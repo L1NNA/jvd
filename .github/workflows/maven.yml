@@ -15,17 +15,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 13 
-    - name: Compile with Maven
-      run: |
-         ls -alh lib/nsa/ghidra/1.0
-         mvn compile
-    - name: Testing
-      run: mvn test
     - name: package
       run: mvn package
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: target/jarv1s-ghidra.jar
+        args: target/jarv1s-ghidra.jar application/java-archive
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
