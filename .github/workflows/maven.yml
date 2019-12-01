@@ -22,6 +22,7 @@ jobs:
       with:
         tag: v0.0.1
         files: target/jarv1s-ghidra.jar 
+        gzip: false
         body: latest jar built
         token: ${{ secrets.GITHUB_TOKEN }}
         allow_override: true
