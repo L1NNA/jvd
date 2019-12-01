@@ -13,6 +13,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 13 
+    - name: list files
+      run: ls .
     - name: Compile with Maven
       run: mvn compile
     - name: Testing
