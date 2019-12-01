@@ -5,7 +5,7 @@
 Ghidra build for Kam1n0 &amp; Jarv1s
 
 ### :rocket: Installation:
-Required: Python 3+. Option: OpenJDK 13+ 
+Required: Python 3+. [Optional: OpenJDK 13+]
 ```bash
 pip install ghidrapy
 ```
