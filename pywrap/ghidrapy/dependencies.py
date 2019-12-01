@@ -21,13 +21,13 @@ def download_file(url, dest_path, progress=False):
         os.makedirs(dest_path)
 
     if progress:
-        logging.info('downloading from: %s', url)
+        log.info('downloading from: %s', url)
 
     fn = fn_from_url(url)
     full_fn = os.path.join(dest_path, fn)
 
     if os.path.exists(full_fn):
-        logging.info('File %s already exists in %s ...' % (fn, dest_path))
+        log.info('File %s already exists in %s ...' % (fn, dest_path))
     else:
         r = requests.get(url, stream=True)
         total_length = r.headers.get('content-length')
@@ -47,11 +47,24 @@ def download_file(url, dest_path, progress=False):
     return full_fn
 
 
-def install_jdk(path, version='13.0.1'):
-    version = subprocess.check_output(['java', '-version'], stderr=subprocess.STDOUT)
-    pattern = '\"(\d+\.\d+).*\"'
+def install_jar_if_needed(path):
+    url = 'https://github.com/L1NNA/JARV1S-Ghidra/releases/download/v0.0.1/jarv1s-ghidra.jar'
+    jar = os.path.join(path, 'jarv1s-ghidra.jar')
+    if not os.path.exists(jar):
+        log.info('Dowloading jar into {}'.format(url, path))
+        download_file(
+            url, path, progress=True)
+    if not os.path.exists(jar):
+        log.error('Jar downloaded to {} but still not found'.format(path)) 
+    return jar
+
+
+def install_jdk_if_needed(path, jdk='13.0.1'):
+    version = subprocess.check_output(
+        ['java', '-version'], stderr=subprocess.STDOUT)
+    pattern = b'\"(\d+\.\d+).*\"'
     val = re.search(pattern, version).groups()[0]
-    val = double(val)
+    val = float(val)
     if val >= 11:
         return 'java'
 
@@ -63,7 +76,7 @@ def install_jdk(path, version='13.0.1'):
         'windows': 'jdk-{}/bin/java.exe',
         'darwin': 'jdk-{}/bin/java',
     }[platform.system().lower()]
-    java = os.path.join(path, 'bin', java.format(version))
+    java = os.path.join(path, java.format(jdk))
 
     if not os.path.exists(java):
         url = {
@@ -71,7 +84,10 @@ def install_jdk(path, version='13.0.1'):
             'windows': 'https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-{}_windows-x64_bin.zip',
             'darwin': 'https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-{}_osx-x64_bin.tar.gz'
         }[platform.system().lower()]
-        url = url.format(version)
+        url = url.format(jdk)
+        log.info(
+            'Current version of java is {} (not supported by Ghidra).'.format(val))
+        log.info('Downloading OpenJDK to {}'.format(url, path))
         fn = download_file(
             url, path, progress=True)
 
@@ -82,4 +98,5 @@ def install_jdk(path, version='13.0.1'):
                 'Java not found even though JDK has been downloaded. Check here %s',
                 path
             )
+    log.info('using: %s', java)
     return java
