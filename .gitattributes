@@ -1,1 +1,2 @@
 ghidra.jar filter=lfs diff=lfs merge=lfs -text
+lib/nsa/ghidra/1.0/ghidra-1.0.jar filter=lfs diff=lfs merge=lfs -text

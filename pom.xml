@@ -40,6 +40,12 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>lib</id>
+      <url>file://${project.basedir}/lib</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -48,11 +54,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>ghidra</groupId>
+      <groupId>nsa</groupId>
       <artifactId>ghidra</artifactId>
       <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/ghidra.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
