@@ -12,12 +12,13 @@ public class GhidraMain {
     public static void main(String[] args) {
         if (args.length > 0) {
             String bin = args[0];
-            String ghidra_project = args[1];
+            String json = args[1];
+            String ghidra_project = args[2];
 
             GhidraDecompiler decompiler;
             try {
                 decompiler = new GhidraDecompiler(bin, ghidra_project);
-                decompiler.dump(bin + ".asm.json");
+                decompiler.dump(json);
                 decompiler.close();
             } catch (VersionException | CancelledException | DuplicateNameException | InvalidNameException
                     | IOException e) {

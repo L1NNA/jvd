@@ -31,13 +31,37 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>ca.l1nna.ghidra.GidhraDecompiler</mainClass>
+                  <mainClass>ca.l1nna.ghidra.GhidraMain</mainClass>
                 </transformer>
               </transformers>
             </configuration>
           </execution>
         </executions>
       </plugin>
+      <plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${user.dir}/pywrap/jarv1s-ghidra</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${user.dir}/target/</directory>
+									<includes>
+										<include>jarv1s-ghidra.jar</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
     </plugins>
   </build>
   <repositories>
