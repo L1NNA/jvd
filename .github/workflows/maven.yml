@@ -16,7 +16,7 @@ jobs:
       with:
         java-version: 13 
     - name: download dependencies
-      run: wget https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar lib/nsa/ghidra/1.0/
+      run: wget -q https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar -P lib/nsa/ghidra/1.0/
     - name: package
       run: mvn --no-transfer-progress package
     - name: Upload to release
