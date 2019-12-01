@@ -19,7 +19,7 @@ jobs:
       run: mvn test
     - name: package
       run: mvn package
-    - uses: Shopify/upload-to-release
     - name: jarv1s-ghidra.jar
+    - uses: Shopify/upload-to-release
       path: target/
       repo-token: ${{ secrets.GITHUB_TOKEN }}
