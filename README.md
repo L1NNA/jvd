@@ -11,7 +11,7 @@ pip install ghidrapy
 ```
 ### :fire: Usage:
 ```bash
-python -m ghidrapy your_file_name
+python -m ghidrapy binary_file_to_decompile
 ```
 
 ### :star: Contributors:
