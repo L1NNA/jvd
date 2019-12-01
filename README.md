@@ -4,4 +4,11 @@
 
 Ghidra build for Kam1n0 &amp; Jarv1s
 
-:rocket: [Lastest build](https://github.com/L1NNA/JARV1S-Ghidra/releases/tag/v0.0.1) 
+#### :rocket: Installation:
+```bash
+pip install ghidrapy
+```
+#### :fire: Usage:
+```bash
+python -m ghidrapy your_file_name
+```
