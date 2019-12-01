@@ -4,11 +4,14 @@
 
 Ghidra build for Kam1n0 &amp; Jarv1s
 
-#### :rocket: Installation:
+### :rocket: Installation:
 ```bash
 pip install ghidrapy
 ```
-#### :fire: Usage:
+### :fire: Usage:
 ```bash
 python -m ghidrapy your_file_name
 ```
+
+### :star: Contributors:
+TBA
