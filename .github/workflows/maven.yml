@@ -18,8 +18,8 @@ jobs:
     - name: package
       run: mvn package
     - name: Upload to release
-      uses: JasonEtco/upload-to-release@master
+      uses: meeDamian/github-release@1.0
       with:
-        args: target/jarv1s-ghidra.jar application/java-archive
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: v0.0.1
+        files: target/jarv1s-ghidra.jar 
+        token: ${{ secrets.GITHUB_TOKEN }}
