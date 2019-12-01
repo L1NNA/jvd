@@ -38,6 +38,26 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.4.2</version>
+        <executions>
+          <execution>
+            <id>install-ghidra-jar</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar</url>
+              <unpack>false</unpack>
+              <outputDirectory>${project.basedir}/lib/nsa/ghidra/1.0/</outputDirectory>
+              <!-- <md5>df65b5642f33676313ebe4d5b69a3fff</md5> -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <repositories>
