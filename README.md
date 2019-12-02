@@ -1,6 +1,6 @@
 # JARV1S-Ghidra
 
-[![](https://github.com/L1NNA/JARV1S-Ghidra/workflows/Build%20and%20Release%20JAR/badge.svg)](https://github.com/L1NNA/JARV1S-Ghidra/actions)
+[![](https://github.com/L1NNA/JARV1S-Ghidra/workflows/Build%20and%20Release%20JAR/badge.svg)](https://github.com/L1NNA/JARV1S-Ghidra/actions) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?&maxAge=86400)
 
 Ghidra build for Kam1n0 &amp; Jarv1s
 
