@@ -47,11 +47,11 @@ def download_file(url, dest_path, progress=False):
     return full_fn
 
 
-def install_jar_if_needed(path):
-    url = 'https://github.com/L1NNA/JARV1S-Ghidra/releases/download/v0.0.1/jarv1s-ghidra.jar'
+def install_jar_if_needed(path, v='v0.0.1'):
+    url = 'https://github.com/L1NNA/JARV1S-Ghidra/releases/download/{}/jarv1s-ghidra.jar'.format(v)
     jar = os.path.join(path, 'jarv1s-ghidra.jar')
     if not os.path.exists(jar):
-        log.info('Dowloading jar into {}'.format(url, path))
+        log.info('Dowloading pre-built jar into {}'.format(path))
         download_file(
             url, path, progress=True)
     if not os.path.exists(jar):

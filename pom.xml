@@ -45,7 +45,7 @@
         <executions>
           <execution>
             <id>install-ghidra-jar</id>
-            <phase>generate-sources</phase>
+            <phase>process-resources</phase>
             <goals>
               <goal>wget</goal>
             </goals>
