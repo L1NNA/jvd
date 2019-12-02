@@ -15,4 +15,7 @@ python -m ghidrapy binary_file_to_decompile
 ```
 
 ### :star: Contributors:
-TBA
+Christopher Bennett - Carleton University
+Miguel Garzon - University of Ottawa, Bell Canada
+Steven Ding - Queen's Computing
+
