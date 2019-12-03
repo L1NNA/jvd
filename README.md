@@ -13,7 +13,7 @@ pip install ghidrapy
 ```bash
 python -m ghidrapy binary_file_to_decompile
 ```
-
+During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-ghidra` if needed.
 ### :star: Contributors:
 - Christopher Bennett - Carleton University
 - Miguel Garzon - University of Ottawa, Bell Canada
