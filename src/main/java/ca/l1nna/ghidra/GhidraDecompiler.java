@@ -64,10 +64,12 @@ public class GhidraDecompiler {
     private TaskMonitor monitor = TaskMonitor.DUMMY;
     private CodeUnitFormat format = new CodeUnitFormat(new CodeUnitFormatOptions());
     private DecompInterface decomp = null;
+    private boolean decompiled;
 
-    GhidraDecompiler(String binPath, String projPath)
+    GhidraDecompiler(String binPath, String projPath, boolean decompiled)
             throws IOException, VersionException, CancelledException, DuplicateNameException, InvalidNameException {
         this.binaryFile = new File(binPath);
+        this.decompiled = decompiled;
         manager = new TestProgramManager();
 
         // Initialize application
@@ -143,10 +145,12 @@ public class GhidraDecompiler {
                 func.addr_end = currentFunction.getBody().getMaxAddress().getOffset();
                 model.functions.add(func);
 
-                FuncSrc funcSrc = new FuncSrc();
-                funcSrc._id = func._id;
-                funcSrc.src = decomp.decompileFunction(currentFunction, 0, monitor).getDecompiledFunction().getC();
-                model.functions_src.add(funcSrc);
+                if (this.decompiled) {
+                    FuncSrc funcSrc = new FuncSrc();
+                    funcSrc._id = func._id;
+                    funcSrc.src = decomp.decompileFunction(currentFunction, 0, monitor).getDecompiledFunction().getC();
+                    model.functions_src.add(funcSrc);
+                }
 
                 CodeBlockIterator codeBlockIterator = basicBlockModel.getCodeBlocksContaining(currentFunction.getBody(),
                         monitor);
