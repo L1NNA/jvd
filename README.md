@@ -1,6 +1,6 @@
 # JARV1S-Ghidra
 
-[![](https://github.com/L1NNA/JARV1S-Ghidra/workflows/Build%20and%20Release%20JAR/badge.svg)](https://github.com/L1NNA/JARV1S-Ghidra/actions)
+[![](https://github.com/L1NNA/JARV1S-Ghidra/workflows/Build%20and%20Release%20JAR/badge.svg)](https://github.com/L1NNA/JARV1S-Ghidra/actions) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?&maxAge=86400)
 
 Ghidra build for Kam1n0 &amp; Jarv1s
 
@@ -13,6 +13,9 @@ pip install ghidrapy
 ```bash
 python -m ghidrapy binary_file_to_decompile
 ```
-
+During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-ghidra` if needed.
 ### :star: Contributors:
-TBA
+- Christopher Bennett - Carleton University
+- Miguel Garzon - University of Ottawa, Bell Canada
+- Steven Ding - Queen's Computing
+
