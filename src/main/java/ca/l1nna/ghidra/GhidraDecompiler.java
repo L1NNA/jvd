@@ -2,6 +2,7 @@ package ca.l1nna.ghidra;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class GhidraDecompiler {
 
     GhidraDecompiler(String binPath, String projPath, boolean decompiled)
             throws IOException, VersionException, CancelledException, DuplicateNameException, InvalidNameException {
+
         this.binaryFile = new File(binPath);
         this.decompiled = decompiled;
         manager = new TestProgramManager();
@@ -88,8 +90,10 @@ public class GhidraDecompiler {
         basicBlockModel = new BasicBlockModel(program);
         functionManager = program.getFunctionManager();
         GhidraProject.analyze(program);
-        decomp = new DecompInterface();
-        decomp.openProgram(program);
+        if (decompiled) {
+            decomp = new DecompInterface();
+            decomp.openProgram(program);
+        }
     }
 
     private String getBinaryId() {

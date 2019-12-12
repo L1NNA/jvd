@@ -2,9 +2,11 @@ from ghidrapy.dependencies import install_jdk_if_needed
 from ghidrapy.dependencies import install_jar_if_needed
 import os
 from pathlib import Path
-from subprocess import call
+from subprocess import Popen, PIPE
 from shutil import rmtree
 import sys
+import json
+import errno
 
 
 NULL_FILE = open(os.devnull, 'w')
@@ -19,7 +21,8 @@ java = install_jdk_if_needed(
 )
 
 
-def process(file, json_suffix='.asm.json', project_suffix='.ghidra'):
+def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
+            decompile=True, load=False):
     json_file = file + json_suffix
     project_dir = file + project_suffix
 
@@ -28,11 +31,18 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra'):
 
     if not os.path.exists(project_dir):
         os.mkdir(project_dir)
-    cmd = [java, '-jar', jar, file, json_file, project_dir]
-    call(cmd,
-         stdout=NULL_FILE,
-         stderr=sys.stderr)
-    return json_file
+    cmd = [java, '-jar', jar, file, json_file,
+           project_dir, str(decompile).lower()]
+    p = Popen(cmd, stdout=PIPE)
+    out, _ = p.communicate()
+    if os.path.exists(json_file):
+        if load:
+            with open(json_file) as of:
+                json_file = json.load(of)
+    else:
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT), json_file)
+    return json_file, out
 
 
 def cleanup(file, project_only=True, json_suffix='.asm.json', project_suffix='.ghidra'):

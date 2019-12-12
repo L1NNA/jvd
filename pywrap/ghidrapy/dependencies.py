@@ -10,6 +10,8 @@ from tqdm import tqdm
 from shutil import unpack_archive
 import subprocess
 import re
+import datetime
+from dateutil.parser import parse as parsedate
 
 
 def fn_from_url(url):
@@ -48,14 +50,33 @@ def download_file(url, dest_path, progress=False):
 
 
 def install_jar_if_needed(path, v='v0.0.1'):
-    url = 'https://github.com/L1NNA/JARV1S-Ghidra/releases/download/{}/jarv1s-ghidra.jar'.format(v)
+    url = 'https://github.com/L1NNA/JARV1S-Ghidra/releases/download/{}/jarv1s-ghidra.jar'.format(
+        v)
     jar = os.path.join(path, 'jarv1s-ghidra.jar')
-    if not os.path.exists(jar):
+    download = True
+    if os.path.exists(jar):
+        u = urllib.request.urlopen(url)
+        meta = u.info()
+        url_time = meta['Last-Modified']
+        url_date = datetime.datetime.strptime(
+            url_time, "%a, %d %b %Y %X GMT")
+        file_time = datetime.datetime.fromtimestamp(
+            os.path.getmtime(jar))
+
+        if url_date > file_time:
+            log.info('Jar file exists but the server has a newer version. {} vs {}'.format(
+                url_time, file_time))
+            os.remove(jar)
+            download = True
+        else:
+            download = False
+
+    if download:
         log.info('Dowloading pre-built jar into {}'.format(path))
         download_file(
             url, path, progress=True)
     if not os.path.exists(jar):
-        log.error('Jar downloaded to {} but still not found'.format(path)) 
+        log.error('Jar downloaded to {} but still not found'.format(path))
     return jar
 
 

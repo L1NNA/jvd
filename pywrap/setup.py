@@ -14,7 +14,7 @@ if path.exists(readme):
 setup(
     name='ghidrapy',
     packages=['ghidrapy'],
-    version='0.0.3',
+    version='0.0.4',
     license='Apache 2.0',
     description='Ghidra disassembler through python. Output formatted for Kam1n0 and JARV1S.',
     long_description=long_description,
