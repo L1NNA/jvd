@@ -12,6 +12,8 @@ import subprocess
 import re
 import datetime
 from dateutil.parser import parse as parsedate
+import pytz
+from dateutil.tz import tzlocal
 
 
 def fn_from_url(url):
@@ -60,12 +62,13 @@ def install_jar_if_needed(path, v='v0.0.1'):
         url_time = meta['Last-Modified']
         url_date = datetime.datetime.strptime(
             url_time, "%a, %d %b %Y %X GMT")
+        url_date = pytz.utc.localize(url_date)
         file_time = datetime.datetime.fromtimestamp(
-            os.path.getmtime(jar))
+            os.path.getmtime(jar), tz=tzlocal())
 
         if url_date > file_time:
             log.info('Jar file exists but the server has a newer version. {} vs {}'.format(
-                url_time, file_time))
+                url_date, file_time))
             os.remove(jar)
             download = True
         else:

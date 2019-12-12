@@ -48,6 +48,7 @@ public class Model {
     public static class Block {
         public long addr_start;
         public String bin_id = "";
+        public String func_id = "";
         public String name = "";
         public List<String> calls = new ArrayList<>();
         public long addr_end;

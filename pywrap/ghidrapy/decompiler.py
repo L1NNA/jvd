@@ -2,7 +2,7 @@ from ghidrapy.dependencies import install_jdk_if_needed
 from ghidrapy.dependencies import install_jar_if_needed
 import os
 from pathlib import Path
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 from shutil import rmtree
 import sys
 import json
@@ -22,7 +22,7 @@ java = install_jdk_if_needed(
 
 
 def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
-            decompile=True, load=False):
+            decompile=False, load=False):
     json_file = file + json_suffix
     project_dir = file + project_suffix
 
@@ -33,7 +33,7 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
         os.mkdir(project_dir)
     cmd = [java, '-jar', jar, file, json_file,
            project_dir, str(decompile).lower()]
-    p = Popen(cmd, stdout=PIPE)
+    p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
     out, _ = p.communicate()
     if os.path.exists(json_file):
         if load:
@@ -45,7 +45,8 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
     return json_file, out
 
 
-def cleanup(file, project_only=True, json_suffix='.asm.json', project_suffix='.ghidra'):
+def cleanup(file, project_only=True, json_suffix='.asm.json',
+            project_suffix='.ghidra'):
     json_file = file + json_suffix
     project_dir = file + project_suffix
     rmtree(project_dir)
