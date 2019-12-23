@@ -130,7 +130,7 @@ public class GhidraDecompiler {
             bin.bits = "b" + program.getAddressFactory().getDefaultAddressSpace().getSize();
             bin.strings = new ArrayList<>(StreamSupport
                     .stream(program.getListing().getDefinedData(true).spliterator(), false).map(dat -> dat.getValue())
-                    .filter(dat -> dat != null).map(dat -> dat.toString()).collect(Collectors.toSet()));
+                    .filter(dat -> dat != null).map(dat -> dat.toString().replaceAll("\\s", "_")).collect(Collectors.toSet()));
             // if (type.contains("unicode") || type.contains("string")) {
             bin.compiler = program.getCompiler();
             model.bin = bin;
@@ -234,14 +234,14 @@ public class GhidraDecompiler {
                 // This assumes simple block model so no overlap is possible
                 CodeBlock block_containing_comment = basicBlockModel.getFirstCodeBlockContaining(address,
                         TaskMonitor.DUMMY);
-                comment.block_id = block_containing_comment == null ? "null" : block_containing_comment.getName();
+                comment.blk_id = block_containing_comment == null ? "null" : block_containing_comment.getName();
                 comment.author = "Ghidra";
-                comment.binary_id = getBinaryId();
+                comment.bin_id = getBinaryId();
                 comment.created_at = date_formatter.format(Calendar.getInstance().getTime());
 
                 Function function = program.getFunctionManager().getFunctionContaining(address);
                 if (function != null) {
-                    comment.function_id = getFuncId(function.getEntryPoint().getOffset());
+                    comment.func_id = getFuncId(function.getEntryPoint().getOffset());
                     comment.address = address.getOffset();
                     comments.add(comment);
                 }

@@ -65,11 +65,11 @@ public class Model {
     public static class Comment {
         public String category = "";
         public String content = "";
-        public String block_id = "";
+        public String blk_id = "";
         public String author = "ghidra";
-        public String binary_id = "";
+        public String bin_id = "";
         public String created_at = "";
-        public String function_id = "";
+        public String func_id = "";
         public long address;
     }
 }
