@@ -49,6 +49,7 @@ public class Model {
         public long addr_start;
         public String bin_id = "";
         public String func_id = "";
+        public String _id = "";
         public String name = "";
         public List<String> calls = new ArrayList<>();
         public long addr_end;

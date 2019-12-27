@@ -163,6 +163,7 @@ public class GhidraDecompiler {
 
                     Block block = new Block();
                     block.addr_start = codeBlock.getFirstStartAddress().getOffset();
+                    block._id = this.getBlkId(block.addr_start)
                     block.bin_id = model.bin._id;
                     block.func_id = func._id;
                     block.name = codeBlock.getName();
