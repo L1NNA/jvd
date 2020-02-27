@@ -92,7 +92,7 @@ def install_jdk_if_needed(path, jdk='13.0.1'):
         val = float(val)
         if val >= 11:
             return 'java'
-    except Exception:
+    except subprocess.CalledProcessError:
         pass
 
     if not os.path.exists(path):
