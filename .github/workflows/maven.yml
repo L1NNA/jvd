@@ -1,6 +1,18 @@
 name: Build and Release JAR
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+#       - '.github/workflows/maven.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+#       - '.github/workflows/maven.yml'
 
 jobs:
   build:
