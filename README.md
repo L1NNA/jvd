@@ -20,5 +20,5 @@ During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-
 - Steven Ding - Queen's Computing
 ### 🌵 Used in `requirements.txt`:
 ```
-git+https://github.com/L1NNA/JARV1S-Ghidra@master
+git+https://github.com/L1NNA/JARV1S-Ghidra@master#subdirectory=pywrap
 ```
