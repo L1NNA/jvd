@@ -84,13 +84,17 @@ def install_jar_if_needed(path, v='v0.0.1'):
 
 
 def install_jdk_if_needed(path, jdk='13.0.1'):
-    version = subprocess.check_output(
-        ['java', '-version'], stderr=subprocess.STDOUT)
-    pattern = b'\"(\d+\.\d+).*\"'
-    val = re.search(pattern, version).groups()[0]
-    val = float(val)
-    if val >= 11:
-        return 'java'
+    val = None
+    try:
+        version = subprocess.check_output(
+            ['java', '-version'], stderr=subprocess.STDOUT)
+        pattern = b'\"(\d+\.\d+).*\"'
+        val = re.search(pattern, version).groups()[0]
+        val = float(val)
+        if val >= 11:
+            return 'java'
+    except subprocess.CalledProcessError:
+        pass
 
     if not os.path.exists(path):
         os.mkdir(path)
@@ -109,8 +113,9 @@ def install_jdk_if_needed(path, jdk='13.0.1'):
             'darwin': 'https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-{}_osx-x64_bin.tar.gz'
         }[platform.system().lower()]
         url = url.format(jdk)
-        log.info(
-            'Current version of java is {} (not supported by Ghidra).'.format(val))
+        if val:
+            log.info(
+                'Current version of java is {} (not supported by Ghidra).'.format(val))
         log.info('Downloading OpenJDK to {}'.format(url, path))
         fn = download_file(
             url, path, progress=True)

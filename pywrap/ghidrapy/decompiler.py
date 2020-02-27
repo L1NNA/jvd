@@ -7,6 +7,7 @@ from shutil import rmtree
 import sys
 import json
 import errno
+import logging as log
 
 
 NULL_FILE = open(os.devnull, 'w')
@@ -34,14 +35,15 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
     cmd = [java, '-jar', jar, file, json_file,
            project_dir, str(decompile).lower()]
     p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
-    out, _ = p.communicate()
+    out, err = p.communicate()
     if os.path.exists(json_file):
         if load:
             with open(json_file) as of:
                 json_file = json.load(of)
     else:
-        # raise FileNotFoundError(
-        #     errno.ENOENT, os.strerror(errno.ENOENT), json_file)
+        log.error(
+            'No json file generated. Info: {} Err: {}'.format(
+                out, err))
         json_file = None
     return json_file, out
 
