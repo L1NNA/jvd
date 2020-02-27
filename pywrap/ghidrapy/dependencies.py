@@ -84,13 +84,16 @@ def install_jar_if_needed(path, v='v0.0.1'):
 
 
 def install_jdk_if_needed(path, jdk='13.0.1'):
-    version = subprocess.check_output(
-        ['java', '-version'], stderr=subprocess.STDOUT)
-    pattern = b'\"(\d+\.\d+).*\"'
-    val = re.search(pattern, version).groups()[0]
-    val = float(val)
-    if val >= 11:
-        return 'java'
+    try:
+        version = subprocess.check_output(
+            ['java', '-version'], stderr=subprocess.STDOUT)
+        pattern = b'\"(\d+\.\d+).*\"'
+        val = re.search(pattern, version).groups()[0]
+        val = float(val)
+        if val >= 11:
+            return 'java'
+    except Exception:
+        pass
 
     if not os.path.exists(path):
         os.mkdir(path)
