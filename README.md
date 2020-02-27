@@ -7,7 +7,7 @@ Ghidra build for Kam1n0 &amp; Jarv1s
 ### :rocket: Installation:
 Required: Python 3+. [Optional: OpenJDK 13+]
 ```bash
-pip install git+https://github.com/L1NNA/JARV1S-Ghidra@master
+git+https://github.com/L1NNA/JARV1S-Ghidra@master#subdirectory=pywrap
 ```
 ### :fire: Usage:
 ```bash
