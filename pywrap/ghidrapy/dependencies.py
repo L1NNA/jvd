@@ -102,7 +102,7 @@ def install_jdk_if_needed(path, jdk='13.0.1'):
     java = {
         'linux': 'jdk-{}/bin/java',
         'windows': 'jdk-{}/bin/java.exe',
-        'darwin': 'jdk-{}/bin/java',
+        'darwin': 'jdk-{}.jdk/contents/home/bin/java',
     }[platform.system().lower()]
     java = os.path.join(path, java.format(jdk))
 
