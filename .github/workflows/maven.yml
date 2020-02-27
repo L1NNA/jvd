@@ -6,13 +6,13 @@ on:
       - master
     paths:
       - 'src/**'
-#       - '.github/workflows/maven.yml'
+      - '.github/workflows/maven.yml'
   pull_request:
     branches:
       - master
     paths:
       - 'src/**'
-#       - '.github/workflows/maven.yml'
+      - '.github/workflows/maven.yml'
 
 jobs:
   build:
