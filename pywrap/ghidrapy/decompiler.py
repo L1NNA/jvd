@@ -40,8 +40,9 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
             with open(json_file) as of:
                 json_file = json.load(of)
     else:
-        raise FileNotFoundError(
-            errno.ENOENT, os.strerror(errno.ENOENT), json_file)
+        # raise FileNotFoundError(
+        #     errno.ENOENT, os.strerror(errno.ENOENT), json_file)
+        json_file = None
     return json_file, out
 
 
