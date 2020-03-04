@@ -38,7 +38,7 @@ jobs:
     - name: generate single JAR ghidra
       run: |
         ls -alh
-        ./ghidra_9.1.2_PUBLIC/server/buildGhidraJar
+        ./ghidra_9.1.2_PUBLIC/support/buildGhidraJar
     - name: package
       run: mvn --no-transfer-progress package
     - name: Upload to release
