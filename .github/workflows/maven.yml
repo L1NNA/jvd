@@ -39,7 +39,7 @@ jobs:
       run: |
         ls -alh
         ./ghidra_9.1.2_PUBLIC/support/buildGhidraJar
-        ls -alh ./ghidra_9.1.2_PUBLIC/support/
+        ls -alh
         cp ./ghidar.jar lib/nsa/ghidra/1.0/ghidra-1.0.jar
     - name: package
       run: mvn --no-transfer-progress package
