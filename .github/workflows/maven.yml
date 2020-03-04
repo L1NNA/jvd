@@ -27,12 +27,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 13 
+#     this is the jar we built locally (not the lastest)
+#     (now we switch to download the latest ghidra release and build the single jar. see code below.)
 #     - name: download dependencies
 #       run: wget -q https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar -P lib/nsa/ghidra/1.0/
     - name: download official Ghidra single jar
       run: |
         wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip
-        unzip file.zip
+        unzip ghidra_9.1.2_PUBLIC_20200212.zip
     - name: generate single JAR ghidra
       run: ./ghidra_9.1.2_PUBLIC/server/buildGhidraJar
     - name: package
