@@ -36,7 +36,9 @@ jobs:
         wget -q https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip
         unzip -q ghidra_9.1.2_PUBLIC_20200212.zip
     - name: generate single JAR ghidra
-      run: ./ghidra_9.1.2_PUBLIC/server/buildGhidraJar
+      run: |
+        ls -alh
+        ./ghidra_9.1.2_PUBLIC/server/buildGhidraJar
     - name: package
       run: mvn --no-transfer-progress package
     - name: Upload to release
