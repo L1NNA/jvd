@@ -39,6 +39,8 @@ jobs:
       run: |
         ls -alh
         ./ghidra_9.1.2_PUBLIC/support/buildGhidraJar
+        ls -alh ./ghidra_9.1.2_PUBLIC/support/
+        cp ./ghidra_9.1.2_PUBLIC/support/ghidar.jar lib/nsa/ghidra/1.0/
     - name: package
       run: mvn --no-transfer-progress package
     - name: Upload to release
