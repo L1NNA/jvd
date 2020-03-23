@@ -302,13 +302,16 @@ for seg_ea in Segments():
                     continue
                 mne = idc.GetDisasm(head).split()[0]
                 oprs = []
+                oprs_tp = []
                 for i in range(5):
                     if cleanStack == 1:
                         idc.OpOff(head, i, 16)
                     opd = idc.print_operand(head, i)
+                    tp = idc.get_operand_type(head, i)
                     if opd == "":
                         continue
                     oprs.append(opd)
+                    oprs_tp.append(tp)
 
                 if idaapi.is_call_insn(head):
                     calls = [x.to for x in XrefsFrom(
@@ -322,7 +325,8 @@ for seg_ea in Segments():
                 sblock['ins'].append({
                     'ea': head,
                     'mne': mne,
-                    'oprs': ' '.join(oprs)
+                    'oprs': oprs,
+                    'oprs_tp': oprs_tp,
                 })
             sblock['ins_c'] = len(sblock['ins'])
 
