@@ -16,6 +16,10 @@ Example:
 ```bash
 python -m jvd binary_file_to_decompile
 ```
+Batch mode: (process files end with `.o` in the `bins` folder)
+```bash
+python -m jvd bins --cfg --ext=.o
+```
 If IDA Pro is not in the path, Ghidra jar will be downloaded and installed. 
 During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-ghidra` if needed.
 Options:
