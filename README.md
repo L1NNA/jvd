@@ -12,11 +12,29 @@ Required: Python 3+. [Optional: OpenJDK 13+]
 pip install git+https://github.com/L1NNA/JARV1S-Ghidra@master#subdirectory=package
 ```
 ### :fire: Usage:
+Example:
 ```bash
 python -m jvd binary_file_to_decompile
 ```
+Batch mode: (process files end with `.o` in the `bins` folder)
+```bash
+python -m jvd bins --cfg --ext=.o
+```
 If IDA Pro is not in the path, Ghidra jar will be downloaded and installed. 
 During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-ghidra` if needed.
+Options:
+```bash
+usage: python -m jvd <file> [options]
+
+positional arguments:
+  file                The binary file.
+
+optional arguments:
+  -h, --help          show this help message and exit
+  --dis {ida,ghidra}  The disassembler
+  --ext EXT           If the input is a folder, the file extension to include
+  --cfg               Generate CFG matrix
+```
 ### :star: Contributors:
 - Steven Ding - Queen's Computing
 - Christopher Bennett - Carleton University

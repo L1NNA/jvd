@@ -14,7 +14,8 @@ if path.exists(readme):
 setup(
     name='jvd',
     packages=['jvd'],
-    version='0.0.6',
+    package_data={'jvd': ['jvd/*.py', 'jvd/**/*.py', 'jvd/*.json', 'jvd/**/*.json']},
+    version='0.0.7',
     license='Apache 2.0',
     description='Unified disassembler for JARV1S/Kam1n0',
     long_description=long_description,
