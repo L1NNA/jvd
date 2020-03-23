@@ -15,6 +15,7 @@ setup(
     name='jvd',
     packages=['jvd'],
     package_data={'jvd': ['jvd/*.py', 'jvd/**/*.py', 'jvd/*.json', 'jvd/**/*.json']},
+    include_package_data=True,
     version='0.0.7',
     license='Apache 2.0',
     description='Unified disassembler for JARV1S/Kam1n0',
@@ -28,6 +29,9 @@ setup(
     install_requires=[
         'requests',
         'tqdm',
+        'python-magic-bin; sys_platform == "win32"',
+        'python-magic-bin; sys_platform == "darwin"',
+        'python-magic; sys_platform == "linux"',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

@@ -80,7 +80,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
 
         def gen():
             if multiprocessing:
-                with ProcessPoolExecutor() as e:
+                with ProcessPoolExecutor(max_workers=30) as e:
                     for ind, extracted in enumerate(
                             e.map(partial(
                                 self.disassemble, decompile=decompile,
