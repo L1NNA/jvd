@@ -1,0 +1,1125 @@
+{
+   "Kam1n0-Architecture": {
+      "processor": "tms320c6",
+      "operations": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "ABS_g"
+               ],
+               "_identifier": "ABS"
+            },
+            {
+               "suffixGroup": [
+                  "ADD_g"
+               ],
+               "_identifier": "ADD"
+            },
+            {
+               "suffixGroup": [
+                  "AND_g"
+               ],
+               "_identifier": "AND"
+            },
+            {
+               "suffixGroup": [
+                  "AVG_g"
+               ],
+               "_identifier": "AVG"
+            },
+            {
+               "suffixGroup": [
+                  "BIT_g"
+               ],
+               "_identifier": "BIT"
+            },
+            {
+               "_identifier": "CLR"
+            },
+            {
+               "suffixGroup": [
+                  "CMP_g"
+               ],
+               "_identifier": "CMP"
+            },
+            {
+               "suffixGroup": [
+                  "DDOT_g"
+               ],
+               "_identifier": "DDOT"
+            },
+            {
+               "_identifier": "DEAL"
+            },
+            {
+               "_identifier": "DINT"
+            },
+            {
+               "_identifier": "DMV"
+            },
+            {
+               "suffixGroup": [
+                  "DOTP_g"
+               ],
+               "_identifier": "DOTP"
+            },
+            {
+               "suffixGroup": [
+                  "DP_g"
+               ],
+               "_identifier": "DP"
+            },
+            {
+               "suffixGroup": [
+                  "EXT_g"
+               ],
+               "_identifier": "EXT"
+            },
+            {
+               "suffixGroup": [
+                  "GMPY_g"
+               ],
+               "_identifier": "GMPY"
+            },
+            {
+               "suffixGroup": [
+                  "INT_g"
+               ],
+               "_identifier": "INT"
+            },
+            {
+               "suffixGroup": [
+                  "LD_g"
+               ],
+               "_identifier": "LD"
+            },
+            {
+               "suffixGroup": [
+                  "MAX_g"
+               ],
+               "_identifier": "MAX"
+            },
+            {
+               "suffixGroup": [
+                  "MIN_g"
+               ],
+               "_identifier": "MIN"
+            },
+            {
+               "suffixGroup": [
+                  "MPY_g"
+               ],
+               "_identifier": "MPY"
+            },
+            {
+               "suffixGroup": [
+                  "MV_g"
+               ],
+               "_identifier": "MV"
+            },
+            {
+               "_identifier": "NEG"
+            },
+            {
+               "_identifier": "NOP"
+            },
+            {
+               "_identifier": "NORM"
+            },
+            {
+               "_identifier": "NOT"
+            },
+            {
+               "suffixGroup": [
+                  "PACK_g"
+               ],
+               "_identifier": "PACK"
+            },
+            {
+               "suffixGroup": [
+                  "RCP_g"
+               ],
+               "_identifier": "RCP"
+            },
+            {
+               "_identifier": "RINT"
+            },
+            {
+               "_identifier": "ROTL"
+            },
+            {
+               "_identifier": "RPACK2"
+            },
+            {
+               "suffixGroup": [
+                  "RSQR_g"
+               ],
+               "_identifier": "RSQR"
+            },
+            {
+               "suffixGroup": [
+                  "SAD_g"
+               ],
+               "_identifier": "SAD"
+            },
+            {
+               "_identifier": "SAT"
+            },
+            {
+               "_identifier": "SET"
+            },
+            {
+               "suffixGroup": [
+                  "SH_g"
+               ],
+               "_identifier": "SH"
+            },
+            {
+               "suffixGroup": [
+                  "SMPY_g"
+               ],
+               "_identifier": "SMPY"
+            },
+            {
+               "suffixGroup": [
+                  "SP_g"
+               ],
+               "_identifier": "SP"
+            },
+            {
+               "suffixGroup": [
+                  "SS_g"
+               ],
+               "_identifier": "SS"
+            },
+            {
+               "suffixGroup": [
+                  "ST_g"
+               ],
+               "_identifier": "ST"
+            },
+            {
+               "suffixGroup": [
+                  "SUB_g"
+               ],
+               "_identifier": "SUB"
+            },
+            {
+               "suffixGroup": [
+                  "SW_g"
+               ],
+               "_identifier": "SW"
+            },
+            {
+               "suffixGroup": [
+                  "UNPK_g"
+               ],
+               "_identifier": "UNPK"
+            },
+            {
+               "suffixGroup": [
+                  "XOR_g"
+               ],
+               "_identifier": "XOR"
+            },
+            {
+               "suffixGroup": [
+                  "XPND_g"
+               ],
+               "_identifier": "XPND"
+            },
+            {
+               "_identifier": "ZERO"
+            }
+         ]
+      },
+      "operationJmps": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "B_g"
+               ],
+               "_identifier": "B"
+            },
+            {
+               "_identifier": "CALLP"
+            }
+         ]
+      },
+      "suffixGroups": {
+         "suffixGroup": [
+            {
+               "suffix": [
+                  null,
+                  "2",
+                  "DP",
+                  "SP"
+               ],
+               "_identifier": "ABS_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "2",
+                  "4",
+                  "AB",
+                  "AD",
+                  "AH",
+                  "AW",
+                  "DP",
+                  "K",
+                  "KPC",
+                  "SP",
+                  "SUB",
+                  "SUB2",
+                  "U"
+               ],
+               "_identifier": "ADD_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "N"
+               ],
+               "_identifier": "AND_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "2",
+                  "U4"
+               ],
+               "_identifier": "AVG_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "C",
+                  "R"
+               ],
+               "_identifier": "BIT_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "EQ",
+                  "EQ2",
+                  "EQ4",
+                  "EQDP",
+                  "EQSP",
+                  "GT",
+                  "GT2",
+                  "GTDP",
+                  "GTSP",
+                  "GTU",
+                  "GTU4",
+                  "LT",
+                  "LT2",
+                  "LTDP",
+                  "LTSP",
+                  "LTU",
+                  "LTU4",
+                  "Y",
+                  "YR",
+                  "YR1"
+               ],
+               "_identifier": "CMP_g"
+            },
+            {
+               "suffix": [
+                  "P4",
+                  "PH2",
+                  "PH2R",
+                  "PL2",
+                  "PL2R"
+               ],
+               "_identifier": "DDOT_g"
+            },
+            {
+               "suffix": [
+                  "2",
+                  "N2",
+                  "NRSU2",
+                  "NRUS2",
+                  "RSU2",
+                  "RUS2",
+                  "SU4",
+                  "U4",
+                  "US4"
+               ],
+               "_identifier": "DOTP_g"
+            },
+            {
+               "suffix": [
+                  "ACK2",
+                  "ACKX2",
+                  "INT",
+                  "SP",
+                  "TRUNC"
+               ],
+               "_identifier": "DP_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "U"
+               ],
+               "_identifier": "EXT_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "4"
+               ],
+               "_identifier": "GMPY_g"
+            },
+            {
+               "suffix": [
+                  "DP",
+                  "DPU",
+                  "SP",
+                  "SPU"
+               ],
+               "_identifier": "INT_g"
+            },
+            {
+               "suffix": [
+                  "B",
+                  "BU",
+                  "DW",
+                  "H",
+                  "HU",
+                  "NDW",
+                  "NW",
+                  "W"
+               ],
+               "_identifier": "LD_g"
+            },
+            {
+               "suffix": [
+                  "2",
+                  "U4"
+               ],
+               "_identifier": "MAX_g"
+            },
+            {
+               "suffix": [
+                  "2",
+                  "U4"
+               ],
+               "_identifier": "MIN_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "2",
+                  "2IR",
+                  "32",
+                  "32SU",
+                  "32U",
+                  "32US",
+                  "DP",
+                  "H",
+                  "HI",
+                  "HIR",
+                  "HL",
+                  "HLU",
+                  "HSLU",
+                  "HSU",
+                  "HU",
+                  "HULS",
+                  "HUS",
+                  "I",
+                  "ID",
+                  "IH",
+                  "IHR",
+                  "IL",
+                  "ILR",
+                  "LH",
+                  "LHU",
+                  "LI",
+                  "LIR",
+                  "LSHU",
+                  "LUHS",
+                  "SP",
+                  "SP2DP",
+                  "SPDP",
+                  "SU",
+                  "SU4",
+                  "U",
+                  "U4",
+                  "US",
+                  "US4"
+               ],
+               "_identifier": "MPY_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "C",
+                  "D",
+                  "K",
+                  "KH",
+                  "KL",
+                  "KLH"
+               ],
+               "_identifier": "MV_g"
+            },
+            {
+               "suffix": [
+                  "2",
+                  "H2",
+                  "H4",
+                  "HL2",
+                  "L4",
+                  "LH2"
+               ],
+               "_identifier": "PACK_g"
+            },
+            {
+               "suffix": [
+                  "DP",
+                  "SP"
+               ],
+               "_identifier": "RCP_g"
+            },
+            {
+               "suffix": [
+                  "DP",
+                  "SP"
+               ],
+               "_identifier": "RSQR_g"
+            },
+            {
+               "suffix": [
+                  "D",
+                  "D2",
+                  "DSU2",
+                  "DSUB",
+                  "DSUB2",
+                  "DU4",
+                  "DUS2"
+               ],
+               "_identifier": "SAD_g"
+            },
+            {
+               "suffix": [
+                  "FL",
+                  "FL3",
+                  "L",
+                  "LMB",
+                  "R",
+                  "R2",
+                  "RMB",
+                  "RU",
+                  "RU2"
+               ],
+               "_identifier": "SH_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "2",
+                  "32",
+                  "H",
+                  "HL",
+                  "LH"
+               ],
+               "_identifier": "SMPY_g"
+            },
+            {
+               "suffix": [
+                  "ACK2",
+                  "ACKU4",
+                  "DP",
+                  "INT",
+                  "KERNEL",
+                  "KERNELR",
+                  "LOOP",
+                  "LOOPD",
+                  "LOOPW",
+                  "MASK",
+                  "MASKR",
+                  "TRUNC"
+               ],
+               "_identifier": "SP_g"
+            },
+            {
+               "suffix": [
+                  "HL",
+                  "HVL",
+                  "HVR",
+                  "UB",
+                  "UB2"
+               ],
+               "_identifier": "SS_g"
+            },
+            {
+               "suffix": [
+                  "B",
+                  "BU",
+                  "DW",
+                  "H",
+                  "HU",
+                  "NDW",
+                  "NW",
+                  "W"
+               ],
+               "_identifier": "ST_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "2",
+                  "4",
+                  "AB",
+                  "ABS4",
+                  "AH",
+                  "AW",
+                  "C",
+                  "DP",
+                  "SP",
+                  "U"
+               ],
+               "_identifier": "SUB_g"
+            },
+            {
+               "suffix": [
+                  "AP2",
+                  "AP4",
+                  "E",
+                  "ENR"
+               ],
+               "_identifier": "SW_g"
+            },
+            {
+               "suffix": [
+                  "HU4",
+                  "LU4"
+               ],
+               "_identifier": "UNPK_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "MPY"
+               ],
+               "_identifier": "XOR_g"
+            },
+            {
+               "suffix": [
+                  "2",
+                  "4"
+               ],
+               "_identifier": "XPND_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  "DEC",
+                  "NOP",
+                  "POS"
+               ],
+               "_identifier": "B_g"
+            }
+         ]
+      },
+      "registers": {
+         "register": [
+            {
+               "_identifier": "AMR",
+               "_category": "AMR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CSR",
+               "_category": "CSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ACR",
+               "_category": "ACR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ADR",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "PCE1",
+               "_category": "PCE1",
+               "_length": "32"
+            },
+            {
+               "_identifier": "REP",
+               "_category": "REP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "DNUM",
+               "_category": "DNUM",
+               "_length": "32"
+            },
+            {
+               "_identifier": "SSR",
+               "_category": "SSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CS",
+               "_category": "CS",
+               "_length": "32"
+            },
+            {
+               "_identifier": "DS",
+               "_category": "DS",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A0",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A1",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A2",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A3",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A4",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A5",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A6",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A7",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A8",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A9",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A10",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A11",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A12",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A13",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A14",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A15",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A16",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A17",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A18",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A19",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A20",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A21",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A22",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A23",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A24",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A25",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A26",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A27",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A28",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A29",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A30",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "A31",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B0",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B1",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B2",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B3",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B4",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B5",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B6",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B7",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B8",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B9",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B10",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B11",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B12",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B13",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B14",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B15",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B16",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B17",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B18",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B19",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B20",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B21",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B22",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B23",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B24",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B25",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B26",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B27",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B28",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B29",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B30",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "B31",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "IFR",
+               "_category": "INT",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ISR",
+               "_category": "INT",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ICR",
+               "_category": "INT",
+               "_length": "32"
+            },
+            {
+               "_identifier": "IER",
+               "_category": "INT",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ISTP",
+               "_category": "INT",
+               "_length": "32"
+            },
+            {
+               "_identifier": "IRP",
+               "_category": "INT",
+               "_length": "32"
+            },
+            {
+               "_identifier": "TSCL",
+               "_category": "TIM",
+               "_length": "32"
+            },
+            {
+               "_identifier": "TSCH",
+               "_category": "TIM",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ILC",
+               "_category": "LOP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "RILC",
+               "_category": "LOP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "GPLYA",
+               "_category": "POL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "GPLYB",
+               "_category": "POL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "GFPGFR",
+               "_category": "POL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "TSR",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ITSR",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "NTSR",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ECR",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "EFR",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "IERR",
+               "_category": "STA",
+               "_length": "32"
+            }
+         ]
+      },
+      "lengthKeywords": "",
+      "jmpKeywords": "",
+      "lineFormats": {
+         "syntax": [
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*),[\\s]*(?<OPN3>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*),[\\s]*(?<OPN4>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*)",
+               "_numberOfOperand": "4"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*),[\\s]*(?<OPN3>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*)",
+               "_numberOfOperand": "3"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*)",
+               "_numberOfOperand": "2"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)",
+               "_numberOfOperand": "1"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+",
+               "_numberOfOperand": "0"
+            }
+         ]
+      },
+      "constantVariableRegex": "(^[0-9]+)|(^=)|#+|(LOC_+)|(loc_+)",
+      "memoryVariableRegex": "(\\[[\\s\\S]+\\])|(\\{[\\s\\S]+\\})"
+   }
+}

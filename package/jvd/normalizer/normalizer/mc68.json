@@ -1,0 +1,3749 @@
+{
+   "Kam1n0-Architecture": {
+      "processor": "mc68",
+      "operations": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "abcd_g"
+               ],
+               "_identifier": "abcd"
+            },
+            {
+               "suffixGroup": [
+                  "sbcd_g"
+               ],
+               "_identifier": "sbcd"
+            },
+            {
+               "suffixGroup": [
+                  "add_g"
+               ],
+               "_identifier": "add"
+            },
+            {
+               "suffixGroup": [
+                  "and_g"
+               ],
+               "_identifier": "and"
+            },
+            {
+               "suffixGroup": [
+                  "as_g"
+               ],
+               "_identifier": "as"
+            },
+            {
+               "suffixGroup": [
+                  "bchg_g"
+               ],
+               "_identifier": "bchg"
+            },
+            {
+               "suffixGroup": [
+                  "bfchg_g"
+               ],
+               "_identifier": "bfchg"
+            },
+            {
+               "suffixGroup": [
+                  "bclr_g"
+               ],
+               "_identifier": "bclr"
+            },
+            {
+               "suffixGroup": [
+                  "bfclr_g"
+               ],
+               "_identifier": "bfclr"
+            },
+            {
+               "suffixGroup": [
+                  "bset_g"
+               ],
+               "_identifier": "bset"
+            },
+            {
+               "suffixGroup": [
+                  "bfset_g"
+               ],
+               "_identifier": "bfset"
+            },
+            {
+               "suffixGroup": [
+                  "btst_g"
+               ],
+               "_identifier": "btst"
+            },
+            {
+               "suffixGroup": [
+                  "bftst_g"
+               ],
+               "_identifier": "bftst"
+            },
+            {
+               "suffixGroup": [
+                  "bitrev_g"
+               ],
+               "_identifier": "bitrev"
+            },
+            {
+               "suffixGroup": [
+                  "byterev_g"
+               ],
+               "_identifier": "byterev"
+            },
+            {
+               "suffixGroup": [
+                  "bfext_g"
+               ],
+               "_identifier": "bfext"
+            },
+            {
+               "suffixGroup": [
+                  "bfffo_g"
+               ],
+               "_identifier": "bfffo"
+            },
+            {
+               "suffixGroup": [
+                  "bfins_g"
+               ],
+               "_identifier": "bfins"
+            },
+            {
+               "suffixGroup": [
+                  "bgnd_g"
+               ],
+               "_identifier": "bgnd"
+            },
+            {
+               "suffixGroup": [
+                  "bkpt_g"
+               ],
+               "_identifier": "bkpt"
+            },
+            {
+               "suffixGroup": [
+                  "cas_g"
+               ],
+               "_identifier": "cas"
+            },
+            {
+               "suffixGroup": [
+                  "chk_g"
+               ],
+               "_identifier": "chk"
+            },
+            {
+               "suffixGroup": [
+                  "cin_g"
+               ],
+               "_identifier": "cin"
+            },
+            {
+               "suffixGroup": [
+                  "clr_g"
+               ],
+               "_identifier": "clr"
+            },
+            {
+               "suffixGroup": [
+                  "cmp_g"
+               ],
+               "_identifier": "cmp"
+            },
+            {
+               "suffixGroup": [
+                  "cpush_g"
+               ],
+               "_identifier": "cpush"
+            },
+            {
+               "suffixGroup": [
+                  "div_g"
+               ],
+               "_identifier": "div"
+            },
+            {
+               "suffixGroup": [
+                  "eor_g"
+               ],
+               "_identifier": "eor"
+            },
+            {
+               "suffixGroup": [
+                  "exg_g"
+               ],
+               "_identifier": "exg"
+            },
+            {
+               "_identifier": "exi"
+            },
+            {
+               "suffixGroup": [
+                  "ext_g"
+               ],
+               "_identifier": "ext"
+            },
+            {
+               "suffixGroup": [
+                  "fabs_g"
+               ],
+               "_identifier": "fabs"
+            },
+            {
+               "suffixGroup": [
+                  "fdabs_g"
+               ],
+               "_identifier": "fdabs"
+            },
+            {
+               "suffixGroup": [
+                  "fsabs_g"
+               ],
+               "_identifier": "fsabs"
+            },
+            {
+               "suffixGroup": [
+                  "facos_g"
+               ],
+               "_identifier": "facos"
+            },
+            {
+               "suffixGroup": [
+                  "fcos_g"
+               ],
+               "_identifier": "fcos"
+            },
+            {
+               "suffixGroup": [
+                  "fadd_g"
+               ],
+               "_identifier": "fadd"
+            },
+            {
+               "suffixGroup": [
+                  "fdadd_g"
+               ],
+               "_identifier": "fdadd"
+            },
+            {
+               "suffixGroup": [
+                  "fsadd_g"
+               ],
+               "_identifier": "fsadd"
+            },
+            {
+               "suffixGroup": [
+                  "fasin_g"
+               ],
+               "_identifier": "fasin"
+            },
+            {
+               "suffixGroup": [
+                  "fsin_g"
+               ],
+               "_identifier": "fsin"
+            },
+            {
+               "suffixGroup": [
+                  "fssub_g"
+               ],
+               "_identifier": "fssub"
+            },
+            {
+               "suffixGroup": [
+                  "fsub_g"
+               ],
+               "_identifier": "fsub"
+            },
+            {
+               "suffixGroup": [
+                  "fdsub_g"
+               ],
+               "_identifier": "fdsub"
+            },
+            {
+               "suffixGroup": [
+                  "fatan_g"
+               ],
+               "_identifier": "fatan"
+            },
+            {
+               "suffixGroup": [
+                  "ftan_g"
+               ],
+               "_identifier": "ftan"
+            },
+            {
+               "_identifier": "fsincos"
+            },
+            {
+               "suffixGroup": [
+                  "ftentox_g"
+               ],
+               "_identifier": "ftentox"
+            },
+            {
+               "suffixGroup": [
+                  "fcmp_g"
+               ],
+               "_identifier": "fcmp"
+            },
+            {
+               "suffixGroup": [
+                  "ftst_g"
+               ],
+               "_identifier": "ftst"
+            },
+            {
+               "suffixGroup": [
+                  "fddiv_g"
+               ],
+               "_identifier": "fddiv"
+            },
+            {
+               "suffixGroup": [
+                  "fdiv_g"
+               ],
+               "_identifier": "fdiv"
+            },
+            {
+               "_identifier": "fsdiv"
+            },
+            {
+               "suffixGroup": [
+                  "fsgldiv_g"
+               ],
+               "_identifier": "fsgldiv"
+            },
+            {
+               "suffixGroup": [
+                  "fdmove_g"
+               ],
+               "_identifier": "fdmove"
+            },
+            {
+               "suffixGroup": [
+                  "fmove_g"
+               ],
+               "_identifier": "fmove"
+            },
+            {
+               "suffixGroup": [
+                  "fsmove_g"
+               ],
+               "_identifier": "fsmove"
+            },
+            {
+               "suffixGroup": [
+                  "fdmul_g"
+               ],
+               "_identifier": "fdmul"
+            },
+            {
+               "suffixGroup": [
+                  "fmul_g"
+               ],
+               "_identifier": "fmul"
+            },
+            {
+               "suffixGroup": [
+                  "fsglmul_g"
+               ],
+               "_identifier": "fsglmul"
+            },
+            {
+               "suffixGroup": [
+                  "fsmul_g"
+               ],
+               "_identifier": "fsmul"
+            },
+            {
+               "suffixGroup": [
+                  "fdneg_g"
+               ],
+               "_identifier": "fdneg"
+            },
+            {
+               "suffixGroup": [
+                  "fneg_g"
+               ],
+               "_identifier": "fneg"
+            },
+            {
+               "suffixGroup": [
+                  "fsneg_g"
+               ],
+               "_identifier": "fsneg"
+            },
+            {
+               "suffixGroup": [
+                  "fsqrt_g"
+               ],
+               "_identifier": "fsqrt"
+            },
+            {
+               "suffixGroup": [
+                  "fssqrt_g"
+               ],
+               "_identifier": "fssqrt"
+            },
+            {
+               "suffixGroup": [
+                  "fdsqrt_g"
+               ],
+               "_identifier": "fdsqrt"
+            },
+            {
+               "suffixGroup": [
+                  "flog2_g"
+               ],
+               "_identifier": "flog2"
+            },
+            {
+               "suffixGroup": [
+                  "flog10_g"
+               ],
+               "_identifier": "flog10"
+            },
+            {
+               "suffixGroup": [
+                  "flogn_g"
+               ],
+               "_identifier": "flogn"
+            },
+            {
+               "suffixGroup": [
+                  "fmod_g"
+               ],
+               "_identifier": "fmod"
+            },
+            {
+               "suffixGroup": [
+                  "fnop_g"
+               ],
+               "_identifier": "fnop"
+            },
+            {
+               "suffixGroup": [
+                  "nop_g"
+               ],
+               "_identifier": "nop"
+            },
+            {
+               "suffixGroup": [
+                  "frem_g"
+               ],
+               "_identifier": "frem"
+            },
+            {
+               "suffixGroup": [
+                  "frestore_g"
+               ],
+               "_identifier": "frestore"
+            },
+            {
+               "suffixGroup": [
+                  "fs_g"
+               ],
+               "_identifier": "fs"
+            },
+            {
+               "suffixGroup": [
+                  "ftrap_g"
+               ],
+               "_identifier": "ftrap"
+            },
+            {
+               "suffixGroup": [
+                  "ftwotox_g"
+               ],
+               "_identifier": "ftwotox"
+            },
+            {
+               "_identifier": "fsave"
+            },
+            {
+               "suffixGroup": [
+                  "fetox_g"
+               ],
+               "_identifier": "fetox"
+            },
+            {
+               "suffixGroup": [
+                  "ff1_g"
+               ],
+               "_identifier": "ff1"
+            },
+            {
+               "suffixGroup": [
+                  "fgetexp_g"
+               ],
+               "_identifier": "fgetexp"
+            },
+            {
+               "suffixGroup": [
+                  "fgetman_g"
+               ],
+               "_identifier": "fgetman"
+            },
+            {
+               "suffixGroup": [
+                  "fint_g"
+               ],
+               "_identifier": "fint"
+            },
+            {
+               "suffixGroup": [
+                  "halt_g"
+               ],
+               "_identifier": "halt"
+            },
+            {
+               "suffixGroup": [
+                  "illegal_g"
+               ],
+               "_identifier": "illegal"
+            },
+            {
+               "suffixGroup": [
+                  "intouch_g"
+               ],
+               "_identifier": "intouch"
+            },
+            {
+               "suffixGroup": [
+                  "move_g"
+               ],
+               "_identifier": "move"
+            },
+            {
+               "suffixGroup": [
+                  "mv_g"
+               ],
+               "_identifier": "mv"
+            },
+            {
+               "suffixGroup": [
+                  "mov_g"
+               ],
+               "_identifier": "mov"
+            },
+            {
+               "suffixGroup": [
+                  "pmov_g"
+               ],
+               "_identifier": "pmov"
+            },
+            {
+               "suffixGroup": [
+                  "ms_g"
+               ],
+               "_identifier": "ms"
+            },
+            {
+               "suffixGroup": [
+                  "masac_g"
+               ],
+               "_identifier": "masac"
+            },
+            {
+               "suffixGroup": [
+                  "maaac_g"
+               ],
+               "_identifier": "maaac"
+            },
+            {
+               "suffixGroup": [
+                  "mac_g"
+               ],
+               "_identifier": "mac"
+            },
+            {
+               "suffixGroup": [
+                  "mul_g"
+               ],
+               "_identifier": "mul"
+            },
+            {
+               "suffixGroup": [
+                  "nbcd_g"
+               ],
+               "_identifier": "nbcd"
+            },
+            {
+               "suffixGroup": [
+                  "lea_g"
+               ],
+               "_identifier": "lea"
+            },
+            {
+               "suffixGroup": [
+                  "link_g"
+               ],
+               "_identifier": "link"
+            },
+            {
+               "suffixGroup": [
+                  "lpstop_g"
+               ],
+               "_identifier": "lpstop"
+            },
+            {
+               "suffixGroup": [
+                  "ls_g"
+               ],
+               "_identifier": "ls"
+            },
+            {
+               "suffixGroup": [
+                  "neg_g"
+               ],
+               "_identifier": "neg"
+            },
+            {
+               "suffixGroup": [
+                  "not_g"
+               ],
+               "_identifier": "not"
+            },
+            {
+               "suffixGroup": [
+                  "or_g"
+               ],
+               "_identifier": "or"
+            },
+            {
+               "suffixGroup": [
+                  "pack_g"
+               ],
+               "_identifier": "pack"
+            },
+            {
+               "suffixGroup": [
+                  "ptest_g"
+               ],
+               "_identifier": "ptest"
+            },
+            {
+               "suffixGroup": [
+                  "ptrap_g"
+               ],
+               "_identifier": "ptrap"
+            },
+            {
+               "suffixGroup": [
+                  "trap_g"
+               ],
+               "_identifier": "trap"
+            },
+            {
+               "suffixGroup": [
+                  "pulse_g"
+               ],
+               "_identifier": "pulse"
+            },
+            {
+               "suffixGroup": [
+                  "pvalid_g"
+               ],
+               "_identifier": "pvalid"
+            },
+            {
+               "suffixGroup": [
+                  "remsl_g"
+               ],
+               "_identifier": "remsl"
+            },
+            {
+               "suffixGroup": [
+                  "remul_g"
+               ],
+               "_identifier": "remul"
+            },
+            {
+               "suffixGroup": [
+                  "reset_g"
+               ],
+               "_identifier": "reset"
+            },
+            {
+               "suffixGroup": [
+                  "sub_g"
+               ],
+               "_identifier": "sub"
+            },
+            {
+               "suffixGroup": [
+                  "swap_g"
+               ],
+               "_identifier": "swap"
+            },
+            {
+               "suffixGroup": [
+                  "tas_g"
+               ],
+               "_identifier": "tas"
+            },
+            {
+               "suffixGroup": [
+                  "tbl_g"
+               ],
+               "_identifier": "tbl"
+            },
+            {
+               "suffixGroup": [
+                  "tst_g"
+               ],
+               "_identifier": "tst"
+            },
+            {
+               "suffixGroup": [
+                  "unlk_g"
+               ],
+               "_identifier": "unlk"
+            },
+            {
+               "suffixGroup": [
+                  "unpk_g"
+               ],
+               "_identifier": "unpk"
+            },
+            {
+               "suffixGroup": [
+                  "wddata_g"
+               ],
+               "_identifier": "wddata"
+            },
+            {
+               "suffixGroup": [
+                  "wdebug_g"
+               ],
+               "_identifier": "wdebug"
+            },
+            {
+               "suffixGroup": [
+                  "pea_g"
+               ],
+               "_identifier": "pea"
+            },
+            {
+               "suffixGroup": [
+                  "pflush_g"
+               ],
+               "_identifier": "pflush"
+            },
+            {
+               "suffixGroup": [
+                  "pload_g"
+               ],
+               "_identifier": "pload"
+            },
+            {
+               "suffixGroup": [
+                  "prestore_g"
+               ],
+               "_identifier": "prestore"
+            },
+            {
+               "suffixGroup": [
+                  "ps_g"
+               ],
+               "_identifier": "ps"
+            },
+            {
+               "suffixGroup": [
+                  "ror_g"
+               ],
+               "_identifier": "ror"
+            },
+            {
+               "suffixGroup": [
+                  "rol_g"
+               ],
+               "_identifier": "rol"
+            },
+            {
+               "suffixGroup": [
+                  "roxl_g"
+               ],
+               "_identifier": "roxl"
+            },
+            {
+               "suffixGroup": [
+                  "roxr_g"
+               ],
+               "_identifier": "roxr"
+            },
+            {
+               "suffixGroup": [
+                  "stop_g"
+               ],
+               "_identifier": "stop"
+            },
+            {
+               "suffixGroup": [
+                  "sats_g"
+               ],
+               "_identifier": "sats"
+            },
+            {
+               "suffixGroup": [
+                  "bra_g"
+               ],
+               "_identifier": "bra"
+            },
+            {
+               "suffixGroup": [
+                  "s_g"
+               ],
+               "_identifier": "s"
+            }
+         ]
+      },
+      "operationJmps": {
+         "operation": [
+            {
+               "_identifier": "bsr"
+            },
+            {
+               "suffixGroup": [
+                  "call_g"
+               ],
+               "_identifier": "call"
+            },
+            {
+               "suffixGroup": [
+                  "b_g"
+               ],
+               "_identifier": "b"
+            },
+            {
+               "_identifier": "bcc"
+            },
+            {
+               "_identifier": "fbcc"
+            },
+            {
+               "suffixGroup": [
+                  "fb_g"
+               ],
+               "_identifier": "fb"
+            },
+            {
+               "suffixGroup": [
+                  "db_g"
+               ],
+               "_identifier": "db"
+            },
+            {
+               "_identifier": "dbcc"
+            },
+            {
+               "suffixGroup": [
+                  "fdb_g"
+               ],
+               "_identifier": "fdb"
+            },
+            {
+               "_identifier": "fdbcc"
+            },
+            {
+               "_identifier": "scc"
+            },
+            {
+               "_identifier": "fscc"
+            },
+            {
+               "suffixGroup": [
+                  "jsr_g"
+               ],
+               "_identifier": "jsr"
+            },
+            {
+               "suffixGroup": [
+                  "jmp_g"
+               ],
+               "_identifier": "jmp"
+            },
+            {
+               "suffixGroup": [
+                  "rt_g"
+               ],
+               "_identifier": "rt"
+            },
+            {
+               "suffixGroup": [
+                  "pdb_g"
+               ],
+               "_identifier": "pdb"
+            },
+            {
+               "suffixGroup": [
+                  "pb_g"
+               ],
+               "_identifier": "pb"
+            }
+         ]
+      },
+      "suffixGroups": {
+         "suffixGroup": [
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "abcd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "sbcd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "a",
+                  "a.b",
+                  "a.d",
+                  "a.l",
+                  "a.p",
+                  "a.s",
+                  "a.w",
+                  "a.x",
+                  "i",
+                  "i.b",
+                  "i.d",
+                  "i.l",
+                  "i.p",
+                  "i.s",
+                  "i.w",
+                  "i.x",
+                  "q",
+                  "q.b",
+                  "q.d",
+                  "q.l",
+                  "q.p",
+                  "q.s",
+                  "q.w",
+                  "q.x",
+                  "x",
+                  "x.b",
+                  "x.d",
+                  "x.l",
+                  "x.p",
+                  "x.s",
+                  "x.w",
+                  "x.x"
+               ],
+               "_identifier": "add_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "i",
+                  "i.b",
+                  "i.d",
+                  "i.l",
+                  "i.p",
+                  "i.s",
+                  "i.w",
+                  "i.x"
+               ],
+               "_identifier": "and_g"
+            },
+            {
+               "suffix": [
+                  "l",
+                  "l.b",
+                  "l.d",
+                  "l.l",
+                  "l.p",
+                  "l.s",
+                  "l.w",
+                  "l.x",
+                  "r",
+                  "r.b",
+                  "r.d",
+                  "r.l",
+                  "r.p",
+                  "r.s",
+                  "r.w",
+                  "r.x"
+               ],
+               "_identifier": "as_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bchg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bfchg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bclr_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bfclr_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bset_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bfset_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "btst_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bftst_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bitrev_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "byterev_g"
+            },
+            {
+               "suffix": [
+                  "s",
+                  "s.b",
+                  "s.d",
+                  "s.l",
+                  "s.p",
+                  "s.s",
+                  "s.w",
+                  "s.x",
+                  "u",
+                  "u.b",
+                  "u.d",
+                  "u.l",
+                  "u.p",
+                  "u.s",
+                  "u.w",
+                  "u.x"
+               ],
+               "_identifier": "bfext_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bfffo_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bfins_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bgnd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bkpt_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "2",
+                  "2.b",
+                  "2.d",
+                  "2.l",
+                  "2.p",
+                  "2.s",
+                  "2.w",
+                  "2.x"
+               ],
+               "_identifier": "cas_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "2",
+                  "2.b",
+                  "2.d",
+                  "2.l",
+                  "2.p",
+                  "2.s",
+                  "2.w",
+                  "2.x"
+               ],
+               "_identifier": "chk_g"
+            },
+            {
+               "suffix": [
+                  "v",
+                  "v.b",
+                  "v.d",
+                  "v.l",
+                  "v.p",
+                  "v.s",
+                  "v.w",
+                  "v.x"
+               ],
+               "_identifier": "cin_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "clr_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "2",
+                  "2.b",
+                  "2.d",
+                  "2.l",
+                  "2.p",
+                  "2.s",
+                  "2.w",
+                  "2.x",
+                  "a",
+                  "a.b",
+                  "a.d",
+                  "a.l",
+                  "a.p",
+                  "a.s",
+                  "a.w",
+                  "a.x",
+                  "i",
+                  "i.b",
+                  "i.d",
+                  "i.l",
+                  "i.p",
+                  "i.s",
+                  "i.w",
+                  "i.x",
+                  "m",
+                  "m.b",
+                  "m.d",
+                  "m.l",
+                  "m.p",
+                  "m.s",
+                  "m.w",
+                  "m.x"
+               ],
+               "_identifier": "cmp_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "cpush_g"
+            },
+            {
+               "suffix": [
+                  "s",
+                  "s.b",
+                  "s.d",
+                  "s.l",
+                  "s.p",
+                  "s.s",
+                  "s.w",
+                  "s.x",
+                  "sl",
+                  "sl.b",
+                  "sl.d",
+                  "sl.l",
+                  "sl.p",
+                  "sl.s",
+                  "sl.w",
+                  "sl.x",
+                  "u",
+                  "u.b",
+                  "u.d",
+                  "u.l",
+                  "u.p",
+                  "u.s",
+                  "u.w",
+                  "u.x",
+                  "ul",
+                  "ul.b",
+                  "ul.d",
+                  "ul.l",
+                  "ul.p",
+                  "ul.s",
+                  "ul.w",
+                  "ul.x"
+               ],
+               "_identifier": "div_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "i",
+                  "i.b",
+                  "i.d",
+                  "i.l",
+                  "i.p",
+                  "i.s",
+                  "i.w",
+                  "i.x"
+               ],
+               "_identifier": "eor_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "exg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "b",
+                  "b.b",
+                  "b.d",
+                  "b.l",
+                  "b.p",
+                  "b.s",
+                  "b.w",
+                  "b.x"
+               ],
+               "_identifier": "ext_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fabs_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdabs_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsabs_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "facos_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "h",
+                  "h.b",
+                  "h.d",
+                  "h.l",
+                  "h.p",
+                  "h.s",
+                  "h.w",
+                  "h.x"
+               ],
+               "_identifier": "fcos_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fadd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdadd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsadd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fasin_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "h",
+                  "h.b",
+                  "h.d",
+                  "h.l",
+                  "h.p",
+                  "h.s",
+                  "h.w",
+                  "h.x"
+               ],
+               "_identifier": "fsin_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fssub_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsub_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdsub_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "h",
+                  "h.b",
+                  "h.d",
+                  "h.l",
+                  "h.p",
+                  "h.s",
+                  "h.w",
+                  "h.x"
+               ],
+               "_identifier": "fatan_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "h",
+                  "h.b",
+                  "h.d",
+                  "h.l",
+                  "h.p",
+                  "h.s",
+                  "h.w",
+                  "h.x"
+               ],
+               "_identifier": "ftan_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ftentox_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fcmp_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ftst_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fddiv_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdiv_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsgldiv_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdmove_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "cr",
+                  "cr.b",
+                  "cr.d",
+                  "cr.l",
+                  "cr.p",
+                  "cr.s",
+                  "cr.w",
+                  "cr.x",
+                  "m",
+                  "m.b",
+                  "m.d",
+                  "m.l",
+                  "m.p",
+                  "m.s",
+                  "m.w",
+                  "m.x"
+               ],
+               "_identifier": "fmove_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsmove_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdmul_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fmul_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsglmul_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsmul_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdneg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fneg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsneg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fsqrt_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fssqrt_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdsqrt_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "flog2_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "flog10_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "p1",
+                  "p1.b",
+                  "p1.d",
+                  "p1.l",
+                  "p1.p",
+                  "p1.s",
+                  "p1.w",
+                  "p1.x"
+               ],
+               "_identifier": "flogn_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fmod_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fnop_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "nop_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "frem_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "frestore_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "cale",
+                  "cale.b",
+                  "cale.d",
+                  "cale.l",
+                  "cale.p",
+                  "cale.s",
+                  "cale.w",
+                  "cale.x"
+               ],
+               "_identifier": "fs_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ftrap_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ftwotox_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "m1",
+                  "m1.b",
+                  "m1.d",
+                  "m1.l",
+                  "m1.p",
+                  "m1.s",
+                  "m1.w",
+                  "m1.x"
+               ],
+               "_identifier": "fetox_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ff1_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fgetexp_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fgetman_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "rz",
+                  "rz.b",
+                  "rz.d",
+                  "rz.l",
+                  "rz.p",
+                  "rz.s",
+                  "rz.w",
+                  "rz.x"
+               ],
+               "_identifier": "fint_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "halt_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "illegal_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "intouch_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "16",
+                  "16.b",
+                  "16.d",
+                  "16.l",
+                  "16.p",
+                  "16.s",
+                  "16.w",
+                  "16.x",
+                  "a",
+                  "a.b",
+                  "a.d",
+                  "a.l",
+                  "a.p",
+                  "a.s",
+                  "a.w",
+                  "a.x",
+                  "c",
+                  "c.b",
+                  "c.d",
+                  "c.l",
+                  "c.p",
+                  "c.s",
+                  "c.w",
+                  "c.x",
+                  "m",
+                  "m.b",
+                  "m.d",
+                  "m.l",
+                  "m.p",
+                  "m.s",
+                  "m.w",
+                  "m.x",
+                  "p",
+                  "p.b",
+                  "p.d",
+                  "p.l",
+                  "p.p",
+                  "p.s",
+                  "p.w",
+                  "p.x",
+                  "q",
+                  "q.b",
+                  "q.d",
+                  "q.l",
+                  "q.p",
+                  "q.s",
+                  "q.w",
+                  "q.x",
+                  "s",
+                  "s.b",
+                  "s.d",
+                  "s.l",
+                  "s.p",
+                  "s.s",
+                  "s.w",
+                  "s.x"
+               ],
+               "_identifier": "move_g"
+            },
+            {
+               "suffix": [
+                  "s",
+                  "s.b",
+                  "s.d",
+                  "s.l",
+                  "s.p",
+                  "s.s",
+                  "s.w",
+                  "s.x",
+                  "z",
+                  "z.b",
+                  "z.d",
+                  "z.l",
+                  "z.p",
+                  "z.s",
+                  "z.w",
+                  "z.x"
+               ],
+               "_identifier": "mv_g"
+            },
+            {
+               "suffix": [
+                  "3q",
+                  "3q.b",
+                  "3q.d",
+                  "3q.l",
+                  "3q.p",
+                  "3q.s",
+                  "3q.w",
+                  "3q.x",
+                  "clr",
+                  "clr.b",
+                  "clr.d",
+                  "clr.l",
+                  "clr.p",
+                  "clr.s",
+                  "clr.w",
+                  "clr.x"
+               ],
+               "_identifier": "mov_g"
+            },
+            {
+               "suffix": [
+                  "e",
+                  "e.b",
+                  "e.d",
+                  "e.l",
+                  "e.p",
+                  "e.s",
+                  "e.w",
+                  "e.x"
+               ],
+               "_identifier": "pmov_g"
+            },
+            {
+               "suffix": [
+                  "aac",
+                  "aac.b",
+                  "aac.d",
+                  "aac.l",
+                  "aac.p",
+                  "aac.s",
+                  "aac.w",
+                  "aac.x",
+                  "ac",
+                  "ac.b",
+                  "ac.d",
+                  "ac.l",
+                  "ac.p",
+                  "ac.s",
+                  "ac.w",
+                  "ac.x",
+                  "acl",
+                  "acl.b",
+                  "acl.d",
+                  "acl.l",
+                  "acl.p",
+                  "acl.s",
+                  "acl.w",
+                  "acl.x",
+                  "sac",
+                  "sac.b",
+                  "sac.d",
+                  "sac.l",
+                  "sac.p",
+                  "sac.s",
+                  "sac.w",
+                  "sac.x"
+               ],
+               "_identifier": "ms_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "masac_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "maaac_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "l",
+                  "l.b",
+                  "l.d",
+                  "l.l",
+                  "l.p",
+                  "l.s",
+                  "l.w",
+                  "l.x"
+               ],
+               "_identifier": "mac_g"
+            },
+            {
+               "suffix": [
+                  "s",
+                  "s.b",
+                  "s.d",
+                  "s.l",
+                  "s.p",
+                  "s.s",
+                  "s.w",
+                  "s.x",
+                  "u",
+                  "u.b",
+                  "u.d",
+                  "u.l",
+                  "u.p",
+                  "u.s",
+                  "u.w",
+                  "u.x"
+               ],
+               "_identifier": "mul_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "nbcd_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "lea_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "link_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "lpstop_g"
+            },
+            {
+               "suffix": [
+                  "l",
+                  "l.b",
+                  "l.d",
+                  "l.l",
+                  "l.p",
+                  "l.s",
+                  "l.w",
+                  "l.x",
+                  "r",
+                  "r.b",
+                  "r.d",
+                  "r.l",
+                  "r.p",
+                  "r.s",
+                  "r.w",
+                  "r.x"
+               ],
+               "_identifier": "ls_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "x",
+                  "x.b",
+                  "x.d",
+                  "x.l",
+                  "x.p",
+                  "x.s",
+                  "x.w",
+                  "x.x"
+               ],
+               "_identifier": "neg_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "not_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "i",
+                  "i.b",
+                  "i.d",
+                  "i.l",
+                  "i.p",
+                  "i.s",
+                  "i.w",
+                  "i.x"
+               ],
+               "_identifier": "or_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "pack_g"
+            },
+            {
+               "suffix": [
+                  "r",
+                  "r.b",
+                  "r.d",
+                  "r.l",
+                  "r.p",
+                  "r.s",
+                  "r.w",
+                  "r.x",
+                  "w",
+                  "w.b",
+                  "w.d",
+                  "w.l",
+                  "w.p",
+                  "w.s",
+                  "w.w",
+                  "w.x"
+               ],
+               "_identifier": "ptest_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ptrap_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "v",
+                  "v.b",
+                  "v.d",
+                  "v.l",
+                  "v.p",
+                  "v.s",
+                  "v.w",
+                  "v.x"
+               ],
+               "_identifier": "trap_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "pulse_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "pvalid_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "remsl_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "remul_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "reset_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "a",
+                  "a.b",
+                  "a.d",
+                  "a.l",
+                  "a.p",
+                  "a.s",
+                  "a.w",
+                  "a.x",
+                  "i",
+                  "i.b",
+                  "i.d",
+                  "i.l",
+                  "i.p",
+                  "i.s",
+                  "i.w",
+                  "i.x",
+                  "q",
+                  "q.b",
+                  "q.d",
+                  "q.l",
+                  "q.p",
+                  "q.s",
+                  "q.w",
+                  "q.x",
+                  "x",
+                  "x.b",
+                  "x.d",
+                  "x.l",
+                  "x.p",
+                  "x.s",
+                  "x.w",
+                  "x.x"
+               ],
+               "_identifier": "sub_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "swap_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "tas_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "tbl_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "tst_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "unlk_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "unpk_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "wddata_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "wdebug_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "pea_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "r",
+                  "r.b",
+                  "r.d",
+                  "r.l",
+                  "r.p",
+                  "r.s",
+                  "r.w",
+                  "r.x"
+               ],
+               "_identifier": "pflush_g"
+            },
+            {
+               "suffix": [
+                  "r",
+                  "r.b",
+                  "r.d",
+                  "r.l",
+                  "r.p",
+                  "r.s",
+                  "r.w",
+                  "r.x",
+                  "w",
+                  "w.b",
+                  "w.d",
+                  "w.l",
+                  "w.p",
+                  "w.s",
+                  "w.w",
+                  "w.x"
+               ],
+               "_identifier": "pload_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "prestore_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x",
+                  "ave",
+                  "ave.b",
+                  "ave.d",
+                  "ave.l",
+                  "ave.p",
+                  "ave.s",
+                  "ave.w",
+                  "ave.x"
+               ],
+               "_identifier": "ps_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "ror_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "rol_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "roxl_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "roxr_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "stop_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "sats_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "bra_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "s_g"
+            },
+            {
+               "suffix": [
+                  "m"
+               ],
+               "_identifier": "call_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "b_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fb_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "db_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "fdb_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "jsr_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "jmp_g"
+            },
+            {
+               "suffix": [
+                  "d",
+                  "d.b",
+                  "d.d",
+                  "d.l",
+                  "d.p",
+                  "d.s",
+                  "d.w",
+                  "d.x",
+                  "e",
+                  "e.b",
+                  "e.d",
+                  "e.l",
+                  "e.p",
+                  "e.s",
+                  "e.w",
+                  "e.x",
+                  "m",
+                  "m.b",
+                  "m.d",
+                  "m.l",
+                  "m.p",
+                  "m.s",
+                  "m.w",
+                  "m.x",
+                  "r",
+                  "r.b",
+                  "r.d",
+                  "r.l",
+                  "r.p",
+                  "r.s",
+                  "r.w",
+                  "r.x",
+                  "s",
+                  "s.b",
+                  "s.d",
+                  "s.l",
+                  "s.p",
+                  "s.s",
+                  "s.w",
+                  "s.x"
+               ],
+               "_identifier": "rt_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "pdb_g"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".b",
+                  ".d",
+                  ".l",
+                  ".p",
+                  ".s",
+                  ".w",
+                  ".x"
+               ],
+               "_identifier": "pb_g"
+            }
+         ]
+      },
+      "oprGroups": {
+         "oprGroup": [
+            {
+               "opr": [
+                  "bchg",
+                  "bfchg"
+               ],
+               "_identifier": "b[f]chg"
+            },
+            {
+               "opr": [
+                  "bclr",
+                  "bfclr"
+               ],
+               "_identifier": "b[f]clr"
+            },
+            {
+               "opr": [
+                  "bset",
+                  "bfset"
+               ],
+               "_identifier": "bset_bfset"
+            },
+            {
+               "opr": [
+                  "btst",
+                  "bftst"
+               ],
+               "_identifier": "b[f]tst"
+            },
+            {
+               "opr": [
+                  "bitrev",
+                  "byterev"
+               ],
+               "_identifier": "bit/byte_rev"
+            },
+            {
+               "opr": [
+                  "fabs",
+                  "fdabs",
+                  "fsabs"
+               ],
+               "_identifier": "f[d/s]abs"
+            },
+            {
+               "opr": [
+                  "facos",
+                  "fcos"
+               ],
+               "_identifier": "f[a]cos"
+            },
+            {
+               "opr": [
+                  "fadd",
+                  "fdadd",
+                  "fsadd"
+               ],
+               "_identifier": "f[d/s]fadd"
+            },
+            {
+               "opr": [
+                  "fsin",
+                  "fasin"
+               ],
+               "_identifier": "f[a]sin"
+            },
+            {
+               "opr": [
+                  "fssub",
+                  "fsub",
+                  "fdsub"
+               ],
+               "_identifier": "f[d/s]sub"
+            },
+            {
+               "opr": [
+                  "fatan",
+                  "ftan"
+               ],
+               "_identifier": "f[a]tan"
+            },
+            {
+               "opr": [
+                  "fddiv",
+                  "fdiv",
+                  "fsgldiv",
+                  "fsdiv"
+               ],
+               "_identifier": "f[d/s/sgl]div"
+            },
+            {
+               "opr": [
+                  "fdmove",
+                  "fmove",
+                  "fsmove"
+               ],
+               "_identifier": "f[d/s]move"
+            },
+            {
+               "opr": [
+                  "fdmul",
+                  "fmul",
+                  "fsglmul",
+                  "fsmul"
+               ],
+               "_identifier": "f[d/s/sgl]mul"
+            },
+            {
+               "opr": [
+                  "fdneg",
+                  "fneg",
+                  "fsneg"
+               ],
+               "_identifier": "f[d/s]neg"
+            },
+            {
+               "opr": [
+                  "fsqrt",
+                  "fssqrt",
+                  "fdsqrt"
+               ],
+               "_identifier": "f[d/s]sqrt"
+            }
+         ]
+      },
+      "registers": {
+         "register": [
+            {
+               "_identifier": "d0",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d1",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d2",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d3",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d4",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d5",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d6",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "d7",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a0",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a1",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a2",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a3",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a4",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a5",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a6",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "a7",
+               "_category": "ADR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "fp0",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp1",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp2",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp3",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp4",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp5",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp6",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "fp7",
+               "_category": "FLT",
+               "_length": "80"
+            },
+            {
+               "_identifier": "bad0",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad1",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad2",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad3",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad4",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad5",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad6",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bad7",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac0",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac1",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac2",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac3",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac4",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac5",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac6",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "bac7",
+               "_category": "BAX",
+               "_length": "16"
+            },
+            {
+               "_identifier": "usp",
+               "_category": "STP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "sp",
+               "_category": "STP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "msp",
+               "_category": "STP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "isp",
+               "_category": "STP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "sfc",
+               "_category": "AFCR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "dfc",
+               "_category": "AFCR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "caar",
+               "_category": "CAH",
+               "_length": "32"
+            },
+            {
+               "_identifier": "cacr",
+               "_category": "CAH",
+               "_length": "32"
+            },
+            {
+               "_identifier": "tc",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "itt0",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "itt1",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "dtt0",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "dtt1",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "tt0",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "tt1",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "urp",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "srp",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "drp",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "crp",
+               "_category": "TRN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "cal",
+               "_category": "LVL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "val",
+               "_category": "LVL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "acc0",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "acc1",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ac",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "scc",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "pcsr",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "acusr",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "accext01",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "accext23",
+               "_category": "CTL",
+               "_length": "32"
+            },
+            {
+               "_identifier": "fpcr",
+               "_category": "fpcr",
+               "_length": "16"
+            },
+            {
+               "_identifier": "fpsr",
+               "_category": "fpsr",
+               "_length": "32"
+            },
+            {
+               "_identifier": "fpiar",
+               "_category": "fpiar",
+               "_length": "32"
+            },
+            {
+               "_identifier": "pc",
+               "_category": "pc",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ccr",
+               "_category": "ccr",
+               "_length": "8"
+            },
+            {
+               "_identifier": "sr",
+               "_category": "sr",
+               "_length": "5"
+            },
+            {
+               "_identifier": "mmusr",
+               "_category": "mmusr",
+               "_length": "32"
+            },
+            {
+               "_identifier": "vbr",
+               "_category": "vbr",
+               "_length": "32"
+            },
+            {
+               "_identifier": "macsr",
+               "_category": "macsr",
+               "_length": "32"
+            },
+            {
+               "_identifier": "mask",
+               "_category": "mask",
+               "_length": "32"
+            },
+            {
+               "_identifier": "cs",
+               "_category": "cs",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ds",
+               "_category": "ds",
+               "_length": "32"
+            }
+         ]
+      },
+      "lengthKeywords": "",
+      "jmpKeywords": "",
+      "lineFormats": {
+         "syntax": [
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*),[\\s]*(?<OPN3>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*),[\\s]*(?<OPN4>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*)",
+               "_numberOfOperand": "4"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*),[\\s]*(?<OPN3>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*)",
+               "_numberOfOperand": "3"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*)",
+               "_numberOfOperand": "2"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)",
+               "_numberOfOperand": "1"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+",
+               "_numberOfOperand": "0"
+            }
+         ]
+      },
+      "constantVariableRegex": "(^[0-9]+)|(^=)|#+|(LOC_+)|(loc_+)",
+      "memoryVariableRegex": "(\\[[\\s\\S]+\\])|(\\{[\\s\\S]+\\})"
+   }
+}

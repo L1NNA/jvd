@@ -1,0 +1,2046 @@
+{
+   "Kam1n0-Architecture": {
+      "processor": "arm",
+      "operations": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "ADRL"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "ALIGN"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "AST"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "BX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "BXJ"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "CDP"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "CPS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "CPY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "DCB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "DCD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "DCS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "DCW"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "EQUB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "EQUD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "EQUS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "EQUW"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "LDC"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "LDREX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "MCR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "MCRR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "MRC"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "MRRC"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "MRS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "MSR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "PKHBT"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "PKHTB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "PLD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QADD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QADD16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QADD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QADDSUBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QASX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QDADD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QDSUB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QSAX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QSUB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QSUB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QSUBADDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "QSUB8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "REV"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "REV16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "REVSH"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "RFE"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SADD16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SADD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SADDSUBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SASX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SEL"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SETEND"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHADD16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHADD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHADDSUBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHASX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHSAX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHSUB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHSUB8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SHSUBADDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLAD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLALD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLALXY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLAWY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLAXY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLSD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLSDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLSLD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMLSLDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMMLA"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMMLAR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMMLS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMMLSR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMUAD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMUADX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMULWY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMULXY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMUSD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SMUSDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SRS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SSAT"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SSAT16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SSAX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SSUB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SSUB8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SSUBADDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "STC"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "STREX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SUBW"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SWI"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SXTAB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SXTAH"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "SXTB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBADC"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBADCS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBADD"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBADDS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBADDW"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBADR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBAND"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBANDS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBASR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBASRS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBBIC"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBBICS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBBKPT"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBBL"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBBLX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBCMN"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBCMP"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBCPS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBCPY"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBEOR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBEORS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBLDMIA"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBLSL"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBLSLS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBLSR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBLSRS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBMOV"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBMOVS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBMUL"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBMULS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBMVNS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBNEG"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBNEGS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBNOP"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBORR"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBORRS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBPOP"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBPUSH"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBREV"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBREV16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBREVSH"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBRORS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSBCS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSETEND"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSTMIA"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSUB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSUBS"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSWI"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSXTB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBSXTH"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBTST"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBUXTB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "THUMBUXTH"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UADD16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UADD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UADDSUBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UASX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHADD16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHADD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHADDSUBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHASX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHSAX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHSUB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHSUB8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UHSUBADDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UMAAL"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQADD16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQADD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQADDSUBX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQASX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQSAX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQSUB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQSUB8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UQSUBADDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USAD8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USADA8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USAT"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USAT16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USAX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USUB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USUB8"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "USUBADDX"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UXTAB"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UXTAB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "UXTB16"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "ADC"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeNoDotAndDot"
+               ],
+               "_identifier": "ADD"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "ADR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "AND"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "ASR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "BFC"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "BFI"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "BIC"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "CLZ"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "CMN"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "CMP"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "EOR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "multiInstruction",
+                  "sizeDot"
+               ],
+               "_identifier": "LDM"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "LDRHT"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "LDRSHT"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "LSL"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "LSR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "MLA"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "MLS"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeNoDotAndDot"
+               ],
+               "_identifier": "MOV"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "MOVT"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "MUL"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "MVN"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "ORN"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "ORR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "RBIT"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "ROR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "RRX"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "RSB"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "RSC"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "SBC"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "SBFX"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "SDIV"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "SMLAL"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "SMMUL"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "SMMULR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "multiInstruction",
+                  "sizeDot"
+               ],
+               "_identifier": "STM"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "STRHT"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "SUB"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "additionalSWP"
+               ],
+               "_identifier": "SWP"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "SXTAB"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "SXTB"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "SXTH"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "TBB"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "TBH"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "TEQ"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "size"
+               ],
+               "_identifier": "THUMBLDR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "size"
+               ],
+               "_identifier": "THUMBSTR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "TST"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "UBFX"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "UDIV"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "UMLAL"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag",
+                  "sizeDot"
+               ],
+               "_identifier": "UMULL"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "UXTAH"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "UXTB"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "UXTH"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "size",
+                  "sizeDot",
+                  "additionalLDSTR"
+               ],
+               "_identifier": "LDR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "size",
+                  "sizeDot",
+                  "additionalLDSTR"
+               ],
+               "_identifier": "STR"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "updateFlag"
+               ],
+               "_identifier": "NEG"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "POP"
+            },
+            {
+               "suffixGroup": [
+                  "condition",
+                  "sizeDot"
+               ],
+               "_identifier": "PUSH"
+            },
+            {
+               "_identifier": "SVC"
+            },
+            {
+               "suffixGroup": [
+                  "sizeDot"
+               ],
+               "_identifier": "NOP"
+            },
+            {
+               "_identifier": "SMULL"
+            },
+            {
+               "_identifier": "IMPORT"
+            },
+            {
+               "suffixGroup": [
+                  "ITIfElseThen",
+                  "ITIfElseThen",
+                  "ITIfElseThen"
+               ],
+               "_identifier": "IT"
+            }
+         ]
+      },
+      "operationJmps": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "condition",
+                  "siopeneDot"
+               ],
+               "_identifier": "B"
+            },
+            {
+               "suffixGroup": [
+                  "condition"
+               ],
+               "_identifier": "BL"
+            },
+            {
+               "_identifier": "CBZ"
+            },
+            {
+               "_identifier": "CBNZ"
+            },
+            {
+               "_identifier": "BLX"
+            },
+            {
+               "_identifier": "RET"
+            }
+         ]
+      },
+      "suffixGroups": {
+         "suffixGroup": [
+            {
+               "suffix": [
+                  null,
+                  "EQ",
+                  "NE",
+                  "CS",
+                  "HS",
+                  "CC",
+                  "LO",
+                  "MI",
+                  "PL",
+                  "VS",
+                  "VC",
+                  "HI",
+                  "LS",
+                  "GE",
+                  "LT",
+                  "GT",
+                  "LE",
+                  "AL",
+                  "NV"
+               ],
+               "_identifier": "condition"
+            },
+            {
+               "suffix": [
+                  null,
+                  "S"
+               ],
+               "_identifier": "updateFlag"
+            },
+            {
+               "suffix": [
+                  null,
+                  "B",
+                  "SB",
+                  "H",
+                  "SH",
+                  "D"
+               ],
+               "_identifier": "size"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".W"
+               ],
+               "_identifier": "sizeDot"
+            },
+            {
+               "suffix": [
+                  null,
+                  "DA",
+                  "DB",
+                  "IA",
+                  "IB",
+                  "EA",
+                  "FA",
+                  "FD",
+                  "ED"
+               ],
+               "_identifier": "multiInstruction"
+            },
+            {
+               "suffix": [
+                  null,
+                  "B"
+               ],
+               "_identifier": "additionalSWP"
+            },
+            {
+               "suffix": [
+                  null,
+                  "T",
+                  "E"
+               ],
+               "_identifier": "ITIfElseThen"
+            },
+            {
+               "suffix": [
+                  null,
+                  "W"
+               ],
+               "_identifier": "sizeNoDot"
+            },
+            {
+               "suffix": [
+                  null,
+                  ".W",
+                  "W"
+               ],
+               "_identifier": "sizeNoDotAndDot"
+            }
+         ]
+      },
+      "registers": {
+         "register": [
+            {
+               "_identifier": "R0",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R1",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R2",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R3",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R4",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R5",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R6",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R7",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R8",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R9",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R10",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R11",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R12",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R13",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R14",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R15",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R0!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R1!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R2!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R3!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R4!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R5!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R6!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R7!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R8!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R9!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R10!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R11!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R12!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R13!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R14!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R15!",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "SP",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "SP!",
+               "_category": "STA",
+               "_length": "32"
+            },
+            {
+               "_identifier": "IP",
+               "_category": "OIP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "IP!",
+               "_category": "OIP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "OP",
+               "_category": "OIP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "OP!",
+               "_category": "OIP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "LR",
+               "_category": "LNK",
+               "_length": "32"
+            },
+            {
+               "_identifier": "LR!",
+               "_category": "LNK",
+               "_length": "32"
+            },
+            {
+               "_identifier": "PC",
+               "_category": "PCN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "PC!",
+               "_category": "PCN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CPSR",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "SPSR",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CPSR_GE",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CPSR_M",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CPSR!",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "SPSR!",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CPSR_GE!",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CPSR_M!",
+               "_category": "PSR",
+               "_length": "32"
+            },
+            {
+               "_identifier": "Z",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "C",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "V",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "Q",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "E",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "T",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "J",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "A",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "I",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "F",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CPSR_GE_0",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CPSR_GE_1",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CPSR_GE_2",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CPSR_GE_3",
+               "_category": "FLG",
+               "_length": "1"
+            }
+         ]
+      },
+      "lengthKeywords": {
+         "lengthKeyWord": {
+            "_identifier": ".W",
+            "_length": "16"
+         }
+      },
+      "jmpKeywords": "",
+      "lineFormats": {
+         "syntax": [
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*),[\\s]*(?<OPN3>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*),[\\s]*(?<OPN4>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*)",
+               "_numberOfOperand": "4"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*),[\\s]*(?<OPN3>\\[*\\{*[^\\{\\[\\]\\}]+\\}*\\]*!*)",
+               "_numberOfOperand": "3"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)[\\s]*,[\\s]*(?<OPN2>\\{*\\[*[^\\{\\}\\[\\]]+\\}*\\]*!*)",
+               "_numberOfOperand": "2"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>\\{*\\[*([^\\{\\}\\]\\[]+)\\}*\\]*!*)",
+               "_numberOfOperand": "1"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+",
+               "_numberOfOperand": "0"
+            }
+         ]
+      },
+      "constantVariableRegex": "(^[0-9]+)|(^=)|#+|(LOC_+)|(loc_+)",
+      "memoryVariableRegex": "(\\[[\\s\\S]+\\])|(\\{[\\s\\S]+\\})"
+   }
+}

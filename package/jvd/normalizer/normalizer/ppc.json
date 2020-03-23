@@ -1,0 +1,821 @@
+{
+   "Kam1n0-Architecture": {
+      "processor": "ppc",
+      "operations": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "lbz"
+            },
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "lhz"
+            },
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "lha"
+            },
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "lwz"
+            },
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "stb"
+            },
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "sth"
+            },
+            {
+               "suffixGroup": [
+                  "ux2",
+                  "ux2"
+               ],
+               "_identifier": "stw"
+            },
+            {
+               "_identifier": "lmw"
+            },
+            {
+               "_identifier": "stmw"
+            },
+            {
+               "suffixGroup": [
+                  "ce1",
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "add"
+            },
+            {
+               "suffixGroup": [
+                  "scc1"
+               ],
+               "_identifier": "addi"
+            },
+            {
+               "suffixGroup": [
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "addme"
+            },
+            {
+               "suffixGroup": [
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "addze"
+            },
+            {
+               "suffixGroup": [
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "neg"
+            },
+            {
+               "suffixGroup": [
+                  "ce1",
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "subf"
+            },
+            {
+               "_identifier": "subfic"
+            },
+            {
+               "suffixGroup": [
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "subfme"
+            },
+            {
+               "suffixGroup": [
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "subfze"
+            },
+            {
+               "suffixGroup": [
+                  "cd2",
+                  "cd2"
+               ],
+               "_identifier": "and"
+            },
+            {
+               "_identifier": "andi."
+            },
+            {
+               "_identifier": "andis."
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "cntlzw"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "eqv"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "extsb"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "extsh"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "nand"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "nor"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "or"
+            },
+            {
+               "_identifier": "ori"
+            },
+            {
+               "_identifier": "oris"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "slw"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "srw"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "srawi"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "sraw"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "xor"
+            },
+            {
+               "_identifier": "xori"
+            },
+            {
+               "_identifier": "xoris"
+            },
+            {
+               "_identifier": "mulhw"
+            },
+            {
+               "_identifier": "muli"
+            },
+            {
+               "_identifier": "mulw"
+            },
+            {
+               "_identifier": "mr"
+            },
+            {
+               "_identifier": "lis"
+            },
+            {
+               "_identifier": "li"
+            },
+            {
+               "_identifier": "mflr"
+            },
+            {
+               "_identifier": "mtlr"
+            },
+            {
+               "_identifier": "mtctr"
+            },
+            {
+               "_identifier": "ldf"
+            },
+            {
+               "_identifier": "stfd"
+            },
+            {
+               "_identifier": "lfs"
+            },
+            {
+               "_identifier": "clrlwi"
+            },
+            {
+               "suffixGroup": [
+                  "u1",
+                  "od2",
+                  "od2"
+               ],
+               "_identifier": "divw"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "rlwimi"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "rlwinm"
+            },
+            {
+               "suffixGroup": [
+                  "d1"
+               ],
+               "_identifier": "rlwnm"
+            },
+            {
+               "suffixGroup": [
+                  "lwi4",
+                  "lwi4",
+                  "lwi4"
+               ],
+               "_identifier": "cmp"
+            },
+            {
+               "_identifier": "crand"
+            },
+            {
+               "_identifier": "crandc"
+            },
+            {
+               "_identifier": "creqv"
+            },
+            {
+               "_identifier": "crnand"
+            },
+            {
+               "_identifier": "crnor"
+            },
+            {
+               "_identifier": "cror"
+            },
+            {
+               "_identifier": "crorc"
+            },
+            {
+               "_identifier": "crxor"
+            },
+            {
+               "_identifier": "mcrf"
+            },
+            {
+               "_identifier": "crclr"
+            },
+            {
+               "_identifier": "crmove"
+            },
+            {
+               "_identifier": "crnot"
+            },
+            {
+               "_identifier": "crset"
+            },
+            {
+               "_identifier": "tw"
+            },
+            {
+               "_identifier": "twi"
+            },
+            {
+               "_identifier": "fdiv"
+            },
+            {
+               "_identifier": "srwi"
+            },
+            {
+               "_identifier": ".extern"
+            },
+            {
+               "_identifier": "fmr"
+            },
+            {
+               "_identifier": "nop"
+            },
+            {
+               "_identifier": "not"
+            },
+            {
+               "_identifier": "fadd"
+            },
+            {
+               "_identifier": "lwbrx"
+            },
+            {
+               "_identifier": "stfs"
+            },
+            {
+               "_identifier": "rotlw"
+            },
+            {
+               "_identifier": "fcmpu"
+            },
+            {
+               "_identifier": "frsp"
+            },
+            {
+               "_identifier": "fneg"
+            },
+            {
+               "_identifier": "rotlwi"
+            },
+            {
+               "_identifier": "slwi"
+            },
+            {
+               "_identifier": "mulhwu"
+            },
+            {
+               "_identifier": "fctiwz"
+            },
+            {
+               "_identifier": "fabs"
+            },
+            {
+               "_identifier": "fdivs"
+            },
+            {
+               "_identifier": "insrwi"
+            },
+            {
+               "_identifier": "extrwi"
+            },
+            {
+               "_identifier": "fsub"
+            },
+            {
+               "_identifier": "fmadd"
+            },
+            {
+               "_identifier": "lfd"
+            },
+            {
+               "_identifier": "clrrwi"
+            },
+            {
+               "_identifier": "fmul"
+            },
+            {
+               "_identifier": "mulli"
+            },
+            {
+               "_identifier": "mullw"
+            },
+            {
+               "_identifier": "mfcr"
+            }
+         ]
+      },
+      "operationJmps": {
+         "operation": [
+            {
+               "suffixGroup": [
+                  "test1",
+                  "lrctr",
+                  "la2",
+                  "la2",
+                  "pl1"
+               ],
+               "_identifier": "b"
+            },
+            {
+               "_identifier": "sc"
+            }
+         ]
+      },
+      "suffixGroups": {
+         "suffixGroup": [
+            {
+               "suffix": [
+                  null,
+                  "u",
+                  "x"
+               ],
+               "_identifier": "ux2"
+            },
+            {
+               "suffix": [
+                  null,
+                  "c",
+                  "e"
+               ],
+               "_identifier": "ce1"
+            },
+            {
+               "suffix": [
+                  null,
+                  "o",
+                  "."
+               ],
+               "_identifier": "od2"
+            },
+            {
+               "suffix": [
+                  null,
+                  "s",
+                  "c",
+                  "c."
+               ],
+               "_identifier": "scc1"
+            },
+            {
+               "suffix": [
+                  null,
+                  "c",
+                  "."
+               ],
+               "_identifier": "cd2"
+            },
+            {
+               "suffix": [
+                  null,
+                  "."
+               ],
+               "_identifier": "d1"
+            },
+            {
+               "suffix": [
+                  null,
+                  "u"
+               ],
+               "_identifier": "u1"
+            },
+            {
+               "suffix": [
+                  null,
+                  "l",
+                  "a"
+               ],
+               "_identifier": "la2"
+            },
+            {
+               "suffix": [
+                  null,
+                  "lr",
+                  "ctr"
+               ],
+               "_identifier": "lrctr"
+            },
+            {
+               "suffix": [
+                  null,
+                  "c",
+                  "dnzf",
+                  "dzf",
+                  "f",
+                  "dnzt",
+                  "t",
+                  "dnz",
+                  "dz",
+                  "eq",
+                  "ge",
+                  "gt",
+                  "le",
+                  "lt",
+                  "ne",
+                  "ng",
+                  "nl",
+                  "ns",
+                  "so"
+               ],
+               "_identifier": "test1"
+            },
+            {
+               "suffix": [
+                  null,
+                  "l",
+                  "w",
+                  "i"
+               ],
+               "_identifier": "lwi4"
+            },
+            {
+               "suffix": [
+                  null,
+                  "+"
+               ],
+               "_identifier": "pl1"
+            }
+         ]
+      },
+      "registers": {
+         "register": [
+            {
+               "_identifier": "R0",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R1",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R2",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R3",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R4",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R5",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R6",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R7",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R8",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R9",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R10",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R11",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R12",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R13",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R14",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R15",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R16",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R17",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R18",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R19",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R20",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R21",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R22",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R23",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R24",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R25",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R26",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R27",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R28",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R29",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R30",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R31",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CR",
+               "_category": "CND",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CTR",
+               "_category": "LOP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "XER",
+               "_category": "EXP",
+               "_length": "32"
+            },
+            {
+               "_identifier": "LR",
+               "_category": "LNK",
+               "_length": "32"
+            },
+            {
+               "_identifier": "CR0",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR1",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR2",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR3",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR4",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR5",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR6",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "CR7",
+               "_category": "FLG",
+               "_length": "1"
+            }
+         ]
+      },
+      "lengthKeywords": {
+         "lengthKeyWord": [
+            {
+               "_identifier": "@h",
+               "_length": "16"
+            },
+            {
+               "_identifier": "@ha",
+               "_length": "16"
+            },
+            {
+               "_identifier": "@l",
+               "_length": "16"
+            }
+         ]
+      },
+      "jmpKeywords": "",
+      "lineFormats": {
+         "syntax": [
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>[\\S\\s]+)[\\s]*,[\\s]*(?<OPN2>[\\S\\s]+),[\\s]*(?<OPN3>[\\S\\s]+)",
+               "_numberOfOperand": "3"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>[\\S\\s]+)[\\s]*,[\\s]*(?<OPN2>[\\S\\s]+)",
+               "_numberOfOperand": "2"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>[\\S\\s]+)",
+               "_numberOfOperand": "1"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+",
+               "_numberOfOperand": "0"
+            }
+         ]
+      },
+      "constantVariableRegex": "(^LOC_+)|(^loc_+)|([0-9x#\\-\\s])|^[\\S]+$",
+      "memoryVariableRegex": "(\\([\\s\\S]+\\))"
+   }
+}
