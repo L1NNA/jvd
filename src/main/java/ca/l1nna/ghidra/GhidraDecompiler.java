@@ -120,7 +120,7 @@ public class GhidraDecompiler {
 
             Binary bin = new Binary();
             StreamSupport.stream(program.getListing().getExternalFunctions().spliterator(), false)
-                    .map(func -> func.getName()).forEach(bin.import_functions::add);
+                    .forEach(func->bin.import_functions.put(func.getEntryPoint().getOffset(), func.getName()));
             bin.name = this.binaryFile.getName();
             bin.disassembled_at = date_formatter.format(Calendar.getInstance().getTime());
             bin.functions_count = functionManager.getFunctionCount();
@@ -128,9 +128,9 @@ public class GhidraDecompiler {
             bin.endian = program.getLanguage().isBigEndian() ? "be" : "le";
             bin._id = getBinaryId();
             bin.bits = "b" + program.getAddressFactory().getDefaultAddressSpace().getSize();
-            bin.strings = new ArrayList<>(StreamSupport
+            StreamSupport
                     .stream(program.getListing().getDefinedData(true).spliterator(), false).map(dat -> dat.getValue())
-                    .filter(dat -> dat != null).map(dat -> dat.toString().replaceAll("\\s", "_")).collect(Collectors.toSet()));
+                    .filter(dat -> dat != null).forEach(dat -> bin.strings.put(dat.getAddress().getOffeset(), dat.toString().replaceAll("\\s", "_")));
             // if (type.contains("unicode") || type.contains("string")) {
             bin.compiler = program.getCompiler();
             model.bin = bin;

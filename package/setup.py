@@ -15,7 +15,7 @@ setup(
     name='jvd',
     packages=['jvd'],
     package_data={'jvd': ['jvd/*.py', 'jvd/**/*.py', 'jvd/*.json', 'jvd/**/*.json']},
-    version='0.0.7',
+    version='0.0.8',
     license='Apache 2.0',
     description='Unified disassembler for JARV1S/Kam1n0',
     long_description=long_description,

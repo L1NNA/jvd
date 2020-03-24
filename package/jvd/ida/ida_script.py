@@ -236,23 +236,21 @@ for seg_ea in Segments():
                     functions[ref_ea]['_id'])
 
 
-
 if py_version == 2:
-    binary['strings'] = [sub(r"\s+", '-', str(st).strip().decode(encoding='UTF-8', errors='ignore').strip().lower())
-                         for st in idautils.Strings() if len(str(st).strip()) > 0]
+    binary['strings'] = {st.ea: sub(r"\s+", '-', str(st).strip().decode(encoding='UTF-8', errors='ignore').strip().lower())
+                         for st in idautils.Strings() if len(str(st).strip()) > 0}
 else:
-    binary['strings'] = [sub(r"\s+", '-', str(st).strip().lower())
-                         for st in idautils.Strings() if len(str(st).strip()) > 0]
-binary['strings'] = list(set(binary['strings']))
+    binary['strings'] = {st.ea: sub(r"\s+", '-', str(st).strip().lower())
+                         for st in idautils.Strings() if len(str(st).strip()) > 0}
 
 # processing imports:
 import_modules = set()
-import_functions = set()
+import_functions = {}
 
 
 def imp_cb(ea, name, ord):
-    if name:
-        import_functions.add(str(name).strip().lower())
+    if name and ea:
+        import_functions[ea] = str(name).strip().lower()
     return True
 
 
@@ -267,7 +265,7 @@ for i in range(0, nimps):
     idaapi.enum_import_names(i, imp_cb)
 
 binary['import_modules'] = list(import_modules)
-binary['import_functions'] = list(import_functions)
+binary['import_functions'] = import_functions
 binary['disassembled_at'] = now_str
 
 

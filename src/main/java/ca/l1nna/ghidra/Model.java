@@ -13,7 +13,7 @@ public class Model {
 
     public static class Binary {
         public List<String> import_modules = new ArrayList<>();
-        public List<String> import_functions = new ArrayList<>();
+        public Map<Long, String> import_functions = new HashMap<>();
         public String description = "";
         public String disassembled_at = "";
         public int functions_count = 0;
@@ -22,7 +22,7 @@ public class Model {
         public String endian = "";
         public String _id = "";
         public String bits = "";
-        public List<String> strings = new ArrayList<>();
+        public Map<Long, String> strings = new HashMap<>();
         public String compiler = "";
         public String name;
 
