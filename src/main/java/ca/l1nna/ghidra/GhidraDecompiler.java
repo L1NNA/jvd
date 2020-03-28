@@ -128,7 +128,7 @@ public class GhidraDecompiler {
             bin.endian = program.getLanguage().isBigEndian() ? "be" : "le";
             bin._id = getBinaryId();
             bin.bits = "b" + program.getAddressFactory().getDefaultAddressSpace().getSize();
-            program.getListing().getDefinedData(true).next().StreamSupport
+            StreamSupport
                     .stream(program.getListing().getDefinedData(true).spliterator(), false).filter(dat -> dat != null)
                     .forEach(dat -> bin.strings.put(dat.getMinAddress().getOffeset(),
                             dat.getValue().toString().replaceAll("\\s", "_")));
