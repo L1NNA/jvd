@@ -57,6 +57,8 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
             with open(json_file) as of:
                 json_file = json.load(of)
     else:
+        if isinstance(out, bytes):
+            out = out.decode('utf-8')
         log.error(
             'No json file generated. Info: {} Err: {}'.format(
                 out, err))

@@ -129,7 +129,7 @@ public class GhidraDecompiler {
             bin._id = getBinaryId();
             bin.bits = "b" + program.getAddressFactory().getDefaultAddressSpace().getSize();
             StreamSupport
-                    .stream(program.getListing().getDefinedData(true).spliterator(), false).filter(dat -> dat != null)
+                    .stream(program.getListing().getDefinedData(true).spliterator(), false).filter(dat -> dat != null && dat.getValue() != null)
                     .forEach(dat -> bin.strings.put(dat.getMinAddress().getOffset(),
                             dat.getValue().toString().replaceAll("\\s", "_")));
             // if (type.contains("unicode") || type.contains("string")) {
