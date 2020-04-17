@@ -30,8 +30,8 @@ class IDA(DisassemblerAbstract):
                 # 32-bit database
                 program = 'ida'
                 extension = '.idb'
-            elif file_type == 'data':
-                # 32-bit database
+            elif file_type.startswith('FoxPro FPT'):
+                # 64-bit database
                 program = 'ida64'
                 extension = '.i64'
             if extension:
