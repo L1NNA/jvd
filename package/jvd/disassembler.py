@@ -44,7 +44,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     json.dump(res, wf)
             return res, log
         except Exception as e:
-            log.append(str(e))
+            log.append('Failed '+ file + ' msg: ' +str(e))
             return None, log
         finally:
             try:
@@ -92,5 +92,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                         f, decompile=decompile, cleanup=cleanup, cfg=cfg)
                     yield ind, extracted
 
-        for ind, _ in tqdm(gen(), total=len(files)):
-            pass
+        for ind, extracted in tqdm(gen(), total=len(files)):
+            res, log = extracted 
+            if res is None:
+                print(log)
