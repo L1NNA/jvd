@@ -236,7 +236,7 @@ public class GhidraDecompiler {
                 // This assumes simple block model so no overlap is possible
                 CodeBlock block_containing_comment = basicBlockModel.getFirstCodeBlockContaining(address,
                         TaskMonitor.DUMMY);
-                comment.blk_id = block_containing_comment == null ? "null" : block_containing_comment.getName();
+                comment.blk_id = block_containing_comment == null ? "null" : this.getBlkId(block_containing_comment.getFirstStartAddress().getOffset());;
                 comment.author = "Ghidra";
                 comment.bin_id = getBinaryId();
                 comment.created_at = date_formatter.format(Calendar.getInstance().getTime());
