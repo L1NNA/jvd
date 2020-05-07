@@ -169,6 +169,7 @@ public class GhidraDecompiler {
                     block.func_id = func._id;
                     block.name = codeBlock.getName();
                     model.blocks.add(block);
+                    func.bbs_len += 1;
 
                     CodeBlockReferenceIterator codeBlockReferenceDestsIterator = codeBlock.getDestinations(monitor);
                     while (codeBlockReferenceDestsIterator.hasNext()) {
