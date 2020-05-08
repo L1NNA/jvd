@@ -23,7 +23,7 @@ class Operation:
 class Assembly:
     def __init__(self):
         super().__init__()
-        self.operations: Dict[str, Dict]
+        self.operations: Dict[str, Operation]
         self.registers: Dict[str, Register]
         self.processor: str
         self.operations = {}
