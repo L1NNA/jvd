@@ -60,13 +60,16 @@ def loadDefinition(data):
             o.suffix = [s.lower() for sg in opr['suffixGroup']
                         if sg in suffix for s in suffix[sg] if s]
             o.suffix = list(set(o.suffix))
-        if opr['_identifier'] in data['operationJmps']['operation']:
-            o.jmp = True
         if o.identifier in opr_group:
             o.type = opr_group[o.identifier].lower()
         else:
             o.type = 'undefined'
         a.operations[o.identifier] = o
+    
+    for opr in data['operationJmps']['operation']:
+        identifier = opr['_identifier'].lower()
+        if identifier in a.operations:
+            a.operations[identifier].jmp = True
 
     for reg in data['registers']['register']:
         r = Register()
