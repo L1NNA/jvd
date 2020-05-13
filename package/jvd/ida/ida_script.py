@@ -52,22 +52,22 @@ def get_comments(binary_id, function_id, block_id, ea):
     text = idc.get_cmt(ea, 1)
     if text and len(text) > 0:
         comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'block_id': block_id, 'author': 'ida', 'category': 'repeatable',
+                         'blk_id': block_id, 'author': 'ida', 'category': 'repeatable',
                          'content': text, 'address': ea, 'created_at': now_str})
     text = idc.get_cmt(ea, 0)
     if text and len(text) > 0:
         comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'block_id': block_id, 'author': 'ida', 'category': 'regular',
+                         'blk_id': block_id, 'author': 'ida', 'category': 'regular',
                          'content': text, 'address': ea, 'created_at': now_str})
     text = _iter_extra_comments(ea, idaapi.E_PREV)
     if text and len(text) > 0:
         comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'block_id': block_id, 'author': 'ida', 'category': 'anterior',
+                         'blk_id': block_id, 'author': 'ida', 'category': 'anterior',
                          'content': text, 'address': ea, 'created_at': now_str})
     text = _iter_extra_comments(ea, idaapi.E_NEXT)
     if text and len(text) > 0:
         comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'block_id': block_id, 'author': 'ida', 'category': 'posterior',
+                         'blk_id': block_id, 'author': 'ida', 'category': 'posterior',
                          'content': text, 'address': ea, 'created_at': now_str})
     return comments
 
