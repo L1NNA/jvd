@@ -7,7 +7,7 @@ class Register:
     def __init__(self):
         super().__init__()
         self.identifer = ''
-        self.type = ''
+        self.type = None
         self.size = 16
 
 
@@ -17,7 +17,7 @@ class Operation:
         self.identifier = ''
         self.suffix = []
         self.jmp = False
-        self.type = ''
+        self.type = None
 
 
 class Assembly:
@@ -63,9 +63,9 @@ def loadDefinition(data):
         if o.identifier in opr_group:
             o.type = opr_group[o.identifier].lower()
         else:
-            o.type = 'undefined'
+            o.type = None
         a.operations[o.identifier] = o
-    
+
     for opr in data['operationJmps']['operation']:
         identifier = opr['_identifier'].lower()
         if identifier in a.operations:
@@ -91,3 +91,36 @@ mc68 = loadDefinition('mc68.json')
 arm = loadDefinition('arm.json')
 ppc = loadDefinition('ppc.json')
 tms320c6 = loadDefinition('tms320c6.json')
+
+_arc2synctax = {
+    'metapc': metapc,
+    'mc68': mc68,
+    '68330': mc68,
+    'arm': arm,
+    'ppc': ppc,
+    'X86_64(x86_64)': metapc
+}
+
+
+def get_definition(arc) -> Assembly:
+    if not arc:
+        return None
+    for k, v in _arc2synctax.items():
+        if arc.startswith(k):
+            return v
+    return None
+
+
+def get_opr_constant(op, op_types):
+    return [o for o, t in zip(op, op_types) if t == 5]
+
+
+def norm_opr(mne, arc=None):
+    arc = get_definition(arc)
+    if arc and mne in arc.operations:
+        return arc.operations[mne]
+    if not arc:
+        for arc in [metapc, arm, mc68, ppc, tms320c6]:
+            if mne in arc.operations:
+                return arc.operations[mne]
+    return None
