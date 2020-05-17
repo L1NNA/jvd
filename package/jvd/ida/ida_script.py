@@ -299,6 +299,7 @@ for seg_ea in Segments():
                 if mne == "":
                     continue
                 mne = idc.GetDisasm(head).split()[0]
+                mne = mne.lower()
                 oprs = []
                 oprs_tp = []
                 for i in range(5):

@@ -116,6 +116,7 @@ def get_opr_constant(op, op_types):
 
 
 def norm_opr(mne, arc=None):
+    mne = mne.lower()
     arc = get_definition(arc)
     if arc and mne in arc.operations:
         return arc.operations[mne]
