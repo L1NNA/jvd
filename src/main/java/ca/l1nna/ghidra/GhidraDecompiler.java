@@ -190,8 +190,7 @@ public class GhidraDecompiler {
                             ins.mne = instr.getMnemonicString();
                             for (int i = 0; i < instr.getNumOperands(); ++i) {
                                 ins.oprs.add(format.getOperandRepresentationString(cu, i));
-                                ins.oprs_tp.add(Integer
-                                        .toString(instr.getPrototype().getOpType(i, instr.getInstructionContext())));
+                                ins.oprs_tp.add(instr.getPrototype().getOpType(i, instr.getInstructionContext()));
                             }
                             block.ins.add(ins);
                         }

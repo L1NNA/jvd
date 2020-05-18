@@ -62,7 +62,7 @@ public class Model {
         public long ea;
         public String mne = "";
         public List<String> oprs = new ArrayList<>();
-        public List<String> oprs_tp = new ArrayList<>();
+        public List<Integer> oprs_tp = new ArrayList<>();
     }
 
     public static class Comment {
