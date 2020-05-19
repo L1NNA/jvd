@@ -48,6 +48,12 @@ class IDA(DisassemblerAbstract):
             log, _ = p.communicate()
         return js_file, log
 
+    def disassemble_in_context(self, with_ins_comments=True):
+        from jvd.ida.ida_utils import get_all
+        # this import cannot be moved to the header since it can
+        # be only imported when running in context
+        return get_all(with_blocks=with_ins_comments)
+
     def cleanup(self, file):
         idb_file = file + '.i64'
         if os.path.exists(idb_file):

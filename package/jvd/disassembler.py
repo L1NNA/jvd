@@ -44,7 +44,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     json.dump(res, wf)
             return res, log
         except Exception as e:
-            log.append('Failed '+ file + ' msg: ' +str(e))
+            log.append('Failed ' + file + ' msg: ' + str(e))
             return None, log
         finally:
             try:
@@ -52,6 +52,24 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     self.cleanup(file)
             except:
                 pass
+
+    def disassemble_in_context(self, with_ins_comments=True):
+        """
+        Call within the disassembler context e.g. as a plugin (so no need to call another process)
+        There is no `file` argument as this function is expected to with the file open on a given disassembler.
+
+        with_ins_comments controls if the return result should include all the instructions and comments.
+        """
+        return None
+    
+
+    def sync_comments(self, to_be_updates=None, to_be_deleted=None):
+        pass
+    
+
+    def jump(self, address):
+        pass
+
 
     @abstractmethod
     def cleanup(self, file):
@@ -71,8 +89,10 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             cfg=False,
             file_ext='.bin'):
         if isinstance(path_or_files, str):
-            logging.info('processing {} with {} '.format( path_or_files, file_ext))
-            files = [os.path.join(path_or_files, f) for f in os.listdir(path_or_files) if f.endswith(file_ext)]
+            logging.info('processing {} with {} '.format(
+                path_or_files, file_ext))
+            files = [os.path.join(path_or_files, f) for f in os.listdir(
+                path_or_files) if f.endswith(file_ext)]
         else:
             path_or_files = [path_or_files]
 
@@ -93,6 +113,6 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     yield ind, extracted
 
         for ind, extracted in tqdm(gen(), total=len(files)):
-            res, log = extracted 
+            res, log = extracted
             if res is None:
                 print(log)

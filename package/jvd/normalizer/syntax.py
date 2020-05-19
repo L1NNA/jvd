@@ -115,7 +115,7 @@ def get_opr_constant(op, op_types):
     # ref: https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/
     # Framework/SoftwareModeling/src/main/java/ghidra/program/model/
     # lang/OperandType.java#L90
-    return [o for o, t in zip(op, op_types) if t == 5 or t == 0x00004000]
+    return [o for o, t in zip(op, op_types) if int(t) == 5 or int(t) == 0x00004000]
 
 
 def norm_opr(mne, arc=None):
