@@ -53,7 +53,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             except:
                 pass
 
-    def disassemble_in_context(self, with_ins_comments=True):
+    def disassemble_in_context(self, function_addresses=None, with_ins_comments=True):
         """
         Call within the disassembler context e.g. as a plugin (so no need to call another process)
         There is no `file` argument as this function is expected to with the file open on a given disassembler.
@@ -61,15 +61,12 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         with_ins_comments controls if the return result should include all the instructions and comments.
         """
         return None
-    
 
     def sync_comments(self, to_be_updates=None, to_be_deleted=None):
         pass
-    
 
     def jump(self, address):
         pass
-
 
     @abstractmethod
     def cleanup(self, file):

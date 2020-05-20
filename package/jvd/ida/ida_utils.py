@@ -20,10 +20,11 @@ import codecs
 import hashlib
 import os
 from ida_nalt import *
-from import *
 from idautils import *
 from idaapi import *
-from ida_names import *
+from ida_name import *
+from idc import *
+import idaapi
 import json
 from collections import defaultdict
 import sys
@@ -116,7 +117,7 @@ def isLibrary(fn):
     fn = get_func(fn)
     if fn is None:
         return True
-    name = GetFunctionName(fn.startEA)
+    name = get_func_name(fn.start_ea)
     for x in tkn_skips:
         if x in name:
             return True
@@ -151,6 +152,7 @@ def get_bin_hash():
 
 
 def get_processor():
+    info = get_inf_structure()
     processor = info.procName.lower()
     if processor.startswith('mips'):
         processor = 'mips'
@@ -169,7 +171,7 @@ def get_binary_with_functions():
     info = get_inf_structure()
     bits = "b32"
     endian = "be"
-    endian = "be" if cvar.inf.is_be() else "le"
+    endian = "be" if info.is_be() else "le"
     if info.is_32bit():
         bits = "b32"
     if info.is_64bit():
@@ -204,7 +206,7 @@ def get_binary_with_functions():
 
     binary['import_modules'] = list(import_modules)
     binary['import_functions'] = import_functions
-    binary['disassembled_at'] = now_str
+    binary['disassembled_at'] = now_str()
 
     functions = get_functions()
     binary['functions_count'] = len(functions)
@@ -212,7 +214,7 @@ def get_binary_with_functions():
 
 
 def get_functions():
-
+    sha256 = get_bin_hash()
     functions = {}
     for seg_ea in Segments():
         for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
@@ -231,6 +233,7 @@ def get_functions():
             function['bin_id'] = sha256
             function['api'] = get_apis(function_ea)[1]
             function['calls'] = []
+            function['tags'] = ['ida-lib'] if isLibrary(function_ea) else []
             functions[function_ea] = function
             func_blocks = list(idaapi.FlowChart(idaapi.get_func(function_ea)))
             function['bbs_len'] = len(func_blocks)
@@ -255,43 +258,44 @@ def get_all(function_eas: list = None, with_blocks=True):
 
     binary, functions = get_binary_with_functions()
     set_function_eas = set(function_eas)
-    functions = [f for f in functions if f['addr_start'] in set_function_eas]
     comments = list()
     blocks = {}
     sha256 = get_bin_hash()
     processor = get_processor()
     time_str = now_str()
 
-    for function_ea in function_eas:
-        func_blocks = FlowChart(get_func(function_ea))
-        for bblock in func_blocks:
-
-            m = hashlib.sha256()
-            m.update(sha256.encode())
-            m.update('b'.encode())
-            m.update(str(bblock.start_ea).encode())
-
-            sblock = dict()
-            sblock['_id'] = m.hexdigest()
-            sblock['addr_start'] = bblock.start_ea
-            if processor == 'arm':
-                sblock['addr_start'] += GetReg(bblock.start_ea, 'T')
-            sblock['addr_end'] = bblock.end_ea
-            sblock['name'] = 'loc_' + format(bblock.start_ea, 'x').upper()
-            sblock['ins'] = []
-            sblock['bin_id'] = sha256
-            sblock['func_id'] = function['_id']
-            sblock['calls'] = []
-            blocks[bblock.start_ea] = sblock
-
-    fn_ending_blk_sea = defaultdict(lambda: list())
-    for function_ea in function_eas():
-        funcfc = FlowChart(get_func(function_ea))
-        for bblock in funcfc:
-            if len(list(bblock.succs())) < 1:
-                fn_ending_blk_sea[function_ea].append(blocks[bblock.start_ea])
-
     if with_blocks:
+        for function_ea in function_eas:
+            func_blocks = FlowChart(get_func(function_ea))
+            function = functions[function_ea]
+            for bblock in func_blocks:
+
+                m = hashlib.sha256()
+                m.update(sha256.encode())
+                m.update('b'.encode())
+                m.update(str(bblock.start_ea).encode())
+
+                sblock = dict()
+                sblock['_id'] = m.hexdigest()
+                sblock['addr_start'] = bblock.start_ea
+                if processor == 'arm':
+                    sblock['addr_start'] += GetReg(bblock.start_ea, 'T')
+                sblock['addr_end'] = bblock.end_ea
+                sblock['name'] = 'loc_' + format(bblock.start_ea, 'x').upper()
+                sblock['ins'] = []
+                sblock['bin_id'] = sha256
+                sblock['func_id'] = function['_id']
+                sblock['calls'] = []
+                blocks[bblock.start_ea] = sblock
+
+        fn_ending_blk_sea = defaultdict(lambda: list())
+        for function_ea in function_eas:
+            funcfc = FlowChart(get_func(function_ea))
+            for bblock in funcfc:
+                if len(list(bblock.succs())) < 1:
+                    fn_ending_blk_sea[function_ea].append(
+                        blocks[bblock.start_ea])
+
         for function_ea in function_eas:
             funcfc = FlowChart(get_func(function_ea))
             function = functions[function_ea]
@@ -329,7 +333,8 @@ def get_all(function_eas: list = None, with_blocks=True):
                             if x in blocks:
                                 sblock['calls'].append(blocks[x]['_id'])
                                 for eea_ending_blk in fn_ending_blk_sea[x]:
-                                    eea_ending_blk['calls'].append(sblock['_id'])
+                                    eea_ending_blk['calls'].append(
+                                        sblock['_id'])
 
                     sblock['ins'].append({
                         'ea': head,
@@ -343,11 +348,10 @@ def get_all(function_eas: list = None, with_blocks=True):
                 for succ_block in bblock.succs():
                     succ_block = func_blks[succ_block.id]
                     sblock['calls'].append(blocks[succ_block.start_ea]['_id'])
-
     return {
         'bin': binary,
-        'functions': functions.values(),
-        'blocks': blocks.values(),
+        'functions': [f for f in functions.values() if f['addr_start'] in set_function_eas],
+        'blocks': list(blocks.values()),
         'comments': comments,
         'functions_src': []
     }
