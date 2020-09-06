@@ -15,7 +15,7 @@ import overflowdb._
 import overflowdb.traversal._
 import scala.collection.mutable
 import java.io.PrintWriter
-
+import io.circe.Json
 import scala.collection.mutable.ListBuffer
 
 object JsonConverter {
@@ -62,18 +62,18 @@ object JsonConverter {
 }
 
 
-type EdgeEntry = (Long, Long)
+type EdgeEntry = (String, Long, Long)
 type VertexEntry = (Long, String)
 type Pdg = (Option[String], List[EdgeEntry], List[VertexEntry])
 
 
 private def pdgFromEdges(edges: Traversal[OdbEdge]): (List[EdgeEntry], List[VertexEntry]) = {
-  val filteredEdges = edges.hasLabel(EdgeTypes.REACHING_DEF, EdgeTypes.CDG).dedup.l
+  val filteredEdges = edges
 
   val (edgeResult, vertexResult) =
     filteredEdges.foldLeft((mutable.Set.empty[EdgeEntry], mutable.Set.empty[VertexEntry])) {
       case ((edgeList, vertexList), edge) =>
-        val edgeEntry = (edge.inNode.id, edge.outNode.id)
+        val edgeEntry = (edge.label.toString(), edge.inNode.id, edge.outNode.id)
         val inVertexEntry = (edge.inNode.id, edge.inNode.propertyOption(NodeKeysOdb.CODE).getOrElse(""))
         val outVertexEntry = (edge.outNode.id, edge.outNode.propertyOption(NodeKeysOdb.CODE).getOrElse(""))
 
@@ -86,10 +86,10 @@ private def pdgFromEdges(edges: Traversal[OdbEdge]): (List[EdgeEntry], List[Vert
 @main def main(prjDir: String, prjName: String): String = {
   importCode(inputPath=prjDir, projectName=prjName)
     val (edgeEntries, vertexEntries) = pdgFromEdges(cpg.graph.E())
-    val edges = edgeEntries.map(x=>List(x._1, x._2))
-    val vertices = vertexEntries.map(x=>List(x._1, x._2))
-    val m = Map("edges"->edges, "vertices"->vertices)
-    val js = JsonConverter.toJson(m)
+    val edges = edgeEntries.map(x=>Json.fromValues(List(Json.fromString(x._1), Json.fromLong(x._2), Json.fromLong(x._3))))
+    val vertices = vertexEntries.map(x=>Json.fromValues(List(Json.fromLong(x._1), Json.fromString(x._2))))
+    val m = Json.obj(("edges", Json.fromValues(edges)), ("vertices", Json.fromValues(vertices)))
+    val js = m.toString()
     new PrintWriter(prjDir + "/" + prjName + ".json") { write(js); close }
     return js
 }
