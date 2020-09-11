@@ -41,7 +41,7 @@ workspace = os.path.join(
 
 
 def install_dependencies():
-    zip_url = 'https://github.com/ShiftLeftSecurity/joern/releases/latest/download/joern-cli.zip'
+    zip_url = 'https://github.com/ShiftLeftSecurity/joern/releases/download/v1.0.187/joern-cli.zip'
     if not os.path.exists(bin_exec):
         fn = download_file(
             zip_url,
