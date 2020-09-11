@@ -67,15 +67,15 @@ type VertexEntry = (Long, String)
 type Pdg = (Option[String], List[EdgeEntry], List[VertexEntry])
 
 
-private def pdgFromEdges(edges: Traversal[OdbEdge]): (List[EdgeEntry], List[VertexEntry]) = {
+private def pdgFromEdges(edges: Traversal[Edge]): (List[EdgeEntry], List[VertexEntry]) = {
   val filteredEdges = edges
 
   val (edgeResult, vertexResult) =
     filteredEdges.foldLeft((mutable.Set.empty[EdgeEntry], mutable.Set.empty[VertexEntry])) {
       case ((edgeList, vertexList), edge) =>
         val edgeEntry = (edge.label.toString(), edge.inNode.id, edge.outNode.id)
-        val inVertexEntry = (edge.inNode.id, edge.inNode.propertyOption(NodeKeysOdb.CODE).getOrElse(""))
-        val outVertexEntry = (edge.outNode.id, edge.outNode.propertyOption(NodeKeysOdb.CODE).getOrElse(""))
+        val inVertexEntry = (edge.inNode.id, edge.inNode.propertyOption(NodeKeys.CODE).orElse(""))
+        val outVertexEntry = (edge.outNode.id, edge.outNode.propertyOption(NodeKeys.CODE).orElse(""))
 
         (edgeList += edgeEntry, vertexList ++= Set(inVertexEntry, outVertexEntry))
     }
