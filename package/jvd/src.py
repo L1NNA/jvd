@@ -41,7 +41,7 @@ workspace = os.path.join(
 
 
 def install_dependencies():
-    zip_url = 'https://github.com/L1NNA/JARV1S-Disassembler/releases/download/v0.0.1/joern-cli.zip'
+    zip_url = 'https://github.com/ShiftLeftSecurity/joern/releases/download/v1.1.5/joern-cli.zip'
     if not os.path.exists(bin_exec):
         fn = download_file(
             zip_url,
