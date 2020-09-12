@@ -6,6 +6,7 @@ from tempfile import TemporaryDirectory
 from zipfile import ZipFile, ZipInfo
 import logging as log
 import json
+from concurrent.futures import ProcessPoolExecutor
 
 from jvd.utils import download_file, home
 
@@ -89,6 +90,19 @@ def extract_pcg(content, file_name='main.cpp'):
         return json_file, out
 
 
+def extract_pcgs(contents, wokers=18, progress=True):
+    def gen():
+        with ProcessPoolExecutor(max_workers=wokers) as e:
+            for ind, extracted in enumerate(e.map(extract_pcg, contents)):
+                yield ind, extracted
+    
+    results = []
+    for _, extracted in tqdm(gen(), total=len(contents)):
+        res, log = extracted
+        results.append(res)
+    return results
+                
+                
 if __name__ == '__main__':
     print('runing testing')
     code = """
