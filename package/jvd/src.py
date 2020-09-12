@@ -6,6 +6,7 @@ from tempfile import TemporaryDirectory
 from zipfile import ZipFile, ZipInfo
 import logging as log
 import json
+from tqdm.notebook import tqdm
 from concurrent.futures import ProcessPoolExecutor
 
 from jvd.utils import download_file, home
