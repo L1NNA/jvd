@@ -79,13 +79,13 @@ private def pdgFromEdges(edges: Traversal[Edge]): (List[EdgeEntry], List[VertexE
           ("key", Json.fromString(key)),
           ("value", Json.fromString(value.toString))
         )
-      })
+      }))
         val outVertexEntry = (edge.outNode.id, Json.fromValues(edge.outNode.propertyMap.asScala.toList.map { case (key, value) =>
         Json.obj(
           ("key", Json.fromString(key)),
           ("value", Json.fromString(value.toString))
         )
-      })
+      }))
 
         (edgeList += edgeEntry, vertexList ++= Set(inVertexEntry, outVertexEntry))
     }
