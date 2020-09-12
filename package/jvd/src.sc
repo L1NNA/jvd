@@ -63,7 +63,7 @@ object JsonConverter {
 
 
 type EdgeEntry = (String, Long, Long)
-type VertexEntry = (Long, String)
+type VertexEntry = (Long, Json)
 type Pdg = (Option[String], List[EdgeEntry], List[VertexEntry])
 
 
