@@ -79,7 +79,7 @@ def extract_pcg(content, file_name='main.cpp'):
         if isinstance(out, bytes):
             out = out.decode('utf-8')
         if os.path.exists(ws):
-            rmtree(ws)
+            rmtree(ws, ignore_errors=True)
         if os.path.exists(json_file):
             with open(json_file) as of:
                 return json.load(of), out
