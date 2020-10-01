@@ -6,6 +6,7 @@ from tqdm import tqdm
 import magic
 import json
 import logging
+from shutil import unpack_archive, rmtree
 
 import re
 
@@ -24,7 +25,9 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         res['cfg'] = adj_sp
         return res
 
-    def disassemble(self, file, decompile=False, cleanup=False, cfg=False):
+    def disassemble(self, file, decompile=False, cleanup=False, cfg=False, no_result=False):
+        archive_types = {
+            'zip': 'zip', 'tar': 'tar', 'gzip tar': 'gztar'}
         file_type = magic.from_file(file)
         res = None
         log = []
@@ -32,6 +35,22 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             js_file = file
             log = ['directly reading generated json file.']
         else:
+            archive_type = None
+            for x in archive_types:
+                if file_type.lower().startswith(x):
+                    archive_type = archive_types[x]
+                    break
+            if archive_type:
+                extract_dir = file+'-extracted'
+                unpack_archive(
+                    filename=file, extract_dir=extract_dir, format=archive_type)
+                files = [f for f in os.listdir(extract_dir) if os.path.isfile(f)]
+                if len(files) > 1:
+                    logging.warn('More than one file extracted.')
+                if len(files) > 0:
+                    file = files[0]
+                else:
+                    file = file
             js_file, log = self._process(
                 file, file_type, decompile=decompile)
             if not isinstance(log, list):
@@ -42,6 +61,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 res = self._cfg(res)
                 with open(js_file, 'w') as wf:
                     json.dump(res, wf)
+            if no_result:
+                return res is not None, '' if res is not None else log
             return res, log
         except Exception as e:
             log.append('Failed ' + file + ' msg: ' + str(e))
@@ -50,6 +71,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             try:
                 if cleanup:
                     self.cleanup(file)
+                if extract_dir is not None and os.path.exists(extract_dir):
+                    rmtree(extract_dir)
             except:
                 pass
 
@@ -106,7 +129,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             else:
                 for ind, f in enumerate(files):
                     extracted = self.disassemble(
-                        f, decompile=decompile, cleanup=cleanup, cfg=cfg)
+                        f, decompile=decompile, cleanup=cleanup, cfg=cfg, no_result=True)
                     yield ind, extracted
 
         for ind, extracted in tqdm(gen(), total=len(files)):
