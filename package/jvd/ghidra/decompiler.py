@@ -1,7 +1,6 @@
 from jvd.ghidra.dependencies import install_jdk_if_needed
 from jvd.ghidra.dependencies import install_jar_if_needed
 import os
-from pathlib import Path
 from subprocess import Popen, PIPE, STDOUT
 from shutil import rmtree
 import sys
@@ -9,12 +8,10 @@ import json
 import errno
 import logging as log
 from jvd.disassembler import DisassemblerAbstract
+from jvd.utils import home
 
 
 NULL_FILE = open(os.devnull, 'w')
-home = os.path.join(
-    str(Path.home()), '.jarv1s-ghidra'
-)
 jar = install_jar_if_needed(
     home
 )
