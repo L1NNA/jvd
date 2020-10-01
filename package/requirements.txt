@@ -5,4 +5,4 @@ flask-socketio
 
 python-magic-bin; sys_platform == 'win32'
 python-magic-bin; sys_platform == 'darwin'
-python-magic; sys_platform == 'linux
+python-magic; sys_platform == 'linux'

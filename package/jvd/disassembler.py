@@ -73,7 +73,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         pass
 
     def read_result_file(self, file):
-        with open(file) as of:
+        with open(file, 'r', encoding='utf-8') as of:
             data = json.load(of)
         return data
 
@@ -91,7 +91,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             files = [os.path.join(path_or_files, f) for f in os.listdir(
                 path_or_files) if f.endswith(file_ext)]
         else:
-            path_or_files = [path_or_files]
+            files = path_or_files
 
         logging.info('{} files to process'.format(len(files)))
 
