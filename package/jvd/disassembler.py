@@ -7,6 +7,8 @@ import magic
 import json
 import logging
 from shutil import unpack_archive, rmtree
+from jvd.unpack import unpack, get_archive_type
+import gzip
 
 import re
 
@@ -25,44 +27,61 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         res['cfg'] = adj_sp
         return res
 
-    def disassemble(self, file, decompile=False, cleanup=False, cfg=False, no_result=False):
-        archive_types = {
-            'zip': 'zip', 'tar': 'tar', 'gzip tar': 'gztar'}
-        file_type = magic.from_file(file)
+    def disassemble(self, file, decompile=False, cleanup=False, cfg=False, no_result=False, file_type=None, as_gzip=False):
+        js_file = file + '.asm.json'
         res = None
         log = []
-        if re.match('(ASCII|UTF-8).+', file_type):
-            js_file = file
-            log = ['directly reading generated json file.']
+        if os.path.exists(js_file):
+            log.append('directly reading the generated json file')
         else:
-            archive_type = None
-            for x in archive_types:
-                if file_type.lower().startswith(x):
-                    archive_type = archive_types[x]
-                    break
-            if archive_type:
-                extract_dir = file+'-extracted'
-                unpack_archive(
-                    filename=file, extract_dir=extract_dir, format=archive_type)
-                files = [f for f in os.listdir(extract_dir) if os.path.isfile(f)]
-                if len(files) > 1:
-                    logging.warn('More than one file extracted.')
-                if len(files) > 0:
-                    file = files[0]
-                else:
-                    file = file
-            js_file, log = self._process(
-                file, file_type, decompile=decompile)
-            if not isinstance(log, list):
-                log = [log]
+            if not file_type:
+                file_type = magic.from_file(file)
+            if re.match('(ASCII|UTF-8).+', file_type):
+                js_file = file
+                log.append('directly reading the json file.')
+            else:
+                target = file
+                archive_type = get_archive_type(target, file_type)
+                if archive_type:
+                    unpack_loc, e_log = unpack(
+                        file, file_type=file_type, format=archive_type)
+                    log.append(e_log)
+                    if unpack_loc is None:
+                        return None, log
+                    files = [os.path.join(unpack_loc, f)
+                             for f in os.listdir(unpack_loc)]
+                    if len(files) > 1:
+                        logging.warn('More than one file extracted.')
+                    if len(files) > 0:
+                        target = files[0]
+
+                out_js, out_log = self._process(
+                    target, file_type, decompile=decompile)
+
+                try:
+                    res = self.read_result_file(out_js)
+                    res['bin']['f_type'] = magic.from_file(target)
+                    if cfg:
+                        res = self._cfg(res)
+                    if not as_gzip:
+                        with open(js_file, 'w') as wf:
+                            json.dump(res, wf)
+                    else:
+                        with gzip.GzipFile(js_file+'.gz', 'w') as gf:
+                            gf.write(json.dumps(res).encode('utf-8'))
+                    if isinstance(log, list):
+                        log.extend(log)
+                    else:
+                        log.append(log)
+                except Exception as e:
+                    log.append(str(e))
+                    return None, log
+
         try:
-            res = self.read_result_file(js_file)
-            if cfg:
-                res = self._cfg(res)
-                with open(js_file, 'w') as wf:
-                    json.dump(res, wf)
+            if not res:
+                res = self.read_result_file(js_file)
             if no_result:
-                return res is not None, '' if res is not None else log
+                return js_file if res else None, '' if res else log
             return res, log
         except Exception as e:
             log.append('Failed ' + file + ' msg: ' + str(e))
@@ -71,8 +90,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             try:
                 if cleanup:
                     self.cleanup(file)
-                if extract_dir is not None and os.path.exists(extract_dir):
-                    rmtree(extract_dir)
+                if unpack_loc is not None and os.path.exists(unpack_loc):
+                    rmtree(unpack_loc)
             except:
                 pass
 
@@ -107,12 +126,15 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             decompile=False,
             cleanup=True,
             cfg=False,
-            file_ext='.bin'):
+            file_ext='.bin',
+            as_gzip=False):
         if isinstance(path_or_files, str):
             logging.info('processing {} with {} '.format(
                 path_or_files, file_ext))
-            files = [os.path.join(path_or_files, f) for f in os.listdir(
-                path_or_files) if f.endswith(file_ext)]
+            # files = [os.path.join(path_or_files, f) for f in os.listdir(
+            #     path_or_files) if f.endswith(file_ext)]
+            files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(
+                path_or_files) for f in filenames if os.path.splitext(f)[1] == file_ext]
         else:
             files = path_or_files
 
@@ -120,16 +142,17 @@ class DisassemblerAbstract(metaclass=ABCMeta):
 
         def gen():
             if multiprocessing:
-                with ProcessPoolExecutor(max_workers=30) as e:
+                with ProcessPoolExecutor(max_workers=50) as e:
                     for ind, extracted in enumerate(
                             e.map(partial(
                                 self.disassemble, decompile=decompile,
-                                cleanup=cleanup, cfg=cfg), files)):
+                                cleanup=cleanup, cfg=cfg, no_result=True, as_gzip=as_gzip), files)):
                         yield ind, extracted
             else:
                 for ind, f in enumerate(files):
                     extracted = self.disassemble(
-                        f, decompile=decompile, cleanup=cleanup, cfg=cfg, no_result=True)
+                        f, decompile=decompile, cleanup=cleanup, cfg=cfg, no_result=True,
+                        as_gzip=as_gzip)
                     yield ind, extracted
 
         for ind, extracted in tqdm(gen(), total=len(files)):

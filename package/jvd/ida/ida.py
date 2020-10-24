@@ -63,15 +63,11 @@ class IDA(DisassemblerAbstract):
         return res
 
     def cleanup(self, file):
-        idb_file = file + '.i64'
-        if os.path.exists(idb_file):
-            try:
-                os.remove(idb_file)
-            except Exception as e:
-                log.error(str(e) + traceback.format_exc())
-        idb_file = file + '.idb'
-        if os.path.exists(idb_file):
-            try:
-                os.remove(idb_file)
-            except Exception as e:
-                log.error(str(e) + traceback.format_exc())
+        extensions = ['.i64', '.idb', '.til', '.id0', '.id1', '.id2', '.nam']
+        for ext in extensions:
+            idb_file = file + ext
+            if os.path.exists(idb_file):
+                try:
+                    os.remove(idb_file)
+                except Exception as e:
+                    log.error(str(e) + traceback.format_exc())

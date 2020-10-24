@@ -279,7 +279,7 @@ def get_all(function_eas: list = None, with_blocks=True):
                 sblock['_id'] = m.hexdigest()
                 sblock['addr_start'] = bblock.start_ea
                 if processor == 'arm':
-                    sblock['addr_start'] += GetReg(bblock.start_ea, 'T')
+                    sblock['addr_start'] += get_sreg(bblock.start_ea, 'T')
                 sblock['addr_end'] = bblock.end_ea
                 sblock['name'] = 'loc_' + format(bblock.start_ea, 'x').upper()
                 sblock['ins'] = []
