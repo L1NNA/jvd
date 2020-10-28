@@ -9,6 +9,7 @@ import logging
 from shutil import unpack_archive, rmtree
 from jvd.unpack import unpack, get_archive_type
 import gzip
+from pathlib import Path
 
 import re
 
@@ -34,31 +35,31 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         if os.path.exists(js_file):
             log.append('directly reading the generated json file')
         else:
-            if not file_type:
-                file_type = magic.from_file(file)
-            if re.match('(ASCII|UTF-8).+', file_type):
-                js_file = file
-                log.append('directly reading the json file.')
-            else:
-                target = file
-                archive_type = get_archive_type(target, file_type)
-                if archive_type:
-                    unpack_loc, e_log = unpack(
-                        file, file_type=file_type, format=archive_type)
-                    log.append(e_log)
-                    if unpack_loc is None:
-                        return None, log
-                    files = [os.path.join(unpack_loc, f)
-                             for f in os.listdir(unpack_loc)]
-                    if len(files) > 1:
-                        logging.warn('More than one file extracted.')
-                    if len(files) > 0:
-                        target = files[0]
+            try:
+                if not file_type:
+                    file_type = magic.from_file(file)
+                if re.match('(ASCII|UTF-8).+', file_type):
+                    js_file = file
+                    log.append('directly reading the json file.')
+                else:
+                    target = file
+                    archive_type = get_archive_type(target, file_type)
+                    if archive_type:
+                        unpack_loc, e_log = unpack(
+                            file, file_type=file_type, format=archive_type)
+                        log.append(e_log)
+                        if unpack_loc is None:
+                            return None, log
+                        files = [os.path.join(unpack_loc, f)
+                                 for f in os.listdir(unpack_loc)]
+                        if len(files) > 1:
+                            logging.warn('More than one file extracted.')
+                        if len(files) > 0:
+                            target = files[0]
 
-                out_js, out_log = self._process(
-                    target, file_type, decompile=decompile)
+                    out_js, out_log = self._process(
+                        target, file_type, decompile=decompile)
 
-                try:
                     res = self.read_result_file(out_js)
                     res['bin']['f_type'] = magic.from_file(target)
                     if cfg:
@@ -73,13 +74,16 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                         log.extend(log)
                     else:
                         log.append(log)
-                except Exception as e:
-                    log.append(str(e))
-                    return None, log
+            except Exception as e:
+                log.append(str(e))
+                return None, log
 
         try:
             if not res:
                 res = self.read_result_file(js_file)
+                if as_gzip and not os.path.exists(js_file + '.gz'):
+                    with gzip.GzipFile(js_file+'.gz', 'w') as gf:
+                        gf.write(json.dumps(res).encode('utf-8'))
             if no_result:
                 return js_file if res else None, '' if res else log
             return res, log
@@ -131,10 +135,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         if isinstance(path_or_files, str):
             logging.info('processing {} with {} '.format(
                 path_or_files, file_ext))
-            # files = [os.path.join(path_or_files, f) for f in os.listdir(
-            #     path_or_files) if f.endswith(file_ext)]
-            files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(
-                path_or_files) for f in filenames if os.path.splitext(f)[1] == file_ext]
+            files = [str(p) for p in Path(
+                path_or_files).rglob('*') if p.is_file() and p.suffix == file_ext]
         else:
             files = path_or_files
 
