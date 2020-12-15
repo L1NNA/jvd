@@ -25,6 +25,7 @@ from idaapi import *
 from ida_name import *
 from idc import *
 import idaapi
+import ida_func
 import json
 from collections import defaultdict
 import sys
@@ -34,7 +35,7 @@ def now_str(): return datetime.now().isoformat()
 
 
 tkn_skips = ('::', 'libname', 'j_')
-rebase = int(os.getenv('K_REBASE', 0))
+# rebase = int(os.getenv('K_REBASE', 0))
 cleanStack = int(os.getenv('K_CLEANSTACK', 0))
 
 
@@ -109,7 +110,7 @@ def get_apis(func_addr):
 
 
 def get_exports():
-    exports = {e[1] for e in Entries()}
+    exports = {e[2]: e[3] for e in Entries()}
     return exports
 
 
@@ -161,12 +162,13 @@ def get_processor():
 
 def get_binary_with_functions():
     binary = {}
-    if rebase == 1:
-        rebase_program(-1 * get_imagebase(), 0)
+    # if rebase == 1:
+    #     rebase_program(-1 * get_imagebase(), 0)
 
     binary_name = get_input_file_path()
     binary['name'] = binary_name
     binary['_id'] = get_bin_hash()
+    binary['base'] = get_imagebase()
 
     info = get_inf_structure()
     bits = "b32"
@@ -183,16 +185,12 @@ def get_binary_with_functions():
     binary['disassembler'] = 'ida'
     binary['compiler'] = get_compiler_name(info.cc.id)
     binary['description'] = ""
-    binary['strings'] = {st.ea: sub(r"\s+", '-', str(st).strip().lower())
-                         for st in Strings() if len(str(st).strip()) > 0}
+    binary['strings'] = {
+        st.ea: str(st)
+        for st in Strings() if len(str(st).strip()) > 0}
 
     import_modules = set()
     import_functions = {}
-
-    def imp_cb(ea, name, ord):
-        if name and ea:
-            import_functions[ea] = str(name).strip().lower()
-        return True
 
     nimps = get_import_module_qty()
     for i in range(0, nimps):
@@ -201,12 +199,25 @@ def get_binary_with_functions():
             print("Failed to get import module name for #%d" % i)
             continue
 
-        import_modules.add(name.strip().lower())
+        def imp_cb(ea, f_name, ord):
+            if f_name and ea:
+                if f_name.startswith("__imp_"):
+                    f_name = f_name[len("__imp_"):]
+                f_name = str(f_name).strip()
+                import_functions[ea] = (name, f_name, ord)
+            return True
+
+        import_modules.add(name.strip())
         enum_import_names(i, imp_cb)
 
     binary['import_modules'] = list(import_modules)
     binary['import_functions'] = import_functions
+    binary['export_functions'] = get_exports()
     binary['disassembled_at'] = now_str()
+    binary['seg'] = {}
+    for seg_ea in Segments():
+        binary['seg'][seg_ea] = idaapi.get_segm_name(seg_ea)
+
 
     functions = get_functions()
     binary['functions_count'] = len(functions)
@@ -233,6 +244,7 @@ def get_functions():
             function['bin_id'] = sha256
             function['api'] = get_apis(function_ea)[1]
             function['calls'] = []
+            functions['xref'] = []
             function['tags'] = ['ida-lib'] if isLibrary(function_ea) else []
             functions[function_ea] = function
             func_blocks = list(idaapi.FlowChart(idaapi.get_func(function_ea)))
@@ -242,9 +254,11 @@ def get_functions():
     for seg_ea in Segments():
         for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
             for ref_ea in CodeRefsTo(function_ea, 0):
-                if ref_ea in functions:
+                ref_func = get_func(ref_ea)
+                if ref_func and ref_func.start_ea in functions:
                     functions[function_ea]['calls'].append(
-                        functions[ref_ea]['_id'])
+                        functions[ref_func.start_ea]['_id'])
+                functions[function_ea]['xref'].append(ref_ea)
     return functions
 
 
@@ -305,10 +319,19 @@ def get_all(function_eas: list = None, with_blocks=True):
 
                 sblock = blocks[bblock.start_ea]
                 sblock['ins'] = []
+                dat = {}
+                sblock['dat'] = dat
+                decoded = None
 
                 for head in Heads(bblock.start_ea, bblock.end_ea):
                     comments.extend(get_comments(
                         binary['_id'], function['_id'], sblock['_id'], head, time_str))
+
+                    refdata = list(DataRefsFrom(head))
+                    if len(refdata) > 0:
+                        for ref in refdata:
+                            dat[head] = format(get_qword(ref), 'x')[::-1]
+
                     mne = print_insn_mnem(head)
                     if mne == "":
                         continue
@@ -324,6 +347,13 @@ def get_all(function_eas: list = None, with_blocks=True):
                         if len(opd) < 1:
                             continue
                         oprs.append(opd)
+
+                        if tp == 5:
+                            if not decoded:
+                                decoded = idautils.DecodeInstruction(head)
+                            dt = decoded.ops[i].dtype
+                            tp = tp * (dt + 1)
+                            # tp/5 to get the size
                         oprs_tp.append(tp)
 
                     if is_call_insn(head):
@@ -341,6 +371,8 @@ def get_all(function_eas: list = None, with_blocks=True):
                         'mne': mne,
                         'oprs': oprs,
                         'oprs_tp': oprs_tp,
+                        'dr': list(idautils.DataRefsFrom(head)),
+                        'cr': list(idautils.CodeRefsFrom(head, False)),
                     })
                 sblock['ins_c'] = len(sblock['ins'])
 
@@ -348,6 +380,7 @@ def get_all(function_eas: list = None, with_blocks=True):
                 for succ_block in bblock.succs():
                     succ_block = func_blks[succ_block.id]
                     sblock['calls'].append(blocks[succ_block.start_ea]['_id'])
+                sblock['calls'] = list(set(sblock['calls']))
     return {
         'bin': binary,
         'functions': [f for f in functions.values() if f['addr_start'] in set_function_eas],

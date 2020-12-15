@@ -1,6 +1,7 @@
 import json
 from typing import Dict, List
 import os
+import struct
 
 
 class Register:
@@ -115,7 +116,34 @@ def get_opr_constant(op, op_types):
     # ref: https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/
     # Framework/SoftwareModeling/src/main/java/ghidra/program/model/
     # lang/OperandType.java#L90
-    return [o for o, t in zip(op, op_types) if int(t) == 5 or int(t) == 0x00004000]
+    tps = [(o, int(t)) for o, t in zip(op, op_types)]
+    return [o for o, t in tps if t == 5 or (t & 0x00000008) or (t & 0x00004000)]
+
+
+def get_opr_imm_str(opr, opr_type):
+    t = int(opr_type)
+    if t != 5 and not (t & 0x00000008):
+        return None, None
+
+    op_value = opr if isinstance(opr, int) else int(opr, 16)
+
+    size = None
+    if t & 0x00010000 or t/5 == 0:
+        size = 1
+        chars = struct.pack("<B", op_value & 0xFF)
+    elif t & 0x00020000 or t/5 == 5:
+        size = 2
+        chars = struct.pack("<H", op_value & 0xFFFF)
+    elif t/5 == 2:
+        size = 4
+        chars = struct.pack("<I", op_value & 0xFFFFFFFF)
+    elif t & 0x00040000 or t/5 == 7:
+        size = 8
+        chars = struct.pack("<Q", op_value & 0xFFFFFFFFFFFFFFFF)
+    else:
+        return None, None
+
+    return chars, size
 
 
 def norm_opr(mne, arc=None):

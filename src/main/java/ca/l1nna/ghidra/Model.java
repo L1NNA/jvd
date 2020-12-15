@@ -15,7 +15,9 @@ public class Model {
 
     public static class Binary {
         public List<String> import_modules = new ArrayList<>();
-        public Map<Long, String> import_functions = new HashMap<>();
+        public Map<Long, List<String, String, Integer>> import_functions = new HashMap<>();
+        public Map<Long, String> export_functions = new HashMap<>();
+        public Map<Long, String> segments = new HashMap<>();
         public String description = "";
         public String disassembled_at = "";
         public int functions_count = 0;
@@ -33,7 +35,8 @@ public class Model {
     public static class Func {
         public long addr_start;
         public String _id = "";
-        public List<String> calls;
+        public List<String> calls = new ArrayList<>();
+        public List<Long> xref = new ArrayList<>();
         public String bin_id = "";
         public int bbs_len = 0;
         public long addr_end;
@@ -56,6 +59,7 @@ public class Model {
         public List<String> calls = new ArrayList<>();
         public long addr_end;
         public List<Ins> ins = new ArrayList<>();
+        public Map<Long, 
     }
 
     public static class Ins {
