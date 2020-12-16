@@ -3,6 +3,7 @@ package ca.l1nna.ghidra;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
+import java.util.zip.GZIPOutputStream
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.hash.Hashing;
@@ -200,8 +202,26 @@ public class GhidraDecompiler {
 
             model.comments = ParseComments();
 
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(new File(file), model);
+            FileOutputStream fStream;
+            GZIPOutputStream zStream;
+            try{
+                fStream = new FileOutputStream(file);
+                zStream = new GZIPOutputStream(new BufferedOutputStream(fStream));
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.writeValue(zStream, model);
+            } finally {
+                if (zStream != null)
+                {
+                  zStream.flush();
+                  zStream.close();
+                }
+                if (fStream != null)
+                {
+                  fStream.flush();
+                  fStream.close();
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

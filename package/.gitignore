@@ -109,3 +109,4 @@ test_folder
 log.txt
 *.jar
 test/*.json
+installer

@@ -1,4 +1,6 @@
 import datetime
+import gzip
+import json
 import logging as log
 import os
 import platform
@@ -17,7 +19,7 @@ from dateutil.tz import tzlocal
 from tqdm import tqdm
 
 home = os.path.join(
-    str(Path.home()), 'jarv1s-dependencies'
+    str(Path.home()), 'k1ntar0-dependencies'
 )
 
 
@@ -54,3 +56,12 @@ def download_file(url, dest_path, progress=False):
             pg.close()
 
     return full_fn
+
+
+def read_gz_js(file):
+    with gzip.open(file, 'r') as fin:
+        json_bytes = fin.read()
+
+    json_str = json_bytes.decode('utf-8')
+    data = json.loads(json_str)
+    return data

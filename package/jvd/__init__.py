@@ -1,9 +1,20 @@
-from jvd.normalizer.syntax import metapc, ppc, arm, mc68, tms320c6
-import platform
 import argparse
+import platform
 import subprocess
 
+import jvd.utils as jvdu
+from jvd.normalizer.syntax import arm, mc68, metapc, ppc, tms320c6
+from jvd.utils import read_gz_js
+
+
+def set_home(new_home_path):
+    jvdu.home = new_home_path
+
+
 def get_disassembler(use_ida=True):
+    """
+    lazy import (so we can still change global path)
+    """
     if use_ida:
         from jvd.ida.ida import IDA
         return IDA()

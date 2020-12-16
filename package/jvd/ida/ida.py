@@ -18,7 +18,7 @@ IDA_script = os.path.join(SRC, 'ida_script.py')
 
 class IDA(DisassemblerAbstract):
 
-    def _process(self, file, file_type, decompile=False):
+    def _process(self, file, file_type, output_file_path, decompile=False):
         log = None
         js_file = os.path.join(
             os.path.dirname(file),
@@ -40,9 +40,12 @@ class IDA(DisassemblerAbstract):
                     shutil.copyfile(file, db)
                 file = db
             cmd = [program, '-A', '-S{}'.format(IDA_script), file]
+            sub_env = os.environ.copy()
+            sub_env["output_file_path"] = output_file_path
             # print(cmd)
             p = Popen(
                 cmd,
+                env=sub_env,
                 stdout=PIPE,
                 stderr=STDOUT)
             log, _ = p.communicate()
