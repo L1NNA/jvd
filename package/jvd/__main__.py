@@ -58,4 +58,4 @@ if __name__ == "__main__":
         if os.path.isfile(f) and not os.path.isdir(f):
             disassember.disassemble(f, cleanup=True, cfg=flags.cfg)
         else:
-            disassember.disassemble_all(f, file_ext=flags.ext, cfg=flags.cfg, as_gzip=True)
+            disassember.disassemble_all(f, file_ext=flags.ext, cfg=flags.cfg)

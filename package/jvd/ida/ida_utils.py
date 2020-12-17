@@ -204,7 +204,7 @@ def get_binary_with_functions():
                 if f_name.startswith("__imp_"):
                     f_name = f_name[len("__imp_"):]
                 f_name = str(f_name).strip()
-                import_functions[ea] = (name, f_name, ord)
+                import_functions[ea] = (name, f_name, str(ord))
             return True
 
         import_modules.add(name.strip())

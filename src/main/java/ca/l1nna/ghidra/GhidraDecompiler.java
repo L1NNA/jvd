@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
+import java.io.BufferedOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -121,8 +122,8 @@ public class GhidraDecompiler {
             Model model = new Model();
 
             Binary bin = new Binary();
-            StreamSupport.stream(program.getListing().getExternalFunctions().spliterator(), false)
-                    .forEach(func -> bin.import_functions.put(func.getEntryPoint().getOffset(), func.getName()));
+            StreamSupport.stream(program.getListing().getExternalFunctions().spliterator(), false).forEach(
+                    func -> bin.import_functions.put(func.getEntryPoint().getOffset(), Arrays.asList(func.getName())));
             bin.name = this.binaryFile.getName();
             bin.disassembled_at = date_formatter.format(Calendar.getInstance().getTime());
             bin.functions_count = functionManager.getFunctionCount();
@@ -130,11 +131,10 @@ public class GhidraDecompiler {
             bin.endian = program.getLanguage().isBigEndian() ? "be" : "le";
             bin._id = getBinaryId();
             bin.bits = "b" + program.getAddressFactory().getDefaultAddressSpace().getSize();
-            StreamSupport
-                    .stream(program.getListing().getDefinedData(true).spliterator(), false).filter(dat -> dat != null && dat.getValue() != null)
-                    .filter(dat->!dat.getValue().toString().startsWith("0x"))
-                    .forEach(dat -> bin.strings.put(dat.getMinAddress().getOffset(),
-                            dat.getValue().toString()));
+            StreamSupport.stream(program.getListing().getDefinedData(true).spliterator(), false)
+                    .filter(dat -> dat != null && dat.getValue() != null)
+                    .filter(dat -> !dat.getValue().toString().startsWith("0x"))
+                    .forEach(dat -> bin.strings.put(dat.getMinAddress().getOffset(), dat.getValue().toString()));
             // if (type.contains("unicode") || type.contains("string")) {
             bin.compiler = program.getCompiler();
             model.bin = bin;
@@ -202,23 +202,21 @@ public class GhidraDecompiler {
 
             model.comments = ParseComments();
 
-            FileOutputStream fStream;
-            GZIPOutputStream zStream;
-            try{
+            FileOutputStream fStream = null;
+            GZIPOutputStream zStream = null;
+            try {
                 fStream = new FileOutputStream(file);
                 zStream = new GZIPOutputStream(new BufferedOutputStream(fStream));
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.writeValue(zStream, model);
             } finally {
-                if (zStream != null)
-                {
-                  zStream.flush();
-                  zStream.close();
+                if (zStream != null) {
+                    zStream.flush();
+                    zStream.close();
                 }
-                if (fStream != null)
-                {
-                  fStream.flush();
-                  fStream.close();
+                if (fStream != null) {
+                    fStream.flush();
+                    fStream.close();
                 }
             }
 
@@ -257,7 +255,9 @@ public class GhidraDecompiler {
                 // This assumes simple block model so no overlap is possible
                 CodeBlock block_containing_comment = basicBlockModel.getFirstCodeBlockContaining(address,
                         TaskMonitor.DUMMY);
-                comment.blk_id = block_containing_comment == null ? "null" : this.getBlkId(block_containing_comment.getFirstStartAddress().getOffset());;
+                comment.blk_id = block_containing_comment == null ? "null"
+                        : this.getBlkId(block_containing_comment.getFirstStartAddress().getOffset());
+                ;
                 comment.author = "Ghidra";
                 comment.bin_id = getBinaryId();
                 comment.created_at = date_formatter.format(Calendar.getInstance().getTime());

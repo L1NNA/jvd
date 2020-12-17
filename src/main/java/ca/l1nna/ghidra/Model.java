@@ -13,9 +13,10 @@ public class Model {
     public List<Block> blocks = new ArrayList<>();
     public List<Comment> comments = new ArrayList<>();
 
+
     public static class Binary {
         public List<String> import_modules = new ArrayList<>();
-        public Map<Long, List<String, String, Integer>> import_functions = new HashMap<>();
+        public Map<Long, List<String>> import_functions = new HashMap<>();
         public Map<Long, String> export_functions = new HashMap<>();
         public Map<Long, String> segments = new HashMap<>();
         public String description = "";
