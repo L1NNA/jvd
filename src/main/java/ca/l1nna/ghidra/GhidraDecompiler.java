@@ -2,7 +2,6 @@ package ca.l1nna.ghidra;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -10,9 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 import java.util.zip.GZIPOutputStream;
 
@@ -28,6 +27,7 @@ import ca.l1nna.ghidra.Model.Ins;
 import generic.stl.Pair;
 import ghidra.GhidraJarApplicationLayout;
 import ghidra.app.decompiler.DecompInterface;
+import ghidra.app.util.bin.ByteProvider;
 import ghidra.base.project.GhidraProject;
 import ghidra.framework.Application;
 import ghidra.framework.ApplicationConfiguration;
@@ -48,14 +48,21 @@ import ghidra.program.model.listing.Function;
 import ghidra.program.model.listing.FunctionManager;
 import ghidra.program.model.listing.Instruction;
 import ghidra.program.model.listing.Listing;
-import ghidra.program.model.listing.OperandRepresentationList;
 import ghidra.program.model.listing.Program;
+import ghidra.program.model.symbol.Symbol;
+import ghidra.program.model.symbol.SymbolTable;
 import ghidra.test.TestProgramManager;
 import ghidra.util.InvalidNameException;
 import ghidra.util.exception.CancelledException;
 import ghidra.util.exception.DuplicateNameException;
 import ghidra.util.exception.VersionException;
 import ghidra.util.task.TaskMonitor;
+
+import ghidra.app.util.bin.MemoryByteProvider;
+import ghidra.app.util.bin.format.pe.OptionalHeader;
+import ghidra.app.util.bin.format.pe.PortableExecutable;
+import generic.continues.RethrowContinuesFactory;
+import ghidra.program.model.address.AddressFactory;
 
 public class GhidraDecompiler {
     private File binaryFile = null;
@@ -116,14 +123,68 @@ public class GhidraDecompiler {
         project.close();
     }
 
+    private Address getEntryPoint() {
+        ByteProvider byteProvider = new MemoryByteProvider(program.getMemory(), program.getImageBase());
+        PortableExecutable portableExecutable = null;
+        try {
+            portableExecutable = PortableExecutable.createPortableExecutable(RethrowContinuesFactory.INSTANCE,
+                    byteProvider, PortableExecutable.SectionLayout.MEMORY);
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            try {
+                byteProvider.close();
+            } catch (IOException e1) {
+                System.out.println(e1.toString());
+            }
+            return null;
+        }
+
+        OptionalHeader optionalHeader = portableExecutable.getNTHeader().getOptionalHeader();
+        long longAddressEntry = optionalHeader.getAddressOfEntryPoint() + program.getImageBase().getOffset();
+
+        AddressFactory addressFactory = program.getAddressFactory();
+        Address addressEntry = addressFactory.getAddress(addressFactory.getDefaultAddressSpace().getBaseSpaceID(),
+                longAddressEntry);
+        System.out.printf("0x%08x\n", longAddressEntry);
+        return addressEntry;
+
+    }
+
     public void dump(String file) {
         try {
 
             Model model = new Model();
 
             Binary bin = new Binary();
-            StreamSupport.stream(program.getListing().getExternalFunctions().spliterator(), false).forEach(
-                    func -> bin.import_functions.put(func.getEntryPoint().getOffset(), Arrays.asList(func.getName())));
+
+            try {
+                Address entry = getEntryPoint();
+                if (entry != null)
+                    bin.entry_points.add(entry.getOffset());
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+
+            SymbolTable sm = program.getSymbolTable();
+            int ord = 0;
+            HashSet<String> modules = new HashSet<>();
+            for (Symbol s : sm.getExternalSymbols()) {
+                String module_name = "<EXTERNAL>";
+                Function func = functionManager.getFunctionContaining(s.getAddress());
+                if (s.getParentSymbol() != null)
+                    module_name = s.getParentSymbol().getName().toLowerCase();
+                modules.add(module_name);
+                long ea = s.getAddress().getOffset();
+                if (func != null)
+                    ea = func.getEntryPoint().getOffset();
+                bin.import_functions.put(ea, Arrays.asList(module_name, s.getName(), Integer.toString(ord)));
+                ord += 1;
+            }
+
+            // StreamSupport.stream(program.getListing().getExternalFunctions().spliterator(),
+            // false).forEach(
+            // func -> bin.import_functions.put(func.getEntryPoint().getOffset(),
+            // Arrays.asList(func.getName())));
             bin.name = this.binaryFile.getName();
             bin.disassembled_at = date_formatter.format(Calendar.getInstance().getTime());
             bin.functions_count = functionManager.getFunctionCount();

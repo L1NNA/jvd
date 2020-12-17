@@ -70,6 +70,7 @@ def extract_file_import_names(data: DataUnit):
 
     def gen():
         for addr, (module, f_name, _ord) in data.obj.bin.import_functions.items():
+            _ord = str(_ord)
             if f_name:
                 for symbol in helpers.generate_symbols(module, f_name):
                     yield Import(symbol), addr

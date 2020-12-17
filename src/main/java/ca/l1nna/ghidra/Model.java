@@ -13,7 +13,6 @@ public class Model {
     public List<Block> blocks = new ArrayList<>();
     public List<Comment> comments = new ArrayList<>();
 
-
     public static class Binary {
         public List<String> import_modules = new ArrayList<>();
         public Map<Long, List<String>> import_functions = new HashMap<>();
@@ -30,6 +29,7 @@ public class Model {
         public Map<Long, String> strings = new HashMap<>();
         public String compiler = "";
         public String name;
+        public List<Long> entry_points = new ArrayList<>();
 
     }
 
@@ -60,7 +60,7 @@ public class Model {
         public List<String> calls = new ArrayList<>();
         public long addr_end;
         public List<Ins> ins = new ArrayList<>();
-        // public Map<Long, 
+        // public Map<Long,
     }
 
     public static class Ins {

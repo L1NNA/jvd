@@ -8,6 +8,8 @@ from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from pathlib import Path
 from shutil import rmtree, unpack_archive
+import tempfile
+from shutil import copyfile, rmtree
 
 import magic
 from tqdm import tqdm
@@ -37,10 +39,16 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         if os.path.exists(js_file):
             log.append('directly reading the generated json file')
         else:
+            tmp_folder = file + '.tmp'
             try:
-                out_js, out_log = self._process(
-                    file, file_type, output_file_path=js_file, decompile=decompile)
-
+                os.mkdir(tmp_folder)
+                new_file = os.path.join(tmp_folder, os.path.basename(file))
+                new_file_js = os.path.join(
+                    tmp_folder, os.path.basename(js_file))
+                copyfile(file, new_file)
+                _, out_log = self._process(
+                    new_file, file_type, output_file_path=new_file_js, decompile=decompile)
+                copyfile(new_file_js, js_file)
                 if isinstance(log, list):
                     log.extend(log)
                 else:
@@ -48,9 +56,11 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             except Exception as e:
                 log.append(str(e))
                 return None, log
+            finally:
+                rmtree(tmp_folder)
 
         try:
-            res = read_gz_js(out_js)
+            res = read_gz_js(js_file)
             changed = False
             if 'f_type' not in res:
                 res['bin']['f_type'] = file_type

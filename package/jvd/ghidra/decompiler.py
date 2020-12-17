@@ -25,7 +25,7 @@ class Ghidra(DisassemblerAbstract):
     def cleanup(self, file):
         _cleanup(file, project_only=True)
 
-    def _process(self, file, file_type, decompile=False):
+    def _process(self, file, file_type, output_file_path, decompile=False):
         log = None
         js_file = os.path.join(
             os.path.dirname(file),
@@ -35,7 +35,7 @@ class Ghidra(DisassemblerAbstract):
         return js_file, log
 
 
-def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
+def process(file, json_suffix='.asm.json.gz', project_suffix='.ghidra',
             decompile=False, load=False):
     json_file = file + json_suffix
     project_dir = file + project_suffix
@@ -49,6 +49,7 @@ def process(file, json_suffix='.asm.json', project_suffix='.ghidra',
            project_dir, str(decompile).lower()]
     p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
     out, err = p.communicate()
+    print(out.decode('utf-8'))
     if os.path.exists(json_file):
         if load:
             with open(json_file) as of:

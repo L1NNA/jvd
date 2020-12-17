@@ -54,12 +54,12 @@ def install_jdk_if_needed(path, jdk='13.0.1'):
     try:
         version = subprocess.check_output(
             ['java', '-version'], stderr=subprocess.STDOUT)
-        pattern = b'\"(\d+\.\d+).*\"'
+        pattern = b'\"(\d+[\.]*\d+).*\"'
         val = re.search(pattern, version).groups()[0]
         val = float(val)
         if val >= 11:
             return 'java'
-    except Exception as _:
+    except Exception as e:
         pass
 
     if not os.path.exists(path):

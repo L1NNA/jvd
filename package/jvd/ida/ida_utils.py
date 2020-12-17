@@ -29,6 +29,7 @@ import ida_func
 import json
 from collections import defaultdict
 import sys
+from ida_entry import get_entry, get_entry_qty
 
 
 def now_str(): return datetime.now().isoformat()
@@ -169,6 +170,7 @@ def get_binary_with_functions():
     binary['name'] = binary_name
     binary['_id'] = get_bin_hash()
     binary['base'] = get_imagebase()
+    binary['entry_points'] =  [get_entry(i) for i in range(get_entry_qty())]
 
     info = get_inf_structure()
     bits = "b32"
