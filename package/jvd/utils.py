@@ -19,7 +19,7 @@ from dateutil.tz import tzlocal
 from tqdm import tqdm
 
 home = os.path.join(
-    str(Path.home()), 'k1ntar0-dependencies'
+    str(Path.home()), 'jvd-dependencies'
 )
 
 
@@ -27,7 +27,7 @@ def fn_from_url(url):
     return os.path.basename(urllib.parse.urlparse(url).path)
 
 
-def download_file(url, dest_path, progress=False):
+def download_file(url, dest_path=home, progress=False):
     if not os.path.exists(dest_path):
         os.makedirs(dest_path)
 

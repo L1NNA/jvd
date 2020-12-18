@@ -17,7 +17,7 @@ public class Model {
         public List<String> import_modules = new ArrayList<>();
         public Map<Long, List<String>> import_functions = new HashMap<>();
         public Map<Long, String> export_functions = new HashMap<>();
-        public Map<Long, String> segments = new HashMap<>();
+        public Map<Long, String> seg = new HashMap<>();
         public String description = "";
         public String disassembled_at = "";
         public int functions_count = 0;
@@ -68,6 +68,8 @@ public class Model {
         public String mne = "";
         public List<String> oprs = new ArrayList<>();
         public List<Integer> oprs_tp = new ArrayList<>();
+        public List<Long> dr = new ArrayList<>();
+        public List<Long> cr = new ArrayList<>();
     }
 
     public static class Comment {

@@ -49,7 +49,7 @@ def process(file, json_suffix='.asm.json.gz', project_suffix='.ghidra',
            project_dir, str(decompile).lower()]
     p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
     out, err = p.communicate()
-    print(out.decode('utf-8'))
+    # print(out.decode('utf-8'))
     if os.path.exists(json_file):
         if load:
             with open(json_file) as of:

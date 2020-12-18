@@ -62,7 +62,7 @@ def extract_file_embedded_pe(data: DataUnit):
 
 
 def extract_file_export_names(data: DataUnit):
-    for addr, name in data.obj.export_functions.items():
+    for addr, name in data.obj.bin.export_functions.items():
         yield Export(name), addr
 
 
@@ -83,9 +83,9 @@ def extract_file_import_names(data: DataUnit):
         data.import_names = defaultdict(list)
         for i, a in gen():
             data.import_names[a].append((i, a))
-    for _, entries in data.import_names:
+    for addr, entries in data.import_names.items():
         for e in entries:
-            yield e
+            yield e, addr
 
 
 def extract_file_section_names(data: DataUnit):

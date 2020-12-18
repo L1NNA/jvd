@@ -65,7 +65,7 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-                <copy file="target/jarv1s-ghidra.jar" todir="${user.home}/k1ntar0-dependencies">
+                <copy file="target/jarv1s-ghidra.jar" todir="${user.home}/jvd-dependencies">
                 </copy>
               </tasks>
             </configuration>

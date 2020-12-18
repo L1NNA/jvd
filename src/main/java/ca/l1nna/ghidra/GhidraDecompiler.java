@@ -49,6 +49,7 @@ import ghidra.program.model.listing.FunctionManager;
 import ghidra.program.model.listing.Instruction;
 import ghidra.program.model.listing.Listing;
 import ghidra.program.model.listing.Program;
+import ghidra.program.model.mem.MemoryBlock;
 import ghidra.program.model.symbol.Symbol;
 import ghidra.program.model.symbol.SymbolTable;
 import ghidra.test.TestProgramManager;
@@ -123,47 +124,12 @@ public class GhidraDecompiler {
         project.close();
     }
 
-    private Address getEntryPoint() {
-        ByteProvider byteProvider = new MemoryByteProvider(program.getMemory(), program.getImageBase());
-        PortableExecutable portableExecutable = null;
-        try {
-            portableExecutable = PortableExecutable.createPortableExecutable(RethrowContinuesFactory.INSTANCE,
-                    byteProvider, PortableExecutable.SectionLayout.MEMORY);
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            try {
-                byteProvider.close();
-            } catch (IOException e1) {
-                System.out.println(e1.toString());
-            }
-            return null;
-        }
-
-        OptionalHeader optionalHeader = portableExecutable.getNTHeader().getOptionalHeader();
-        long longAddressEntry = optionalHeader.getAddressOfEntryPoint() + program.getImageBase().getOffset();
-
-        AddressFactory addressFactory = program.getAddressFactory();
-        Address addressEntry = addressFactory.getAddress(addressFactory.getDefaultAddressSpace().getBaseSpaceID(),
-                longAddressEntry);
-        System.out.printf("0x%08x\n", longAddressEntry);
-        return addressEntry;
-
-    }
-
     public void dump(String file) {
         try {
 
             Model model = new Model();
 
             Binary bin = new Binary();
-
-            try {
-                Address entry = getEntryPoint();
-                if (entry != null)
-                    bin.entry_points.add(entry.getOffset());
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
 
             SymbolTable sm = program.getSymbolTable();
             int ord = 0;
@@ -179,6 +145,19 @@ public class GhidraDecompiler {
                     ea = func.getEntryPoint().getOffset();
                 bin.import_functions.put(ea, Arrays.asList(module_name, s.getName(), Integer.toString(ord)));
                 ord += 1;
+            }
+
+            AddressIterator ite = sm.getExternalEntryPointIterator();
+            while (ite.hasNext()) {
+                Address addr = ite.next();
+                Function func = functionManager.getFunctionContaining(addr);
+                bin.entry_points.add(addr.getOffset());
+                if (func != null)
+                    bin.export_functions.put(addr.getOffset(), func.getName());
+            }
+
+            for (MemoryBlock b : program.getMemory().getBlocks()) {
+                bin.seg.put(b.getStart().getOffset(), b.getName());
             }
 
             // StreamSupport.stream(program.getListing().getExternalFunctions().spliterator(),

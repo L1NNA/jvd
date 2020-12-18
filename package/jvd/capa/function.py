@@ -16,7 +16,7 @@ def extract_function_loop(f):
             edges.append((b._id, c))
 
     if loops.has_loop(edges):
-        yield Characteristic("loop"), f.start_ea
+        yield Characteristic("loop"), f.addr_start
 
 
 def extract_recursive_call(f):

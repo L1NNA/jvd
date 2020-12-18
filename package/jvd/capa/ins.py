@@ -8,7 +8,6 @@
 
 
 import capa.features.extractors.helpers
-import capa.features.extractors.ida.helpers
 from capa.features import (
     ARCH_X32,
     ARCH_X64,
@@ -32,7 +31,7 @@ PATTERN_SINGLENUM = re.compile(r"[+\-] (?P<num>[0-9])")
 
 
 def get_arch(f):
-    bits = f.unit.obj.bits
+    bits = f.unit.obj.bin.bits
     if bits == 'b32':
         return ARCH_X32
     elif bits == 'b64':
@@ -206,8 +205,9 @@ def extract_insn_offset_features(f, bb, insn):
         elif number_int:
             number = int(number_int.group("num"))
             number = -1 * number if number_int.group().startswith("-") else number
-        yield Offset(number), insn.offset
-        yield Offset(number, arch=get_arch(f.smda_report)), insn.offset
+        if number_hex or number_int:
+            yield Offset(number), insn.ea
+            yield Offset(number, arch=get_arch(f)), insn.ea
 
 
 def contains_stack_cookie_keywords(ins):

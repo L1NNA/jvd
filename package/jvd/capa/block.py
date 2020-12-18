@@ -3,10 +3,8 @@ import sys
 import string
 import struct
 
-import capa.features.extractors.ida.helpers as helpers
 from capa.features import Characteristic
 from capa.features.basicblock import BasicBlock
-from capa.features.extractors.ida import helpers
 from capa.features.extractors.helpers import MIN_STACKSTRING_LEN
 import string
 from jvd.normalizer.syntax import Assembly, get_opr_imm_str
@@ -65,8 +63,12 @@ def is_mov_imm_to_stack(f, insn):
         if insn.oprs[0] in syntax.registers:
             if syntax.registers[insn.oprs[0]] == 'GEN':
                 return False
+    try:
+        val = int(insn.oprs[1], 16)
+    except ValueError:
+        return False
     insn.is_mv_stack = True
-    return int(insn.oprs[1], 16), insn.oprs_tp[1]
+    return val, insn.oprs_tp[1]
 
 
 def bb_contains_stackstring(f, bb):
@@ -80,8 +82,9 @@ def bb_contains_stackstring(f, bb):
     """
     count = 0
     for insn in bb.ins:
-        s_var, s_var_type = is_mov_imm_to_stack(f, insn)
-        if s_var:
+        result = is_mov_imm_to_stack(f, insn)
+        if result:
+            s_var, s_var_type = result
             count += get_printable_len(s_var, s_var_type)
         if count > MIN_STACKSTRING_LEN:
             return True
@@ -96,12 +99,12 @@ def extract_bb_stackstring(f, bb):
         bb (IDA BasicBlock)
     """
     if bb_contains_stackstring(f, bb):
-        yield Characteristic("stack string"), bb.start_ea
+        yield Characteristic("stack string"), bb.addr_start
 
 
 def extract_bb_tight_loop(f, bb):
     if bb._id in bb.calls:
-        yield Characteristic("tight loop"), bb.start_ea
+        yield Characteristic("tight loop"), bb.addr_start
 
 
 def extract_features(f, bb):
@@ -114,7 +117,7 @@ def extract_features(f, bb):
     for bb_handler in BASIC_BLOCK_HANDLERS:
         for (feature, ea) in bb_handler(f, bb):
             yield feature, ea
-    yield BasicBlock(), bb.start_ea
+    yield BasicBlock(), bb.addr_start
 
 
 BASIC_BLOCK_HANDLERS = (

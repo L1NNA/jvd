@@ -3,18 +3,18 @@ import json
 import logging
 import os
 import re
+import tempfile
 from abc import ABCMeta, abstractmethod
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from pathlib import Path
-from shutil import rmtree, unpack_archive
-import tempfile
-from shutil import copyfile, rmtree
+from shutil import copyfile, rmtree, unpack_archive
 
 import magic
 from tqdm import tqdm
 
 from jvd.utils import read_gz_js
+from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
 class DisassemblerAbstract(metaclass=ABCMeta):
@@ -31,7 +31,9 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         res['cfg'] = adj_sp
         return res
 
-    def disassemble(self, file, decompile=False, cleanup=False, cfg=False, no_result=False, file_type=None):
+    def disassemble(
+            self, file, decompile=False, cleanup=False, cfg=False,
+            no_result=False, file_type=None, capa=False, verbose=-1):
         js_file = file + '.asm.json.gz'
         res = None
         log = []
@@ -55,6 +57,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     log.append(str(log))
             except Exception as e:
                 log.append(str(e))
+                if verbose > 1:
+                    raise e
                 return None, log
             finally:
                 rmtree(tmp_folder)
@@ -68,14 +72,23 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             if cfg and 'cfg' not in res:
                 self._cfg(res)
                 changed = True
+            if capa and 'capa' not in res:
+                res['capa'] = capa_analyze(res, file, verbose=verbose)
+                changed = True
             if changed:
+                content = json.dumps(
+                    res,
+                    cls=CapaJsonObjectEncoder,
+                ).encode('utf-8')
                 with gzip.GzipFile(js_file, 'w') as gf:
-                    gf.write(json.dumps(res).encode('utf-8'))
+                    gf.write(content)
             if no_result:
                 return js_file if res else None, log
             return res, log
         except Exception as e:
             log.append('Failed ' + file + ' msg: ' + str(e))
+            if verbose > 1:
+                raise e
             return None, log
         finally:
             try:
@@ -110,7 +123,9 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             decompile=False,
             cleanup=True,
             cfg=False,
-            file_ext='.bin'):
+            file_ext='.bin',
+            capa=False,
+            verbose=-1):
         if isinstance(path_or_files, str):
             logging.info('processing {} with {} '.format(
                 path_or_files, file_ext))
@@ -127,12 +142,14 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     for ind, extracted in enumerate(
                             e.map(partial(
                                 self.disassemble, decompile=decompile,
-                                cleanup=cleanup, cfg=cfg, no_result=True), files)):
+                                cleanup=cleanup, cfg=cfg, no_result=True,
+                                capa=capa, verbose=verbose), files)):
                         yield ind, extracted
             else:
                 for ind, f in enumerate(files):
                     extracted = self.disassemble(
-                        f, decompile=decompile, cleanup=cleanup, cfg=cfg, no_result=True,)
+                        f, decompile=decompile, cleanup=cleanup, cfg=cfg,
+                        no_result=True, capa=capa, verbose=verbose)
                     yield ind, extracted
 
         for ind, extracted in tqdm(gen(), total=len(files)):

@@ -41,6 +41,9 @@ if __name__ == "__main__":
     )
     parser.add_argument('--cfg', dest='cfg',
                         action='store_true', help='Generate CFG matrix')
+    parser.add_argument('--capa', dest='capa',
+                        action='store_true', help='Analyze by capa')
+    parser.add_argument('--verbose', dest='verbose', type=int, choices=range(-1, 3), default=-1)
     flags = parser.parse_args()
     if flags.dis is not None:
         disassember = flags.dis
@@ -56,6 +59,11 @@ if __name__ == "__main__":
             disassember = Ghidra()
 
         if os.path.isfile(f) and not os.path.isdir(f):
-            disassember.disassemble(f, cleanup=True, cfg=flags.cfg)
+            _, logs = disassember.disassemble(
+                f, cleanup=True, cfg=flags.cfg, capa=flags.capa, no_result=True, verbose=flags.verbose)
         else:
-            disassember.disassemble_all(f, file_ext=flags.ext, cfg=flags.cfg)
+            disassember.disassemble_all(
+                f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa, verbose=parser.verbose)
+        if len(logs) > 0:
+            for l in logs:
+                print(logs)
