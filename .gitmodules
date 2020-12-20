@@ -1,3 +1,3 @@
-[submodule "package/test/data-capa"]
-	path = package/test/data-capa
-	url = https://github.com/fireeye/capa-testfiles
+[submodule "test/test_capa"]
+	path = test/test_capa
+	url = https://github.com/fireeye/capa
