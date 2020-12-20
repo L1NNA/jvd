@@ -13,8 +13,6 @@ from pathlib import Path
 from shutil import unpack_archive
 
 import requests
-from dateutil.parser import parse as parsedate
-from dateutil.tz import tzlocal
 from tqdm import tqdm
 
 home = os.path.join(

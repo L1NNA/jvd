@@ -11,7 +11,6 @@ from shutil import unpack_archive
 import subprocess
 import re
 import datetime
-from dateutil.parser import parse as parsedate
 import pytz
 from dateutil.tz import tzlocal
 from jvd.utils import download_file
