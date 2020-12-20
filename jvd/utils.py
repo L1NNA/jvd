@@ -12,7 +12,6 @@ import urllib.request
 from pathlib import Path
 from shutil import unpack_archive
 
-import pytz
 import requests
 from dateutil.parser import parse as parsedate
 from dateutil.tz import tzlocal
