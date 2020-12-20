@@ -102,7 +102,12 @@ _arc2synctax = {
     '68330': mc68,
     'arm': arm,
     'ppc': ppc,
-    'X86_64(x86_64)': metapc
+    'X86_64(x86_64)': metapc,
+    'X86_64(amd64)': metapc,
+    'X86(x86)': metapc,
+    'X86(i386)': metapc,
+    'POWERPC_64(ppc64)': ppc,
+    'POWERPC(ppc)': ppc,
 }
 
 
