@@ -22,9 +22,6 @@ java = install_jdk_if_needed(
 
 class Ghidra(DisassemblerAbstract):
 
-    def cleanup(self, file):
-        _cleanup(file, project_only=True)
-
     def _process(self, file, file_type, output_file_path, decompile=False):
         log = None
         js_file = os.path.join(
