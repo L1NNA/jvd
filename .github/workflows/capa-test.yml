@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'jvd/**'
-  pull_request:
-    branches:
-      - master
-    paths:
-      - 'jvd/**'
+  #   paths:
+  #     - 'jvd/**'
+  # pull_request:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - 'jvd/**'
 
 jobs:
   build:

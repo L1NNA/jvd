@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'ghidra/**'
-      - '.github/workflows/ghidra-jar.yml'
-  pull_request:
-    branches:
-      - master
-    paths:
-      - 'ghidra/**'
-      - '.github/workflows/ghidra-jar.yml'
+  #   paths:
+  #     - 'ghidra/**'
+  #     - '.github/workflows/ghidra-jar.yml'
+  # pull_request:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - 'ghidra/**'
+  #     - '.github/workflows/ghidra-jar.yml'
 
 jobs:
   build:
