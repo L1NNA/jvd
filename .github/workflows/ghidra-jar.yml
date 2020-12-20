@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - master
-  #   paths:
-  #     - 'ghidra/**'
-  #     - '.github/workflows/ghidra-jar.yml'
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'ghidra/**'
-  #     - '.github/workflows/ghidra-jar.yml'
+    paths:
+      - 'ghidra/**'
+      - '.github/workflows/ghidra-jar.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'ghidra/**'
+      - '.github/workflows/ghidra-jar.yml'
 
 jobs:
   build:
@@ -50,7 +50,7 @@ jobs:
       uses: L1NNA/github-release@master
       with:
         tag: v0.0.1
-        files: ghidra/target/jarv1s-ghidra.jar 
+        files: ghidra/target/jarv1s-ghidra.jar ghidra.jar
         gzip: false
         body: latest jar built
         token: ${{ secrets.GITHUB_TOKEN }}
