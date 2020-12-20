@@ -1,4 +1,4 @@
-name: Build and Release Ghidra JAR
+name: Testing with Capa
 
 on:
   push:
