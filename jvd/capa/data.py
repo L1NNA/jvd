@@ -58,6 +58,7 @@ class DataUnit:
             for i in b.ins:
                 if len(i.dr) > 0:
                     self.ins_dat_ref[i.ea] = i.dr
+        print('##', self.obj.bin.architecture)
         self.syntax = get_definition(self.obj.bin.architecture)
         self.import_names = None #self.obj.bin.import_functions
         self.seg_addr = sorted([int(k) for k in self.obj.bin.seg.keys()]) + [sys.maxsize]
