@@ -1,2 +1,2 @@
 [flake8]
-exclude = .git,__pycache__,old,build,dist,ida_utils.py
+exclude = .git,__pycache__,old,build,dist,ida_utils.py,ida_script.py,test_capa

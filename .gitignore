@@ -114,3 +114,4 @@ installer
 target
 .DS_Store
 .project 
+.settings
