@@ -1,0 +1,3664 @@
+{
+   "Kam1n0-Architecture": {
+      "processor": "metapc",
+      "operations": {
+         "operation": [
+            {
+               "_identifier": "MOV"
+            },
+            {
+               "_identifier": "MOVZX"
+            },
+            {
+               "_identifier": "MOVSX"
+            },
+            {
+               "_identifier": "MOVSS"
+            },
+            {
+               "_identifier": "XCHG"
+            },
+            {
+               "_identifier": "STC"
+            },
+            {
+               "_identifier": "CLC"
+            },
+            {
+               "_identifier": "CMC"
+            },
+            {
+               "_identifier": "STD"
+            },
+            {
+               "_identifier": "CLD"
+            },
+            {
+               "_identifier": "STI"
+            },
+            {
+               "_identifier": "CLI"
+            },
+            {
+               "_identifier": "PUSH"
+            },
+            {
+               "_identifier": "PUSHF"
+            },
+            {
+               "_identifier": "PUSHA"
+            },
+            {
+               "_identifier": "POP"
+            },
+            {
+               "_identifier": "POPF"
+            },
+            {
+               "_identifier": "POPA"
+            },
+            {
+               "_identifier": "CBW"
+            },
+            {
+               "_identifier": "CWD"
+            },
+            {
+               "_identifier": "CWDE"
+            },
+            {
+               "_identifier": "CSQ"
+            },
+            {
+               "_identifier": "IN"
+            },
+            {
+               "_identifier": "OUT"
+            },
+            {
+               "_identifier": "ADD"
+            },
+            {
+               "_identifier": "ADC"
+            },
+            {
+               "_identifier": "SUB"
+            },
+            {
+               "_identifier": "SBB"
+            },
+            {
+               "_identifier": "DIV"
+            },
+            {
+               "_identifier": "IDIV"
+            },
+            {
+               "_identifier": "MUL"
+            },
+            {
+               "_identifier": "IMUL"
+            },
+            {
+               "_identifier": "INC"
+            },
+            {
+               "_identifier": "DEC"
+            },
+            {
+               "_identifier": "CMP"
+            },
+            {
+               "_identifier": "SAL"
+            },
+            {
+               "_identifier": "SAR"
+            },
+            {
+               "_identifier": "RCL"
+            },
+            {
+               "_identifier": "RCR"
+            },
+            {
+               "_identifier": "ROL"
+            },
+            {
+               "_identifier": "ROR"
+            },
+            {
+               "_identifier": "NEG"
+            },
+            {
+               "_identifier": "NOT"
+            },
+            {
+               "_identifier": "AND"
+            },
+            {
+               "_identifier": "OR"
+            },
+            {
+               "_identifier": "XOR"
+            },
+            {
+               "_identifier": "SHL"
+            },
+            {
+               "_identifier": "SHR"
+            },
+            {
+               "_identifier": "NOP"
+            },
+            {
+               "_identifier": "LEA"
+            },
+            {
+               "_identifier": "INT"
+            },
+            {
+               "_identifier": "TEST"
+            },
+            {
+               "_identifier": "CMPXCHG"
+            },
+            {
+               "_identifier": "BSWAP"
+            },
+            {
+               "_identifier": "XADD"
+            },
+            {
+               "_identifier": "INVD"
+            },
+            {
+               "_identifier": "WBINVD"
+            },
+            {
+               "_identifier": "INVLPG"
+            },
+            {
+               "_identifier": "RDMSR"
+            },
+            {
+               "_identifier": "WRMSR"
+            },
+            {
+               "_identifier": "CPUID"
+            },
+            {
+               "_identifier": "CMPXCHG8B"
+            },
+            {
+               "_identifier": "RDTSC"
+            },
+            {
+               "_identifier": "RSM"
+            },
+            {
+               "_identifier": "CMOVA"
+            },
+            {
+               "_identifier": "CMOVB"
+            },
+            {
+               "_identifier": "CMOVBE"
+            },
+            {
+               "_identifier": "CMOVG"
+            },
+            {
+               "_identifier": "CMOVGE"
+            },
+            {
+               "_identifier": "CMOVL"
+            },
+            {
+               "_identifier": "CMOVLE"
+            },
+            {
+               "_identifier": "CMOVNB"
+            },
+            {
+               "_identifier": "CMOVNO"
+            },
+            {
+               "_identifier": "CMOVNP"
+            },
+            {
+               "_identifier": "CMOVNS"
+            },
+            {
+               "_identifier": "CMOVNZ"
+            },
+            {
+               "_identifier": "CMOVO"
+            },
+            {
+               "_identifier": "CMOVP"
+            },
+            {
+               "_identifier": "CMOVS"
+            },
+            {
+               "_identifier": "CMOVZ"
+            },
+            {
+               "_identifier": "FCMOVB"
+            },
+            {
+               "_identifier": "FCMOVE"
+            },
+            {
+               "_identifier": "FCMOVBE"
+            },
+            {
+               "_identifier": "FCMOVU"
+            },
+            {
+               "_identifier": "FCMOVNB"
+            },
+            {
+               "_identifier": "FCMOVNE"
+            },
+            {
+               "_identifier": "FCMOVNBE"
+            },
+            {
+               "_identifier": "FCMOVNU"
+            },
+            {
+               "_identifier": "FCOMI"
+            },
+            {
+               "_identifier": "FUCOMI"
+            },
+            {
+               "_identifier": "FCOMIP"
+            },
+            {
+               "_identifier": "FUCOMIP"
+            },
+            {
+               "_identifier": "RDPMC"
+            },
+            {
+               "_identifier": "FLD"
+            },
+            {
+               "_identifier": "FST"
+            },
+            {
+               "_identifier": "FSTP"
+            },
+            {
+               "_identifier": "FXCH"
+            },
+            {
+               "_identifier": "FILD"
+            },
+            {
+               "_identifier": "FIST"
+            },
+            {
+               "_identifier": "FISTP"
+            },
+            {
+               "_identifier": "FBLD"
+            },
+            {
+               "_identifier": "FBSTP"
+            },
+            {
+               "_identifier": "FADD"
+            },
+            {
+               "_identifier": "FADDP"
+            },
+            {
+               "_identifier": "FIADD"
+            },
+            {
+               "_identifier": "FSUB"
+            },
+            {
+               "_identifier": "FSUBP"
+            },
+            {
+               "_identifier": "FISUB"
+            },
+            {
+               "_identifier": "FSUBR"
+            },
+            {
+               "_identifier": "FSUBRP"
+            },
+            {
+               "_identifier": "FISUBR"
+            },
+            {
+               "_identifier": "FMUL"
+            },
+            {
+               "_identifier": "FMULP"
+            },
+            {
+               "_identifier": "FIMUL"
+            },
+            {
+               "_identifier": "FDIV"
+            },
+            {
+               "_identifier": "FDIVP"
+            },
+            {
+               "_identifier": "FIDIV"
+            },
+            {
+               "_identifier": "FDIVR"
+            },
+            {
+               "_identifier": "FDIVRP"
+            },
+            {
+               "_identifier": "FIDIVR"
+            },
+            {
+               "_identifier": "FSQRT"
+            },
+            {
+               "_identifier": "FSCALE"
+            },
+            {
+               "_identifier": "FPREM"
+            },
+            {
+               "_identifier": "FRNDINT"
+            },
+            {
+               "_identifier": "FXTRACT"
+            },
+            {
+               "_identifier": "FABS"
+            },
+            {
+               "_identifier": "FCHS"
+            },
+            {
+               "_identifier": "FCOM"
+            },
+            {
+               "_identifier": "FCOMP"
+            },
+            {
+               "_identifier": "FCOMPP"
+            },
+            {
+               "_identifier": "FICOM"
+            },
+            {
+               "_identifier": "FICOMP"
+            },
+            {
+               "_identifier": "FTST"
+            },
+            {
+               "_identifier": "FXAM"
+            },
+            {
+               "_identifier": "FPTAN"
+            },
+            {
+               "_identifier": "FPATAN"
+            },
+            {
+               "_identifier": "F2XM1"
+            },
+            {
+               "_identifier": "FYL2X"
+            },
+            {
+               "_identifier": "FYL2XP1"
+            },
+            {
+               "_identifier": "FLDZ"
+            },
+            {
+               "_identifier": "FLD1"
+            },
+            {
+               "_identifier": "FLDPI"
+            },
+            {
+               "_identifier": "FLDL2T"
+            },
+            {
+               "_identifier": "FLDL2E"
+            },
+            {
+               "_identifier": "FLDLG2"
+            },
+            {
+               "_identifier": "FLDLN2"
+            },
+            {
+               "_identifier": "FINIT"
+            },
+            {
+               "_identifier": "FNINIT"
+            },
+            {
+               "_identifier": "FSETPM"
+            },
+            {
+               "_identifier": "FLDCW"
+            },
+            {
+               "_identifier": "FSTCW"
+            },
+            {
+               "_identifier": "FNSTCW"
+            },
+            {
+               "_identifier": "FSTSW"
+            },
+            {
+               "_identifier": "FNSTSW"
+            },
+            {
+               "_identifier": "FCLEX"
+            },
+            {
+               "_identifier": "FNCLEX"
+            },
+            {
+               "_identifier": "FSTENV"
+            },
+            {
+               "_identifier": "FNSTENV"
+            },
+            {
+               "_identifier": "FLDENV"
+            },
+            {
+               "_identifier": "FSAVE"
+            },
+            {
+               "_identifier": "FNSAVE"
+            },
+            {
+               "_identifier": "FRSTOR"
+            },
+            {
+               "_identifier": "FINCSTP"
+            },
+            {
+               "_identifier": "FDECSTP"
+            },
+            {
+               "_identifier": "FFREE"
+            },
+            {
+               "_identifier": "FNOP"
+            },
+            {
+               "_identifier": "FENI"
+            },
+            {
+               "_identifier": "FNENI"
+            },
+            {
+               "_identifier": "FDISI"
+            },
+            {
+               "_identifier": "FNDISI"
+            },
+            {
+               "_identifier": "FPREM1"
+            },
+            {
+               "_identifier": "FSINCOS"
+            },
+            {
+               "_identifier": "FSIN"
+            },
+            {
+               "_identifier": "FCOS"
+            },
+            {
+               "_identifier": "FUCOM"
+            },
+            {
+               "_identifier": "FUCOMP"
+            },
+            {
+               "_identifier": "FUCOMPP"
+            },
+            {
+               "_identifier": "SETALC"
+            },
+            {
+               "_identifier": "SVDC"
+            },
+            {
+               "_identifier": "RSDC"
+            },
+            {
+               "_identifier": "SVLDT"
+            },
+            {
+               "_identifier": "RSLDT"
+            },
+            {
+               "_identifier": "SVTS"
+            },
+            {
+               "_identifier": "RSTS"
+            },
+            {
+               "_identifier": "ICEBP"
+            },
+            {
+               "_identifier": "LOADALL"
+            },
+            {
+               "_identifier": "EMMS"
+            },
+            {
+               "_identifier": "MOVD"
+            },
+            {
+               "_identifier": "MOVQ"
+            },
+            {
+               "_identifier": "PACKSSWB"
+            },
+            {
+               "_identifier": "PACKSSDW"
+            },
+            {
+               "_identifier": "PACKUSWB"
+            },
+            {
+               "_identifier": "PADDB"
+            },
+            {
+               "_identifier": "PADDW"
+            },
+            {
+               "_identifier": "PADDD"
+            },
+            {
+               "_identifier": "PADDSB"
+            },
+            {
+               "_identifier": "PADDSW"
+            },
+            {
+               "_identifier": "PADDUSB"
+            },
+            {
+               "_identifier": "PADDUSW"
+            },
+            {
+               "_identifier": "PAND"
+            },
+            {
+               "_identifier": "PANDN"
+            },
+            {
+               "_identifier": "PCMPEQB"
+            },
+            {
+               "_identifier": "PCMPEQW"
+            },
+            {
+               "_identifier": "PCMPEQD"
+            },
+            {
+               "_identifier": "PCMPGTB"
+            },
+            {
+               "_identifier": "PCMPGTW"
+            },
+            {
+               "_identifier": "PCMPGTD"
+            },
+            {
+               "_identifier": "PMADDWD"
+            },
+            {
+               "_identifier": "PMULHW"
+            },
+            {
+               "_identifier": "PMULLW"
+            },
+            {
+               "_identifier": "POR"
+            },
+            {
+               "_identifier": "PSLLW"
+            },
+            {
+               "_identifier": "PSLLD"
+            },
+            {
+               "_identifier": "PSLLQ"
+            },
+            {
+               "_identifier": "PSRAW"
+            },
+            {
+               "_identifier": "PSRAD"
+            },
+            {
+               "_identifier": "PSRLW"
+            },
+            {
+               "_identifier": "PSRLD"
+            },
+            {
+               "_identifier": "PSRLQ"
+            },
+            {
+               "_identifier": "PSUBB"
+            },
+            {
+               "_identifier": "PSUBW"
+            },
+            {
+               "_identifier": "PSUBD"
+            },
+            {
+               "_identifier": "PSUBSB"
+            },
+            {
+               "_identifier": "PSUBSW"
+            },
+            {
+               "_identifier": "PSUBUSB"
+            },
+            {
+               "_identifier": "PSUBUSW"
+            },
+            {
+               "_identifier": "PUNPCKHBW"
+            },
+            {
+               "_identifier": "PUNPCKHWD"
+            },
+            {
+               "_identifier": "PUNPCKHDQ"
+            },
+            {
+               "_identifier": "PUNPCKLBW"
+            },
+            {
+               "_identifier": "PUNPCKLWD"
+            },
+            {
+               "_identifier": "PUNPCKLDQ"
+            },
+            {
+               "_identifier": "PXOR"
+            },
+            {
+               "_identifier": "FXSAVE"
+            },
+            {
+               "_identifier": "FXRSTOR"
+            },
+            {
+               "_identifier": "SYSENTER"
+            },
+            {
+               "_identifier": "SYSEXIT"
+            },
+            {
+               "_identifier": "PAVGUSB"
+            },
+            {
+               "_identifier": "PFADD"
+            },
+            {
+               "_identifier": "PFSUB"
+            },
+            {
+               "_identifier": "PFSUBR"
+            },
+            {
+               "_identifier": "PFACC"
+            },
+            {
+               "_identifier": "PFCMPGE"
+            },
+            {
+               "_identifier": "PFCMPGT"
+            },
+            {
+               "_identifier": "PFCMPEQ"
+            },
+            {
+               "_identifier": "PFMIN"
+            },
+            {
+               "_identifier": "PFMAX"
+            },
+            {
+               "_identifier": "PI2FD"
+            },
+            {
+               "_identifier": "PF2ID"
+            },
+            {
+               "_identifier": "PFRCP"
+            },
+            {
+               "_identifier": "PFRSQRT"
+            },
+            {
+               "_identifier": "PFMUL"
+            },
+            {
+               "_identifier": "PFRCPIT1"
+            },
+            {
+               "_identifier": "PFRSQIT1"
+            },
+            {
+               "_identifier": "PFRCPIT2"
+            },
+            {
+               "_identifier": "PMULHRW"
+            },
+            {
+               "_identifier": "FEMMS"
+            },
+            {
+               "_identifier": "PREFETCH"
+            },
+            {
+               "_identifier": "PREFETCHW"
+            },
+            {
+               "_identifier": "ADDPS"
+            },
+            {
+               "_identifier": "ADDSS"
+            },
+            {
+               "_identifier": "ANDNPS"
+            },
+            {
+               "_identifier": "ANDPS"
+            },
+            {
+               "_identifier": "CMPPS"
+            },
+            {
+               "_identifier": "CMPSS"
+            },
+            {
+               "_identifier": "COMISS"
+            },
+            {
+               "_identifier": "CVTPI2PS"
+            },
+            {
+               "_identifier": "CVTPS2PI"
+            },
+            {
+               "_identifier": "CVTSI2SS"
+            },
+            {
+               "_identifier": "CVTSS2SI"
+            },
+            {
+               "_identifier": "CVTTPS2PI"
+            },
+            {
+               "_identifier": "CVTTSS2SI"
+            },
+            {
+               "_identifier": "DIVPS"
+            },
+            {
+               "_identifier": "DIVSS"
+            },
+            {
+               "_identifier": "LDMXCSR"
+            },
+            {
+               "_identifier": "MAXPS"
+            },
+            {
+               "_identifier": "MAXSS"
+            },
+            {
+               "_identifier": "MINPS"
+            },
+            {
+               "_identifier": "MINSS"
+            },
+            {
+               "_identifier": "MOVAPS"
+            },
+            {
+               "_identifier": "MOVHLPS"
+            },
+            {
+               "_identifier": "MOVHPS"
+            },
+            {
+               "_identifier": "MOVLHPS"
+            },
+            {
+               "_identifier": "MOVLPS"
+            },
+            {
+               "_identifier": "MOVMSKPS"
+            },
+            {
+               "_identifier": "MOVUPS"
+            },
+            {
+               "_identifier": "MULPS"
+            },
+            {
+               "_identifier": "MULSS"
+            },
+            {
+               "_identifier": "ORPS"
+            },
+            {
+               "_identifier": "RCPPS"
+            },
+            {
+               "_identifier": "RCPSS"
+            },
+            {
+               "_identifier": "RSQRTPS"
+            },
+            {
+               "_identifier": "RSQRTSS"
+            },
+            {
+               "_identifier": "SHUFPS"
+            },
+            {
+               "_identifier": "SQRTPS"
+            },
+            {
+               "_identifier": "SQRTSS"
+            },
+            {
+               "_identifier": "STMXCSR"
+            },
+            {
+               "_identifier": "SUBPS"
+            },
+            {
+               "_identifier": "SUBSS"
+            },
+            {
+               "_identifier": "UCOMISS"
+            },
+            {
+               "_identifier": "UNPCKHPS"
+            },
+            {
+               "_identifier": "UNPCKLPS"
+            },
+            {
+               "_identifier": "XORPS"
+            },
+            {
+               "_identifier": "PAVGB"
+            },
+            {
+               "_identifier": "PAVGW"
+            },
+            {
+               "_identifier": "PEXTRW"
+            },
+            {
+               "_identifier": "PINSRW"
+            },
+            {
+               "_identifier": "PMAXSW"
+            },
+            {
+               "_identifier": "PMAXUB"
+            },
+            {
+               "_identifier": "PMINSW"
+            },
+            {
+               "_identifier": "PMINUB"
+            },
+            {
+               "_identifier": "PMOVMSKB"
+            },
+            {
+               "_identifier": "PMULHUW"
+            },
+            {
+               "_identifier": "PSADBW"
+            },
+            {
+               "_identifier": "PSHUFW"
+            },
+            {
+               "_identifier": "MASKMOVQ"
+            },
+            {
+               "_identifier": "MOVNTPS"
+            },
+            {
+               "_identifier": "MOVNTQ"
+            },
+            {
+               "_identifier": "PREFETCHT0"
+            },
+            {
+               "_identifier": "PREFETCHT1"
+            },
+            {
+               "_identifier": "PREFETCHT2"
+            },
+            {
+               "_identifier": "PREFETCHNTA"
+            },
+            {
+               "_identifier": "SFENCE"
+            },
+            {
+               "_identifier": "CMPEQPS"
+            },
+            {
+               "_identifier": "CMPLTPS"
+            },
+            {
+               "_identifier": "CMPLEPS"
+            },
+            {
+               "_identifier": "CMPUNORDPS"
+            },
+            {
+               "_identifier": "CMPNEQPS"
+            },
+            {
+               "_identifier": "CMPNLTPS"
+            },
+            {
+               "_identifier": "CMPNLEPS"
+            },
+            {
+               "_identifier": "CMPORDPS"
+            },
+            {
+               "_identifier": "CMPEQSS"
+            },
+            {
+               "_identifier": "CMPLTSS"
+            },
+            {
+               "_identifier": "CMPLESS"
+            },
+            {
+               "_identifier": "CMPUNORDSS"
+            },
+            {
+               "_identifier": "CMPNEQSS"
+            },
+            {
+               "_identifier": "CMPNLTSS"
+            },
+            {
+               "_identifier": "CMPNLESS"
+            },
+            {
+               "_identifier": "CMPORDSS"
+            },
+            {
+               "_identifier": "PF2IW"
+            },
+            {
+               "_identifier": "PFNACC"
+            },
+            {
+               "_identifier": "PFPNACC"
+            },
+            {
+               "_identifier": "PI2FW"
+            },
+            {
+               "_identifier": "PSWAPD"
+            },
+            {
+               "_identifier": "FSTP1"
+            },
+            {
+               "_identifier": "FCOM2"
+            },
+            {
+               "_identifier": "FCOMP3"
+            },
+            {
+               "_identifier": "FXCH4"
+            },
+            {
+               "_identifier": "FCOMP5"
+            },
+            {
+               "_identifier": "FFREEP"
+            },
+            {
+               "_identifier": "FXCH7"
+            },
+            {
+               "_identifier": "FSTP8"
+            },
+            {
+               "_identifier": "FSTP9"
+            },
+            {
+               "_identifier": "ADDPD"
+            },
+            {
+               "_identifier": "ADDSD"
+            },
+            {
+               "_identifier": "ANDNPD"
+            },
+            {
+               "_identifier": "ANDPD"
+            },
+            {
+               "_identifier": "CLFLUSH"
+            },
+            {
+               "_identifier": "CMPPD"
+            },
+            {
+               "_identifier": "CMPSD"
+            },
+            {
+               "_identifier": "COMISD"
+            },
+            {
+               "_identifier": "CVTDQ2PD"
+            },
+            {
+               "_identifier": "CVTDQ2PS"
+            },
+            {
+               "_identifier": "CVTPD2DQ"
+            },
+            {
+               "_identifier": "CVTPD2PI"
+            },
+            {
+               "_identifier": "CVTPD2PS"
+            },
+            {
+               "_identifier": "CVTPI2PD"
+            },
+            {
+               "_identifier": "CVTPS2DQ"
+            },
+            {
+               "_identifier": "CVTPS2PD"
+            },
+            {
+               "_identifier": "CVTSD2SI"
+            },
+            {
+               "_identifier": "CVTSD2SS"
+            },
+            {
+               "_identifier": "CVTSI2SD"
+            },
+            {
+               "_identifier": "CVTSS2SD"
+            },
+            {
+               "_identifier": "CVTTPD2DQ"
+            },
+            {
+               "_identifier": "CVTTPD2PI"
+            },
+            {
+               "_identifier": "CVTTPS2DQ"
+            },
+            {
+               "_identifier": "CVTTSD2SI"
+            },
+            {
+               "_identifier": "DIVPD"
+            },
+            {
+               "_identifier": "DIVSD"
+            },
+            {
+               "_identifier": "LFENCE"
+            },
+            {
+               "_identifier": "MASKMOVDQU"
+            },
+            {
+               "_identifier": "MAXPD"
+            },
+            {
+               "_identifier": "MAXSD"
+            },
+            {
+               "_identifier": "MFENCE"
+            },
+            {
+               "_identifier": "MINPD"
+            },
+            {
+               "_identifier": "MINSD"
+            },
+            {
+               "_identifier": "MOVAPD"
+            },
+            {
+               "_identifier": "MOVDQ2Q"
+            },
+            {
+               "_identifier": "MOVDQA"
+            },
+            {
+               "_identifier": "MOVDQU"
+            },
+            {
+               "_identifier": "MOVHPD"
+            },
+            {
+               "_identifier": "MOVLPD"
+            },
+            {
+               "_identifier": "MOVMSKPD"
+            },
+            {
+               "_identifier": "MOVNTDQ"
+            },
+            {
+               "_identifier": "MOVNTI"
+            },
+            {
+               "_identifier": "MOVNTPD"
+            },
+            {
+               "_identifier": "MOVQ2DQ"
+            },
+            {
+               "_identifier": "MOVSD"
+            },
+            {
+               "_identifier": "MOVUPD"
+            },
+            {
+               "_identifier": "MULPD"
+            },
+            {
+               "_identifier": "MULSD"
+            },
+            {
+               "_identifier": "ORPD"
+            },
+            {
+               "_identifier": "PADDQ"
+            },
+            {
+               "_identifier": "PAUSE"
+            },
+            {
+               "_identifier": "PMULUDQ"
+            },
+            {
+               "_identifier": "PSHUFD"
+            },
+            {
+               "_identifier": "PSHUFHW"
+            },
+            {
+               "_identifier": "PSHUFLW"
+            },
+            {
+               "_identifier": "PSLLDQ"
+            },
+            {
+               "_identifier": "PSRLDQ"
+            },
+            {
+               "_identifier": "PSUBQ"
+            },
+            {
+               "_identifier": "PUNPCKHQDQ"
+            },
+            {
+               "_identifier": "PUNPCKLQDQ"
+            },
+            {
+               "_identifier": "SHUFPD"
+            },
+            {
+               "_identifier": "SQRTPD"
+            },
+            {
+               "_identifier": "SQRTSD"
+            },
+            {
+               "_identifier": "SUBPD"
+            },
+            {
+               "_identifier": "SUBSD"
+            },
+            {
+               "_identifier": "UCOMISD"
+            },
+            {
+               "_identifier": "UNPCKHPD"
+            },
+            {
+               "_identifier": "UNPCKLPD"
+            },
+            {
+               "_identifier": "XORPD"
+            },
+            {
+               "_identifier": "SYSCALL"
+            },
+            {
+               "_identifier": "SYSRET"
+            },
+            {
+               "_identifier": "SWAPGS"
+            },
+            {
+               "_identifier": "MOVDDUP"
+            },
+            {
+               "_identifier": "MOVSHDUP"
+            },
+            {
+               "_identifier": "MOVSLDUP"
+            },
+            {
+               "_identifier": "MOVSXD"
+            },
+            {
+               "_identifier": "CMPXCHG16B"
+            },
+            {
+               "_identifier": "ADDSUBPD"
+            },
+            {
+               "_identifier": "ADDSUBPS"
+            },
+            {
+               "_identifier": "HADDPD"
+            },
+            {
+               "_identifier": "HADDPS"
+            },
+            {
+               "_identifier": "HSUBPD"
+            },
+            {
+               "_identifier": "HSUBPS"
+            },
+            {
+               "_identifier": "MONITOR"
+            },
+            {
+               "_identifier": "MWAIT"
+            },
+            {
+               "_identifier": "FISTTP"
+            },
+            {
+               "_identifier": "LDDQU"
+            },
+            {
+               "_identifier": "PSIGNB"
+            },
+            {
+               "_identifier": "PSIGNW"
+            },
+            {
+               "_identifier": "PSIGND"
+            },
+            {
+               "_identifier": "PSHUFB"
+            },
+            {
+               "_identifier": "PMULHRSW"
+            },
+            {
+               "_identifier": "PMADDUBSW"
+            },
+            {
+               "_identifier": "PHSUBSW"
+            },
+            {
+               "_identifier": "PHADDSW"
+            },
+            {
+               "_identifier": "PHADDW"
+            },
+            {
+               "_identifier": "PHADDD"
+            },
+            {
+               "_identifier": "PHSUBW"
+            },
+            {
+               "_identifier": "PHSUBD"
+            },
+            {
+               "_identifier": "PALIGNR"
+            },
+            {
+               "_identifier": "PABSB"
+            },
+            {
+               "_identifier": "PABSW"
+            },
+            {
+               "_identifier": "PABSD"
+            },
+            {
+               "_identifier": "VMCALL"
+            },
+            {
+               "_identifier": "VMCLEAR"
+            },
+            {
+               "_identifier": "VMLAUNCH"
+            },
+            {
+               "_identifier": "VMRESUME"
+            },
+            {
+               "_identifier": "VMPTRLD"
+            },
+            {
+               "_identifier": "VMPTRST"
+            },
+            {
+               "_identifier": "VMREAD"
+            },
+            {
+               "_identifier": "VMWRITE"
+            },
+            {
+               "_identifier": "VMXOFF"
+            },
+            {
+               "_identifier": "VMXON"
+            },
+            {
+               "_identifier": "UD2"
+            },
+            {
+               "_identifier": "RDTSCP"
+            },
+            {
+               "_identifier": "PFRCPV"
+            },
+            {
+               "_identifier": "PFRSQRTV"
+            },
+            {
+               "_identifier": "CMPEQPD"
+            },
+            {
+               "_identifier": "CMPLTPD"
+            },
+            {
+               "_identifier": "CMPLEPD"
+            },
+            {
+               "_identifier": "CMPUNORDPD"
+            },
+            {
+               "_identifier": "CMPNEQPD"
+            },
+            {
+               "_identifier": "CMPNLTPD"
+            },
+            {
+               "_identifier": "CMPNLEPD"
+            },
+            {
+               "_identifier": "CMPORDPD"
+            },
+            {
+               "_identifier": "CMPEQSD"
+            },
+            {
+               "_identifier": "CMPLTSD"
+            },
+            {
+               "_identifier": "CMPLESD"
+            },
+            {
+               "_identifier": "CMPUNORDSD"
+            },
+            {
+               "_identifier": "CMPNEQSD"
+            },
+            {
+               "_identifier": "CMPNLTSD"
+            },
+            {
+               "_identifier": "CMPNLESD"
+            },
+            {
+               "_identifier": "CMPORDSD"
+            },
+            {
+               "_identifier": "BLENDPD"
+            },
+            {
+               "_identifier": "BLENDPS"
+            },
+            {
+               "_identifier": "BLENDVPD"
+            },
+            {
+               "_identifier": "BLENDVPS"
+            },
+            {
+               "_identifier": "DPPD"
+            },
+            {
+               "_identifier": "DPPS"
+            },
+            {
+               "_identifier": "EXTRACTPS"
+            },
+            {
+               "_identifier": "INSERTPS"
+            },
+            {
+               "_identifier": "MOVNTDQA"
+            },
+            {
+               "_identifier": "MPSADBW"
+            },
+            {
+               "_identifier": "PACKUSDW"
+            },
+            {
+               "_identifier": "PBLENDVB"
+            },
+            {
+               "_identifier": "PBLENDW"
+            },
+            {
+               "_identifier": "PCMPEQQ"
+            },
+            {
+               "_identifier": "PEXTRB"
+            },
+            {
+               "_identifier": "PEXTRD"
+            },
+            {
+               "_identifier": "PEXTRQ"
+            },
+            {
+               "_identifier": "PHMINPOSUW"
+            },
+            {
+               "_identifier": "PINSRB"
+            },
+            {
+               "_identifier": "PINSRD"
+            },
+            {
+               "_identifier": "PINSRQ"
+            },
+            {
+               "_identifier": "PMAXSB"
+            },
+            {
+               "_identifier": "PMAXSD"
+            },
+            {
+               "_identifier": "PMAXUD"
+            },
+            {
+               "_identifier": "PMAXUW"
+            },
+            {
+               "_identifier": "PMINSB"
+            },
+            {
+               "_identifier": "PMINSD"
+            },
+            {
+               "_identifier": "PMINUD"
+            },
+            {
+               "_identifier": "PMINUW"
+            },
+            {
+               "_identifier": "PMOVSXBW"
+            },
+            {
+               "_identifier": "PMOVSXBD"
+            },
+            {
+               "_identifier": "PMOVSXBQ"
+            },
+            {
+               "_identifier": "PMOVSXWD"
+            },
+            {
+               "_identifier": "PMOVSXWQ"
+            },
+            {
+               "_identifier": "PMOVSXDQ"
+            },
+            {
+               "_identifier": "PMOVZXBW"
+            },
+            {
+               "_identifier": "PMOVZXBD"
+            },
+            {
+               "_identifier": "PMOVZXBQ"
+            },
+            {
+               "_identifier": "PMOVZXWD"
+            },
+            {
+               "_identifier": "PMOVZXWQ"
+            },
+            {
+               "_identifier": "PMOVZXDQ"
+            },
+            {
+               "_identifier": "PMULDQ"
+            },
+            {
+               "_identifier": "PMULLD"
+            },
+            {
+               "_identifier": "PTEST"
+            },
+            {
+               "_identifier": "ROUNDPD"
+            },
+            {
+               "_identifier": "ROUNDPS"
+            },
+            {
+               "_identifier": "ROUNDSD"
+            },
+            {
+               "_identifier": "ROUNDSS"
+            },
+            {
+               "_identifier": "CRC32"
+            },
+            {
+               "_identifier": "PCMPESTRI"
+            },
+            {
+               "_identifier": "PCMPESTRM"
+            },
+            {
+               "_identifier": "PCMPISTRI"
+            },
+            {
+               "_identifier": "PCMPISTRM"
+            },
+            {
+               "_identifier": "PCMPGTQ"
+            },
+            {
+               "_identifier": "POPCNT"
+            },
+            {
+               "_identifier": "EXTRQ"
+            },
+            {
+               "_identifier": "INSERTQ"
+            },
+            {
+               "_identifier": "MOVNTSD"
+            },
+            {
+               "_identifier": "MOVNTSS"
+            },
+            {
+               "_identifier": "LZCNT"
+            },
+            {
+               "_identifier": "XGETBV"
+            },
+            {
+               "_identifier": "XRSTOR"
+            },
+            {
+               "_identifier": "XSAVE"
+            },
+            {
+               "_identifier": "XSETBV"
+            },
+            {
+               "_identifier": "GETSEC"
+            },
+            {
+               "_identifier": "CLGI"
+            },
+            {
+               "_identifier": "INVLPGA"
+            },
+            {
+               "_identifier": "SKINIT"
+            },
+            {
+               "_identifier": "STGI"
+            },
+            {
+               "_identifier": "VMEXIT"
+            },
+            {
+               "_identifier": "VMLOAD"
+            },
+            {
+               "_identifier": "VMMCALL"
+            },
+            {
+               "_identifier": "VMRUN"
+            },
+            {
+               "_identifier": "VMSAVE"
+            },
+            {
+               "_identifier": "INVEPT"
+            },
+            {
+               "_identifier": "INVVPID"
+            },
+            {
+               "_identifier": "MOVBE"
+            },
+            {
+               "_identifier": "AESENC"
+            },
+            {
+               "_identifier": "AESENCLAST"
+            },
+            {
+               "_identifier": "AESDEC"
+            },
+            {
+               "_identifier": "AESDECLAST"
+            },
+            {
+               "_identifier": "AESIMC"
+            },
+            {
+               "_identifier": "AESKEYGENASSIST"
+            },
+            {
+               "_identifier": "PCLMULQDQ"
+            },
+            {
+               "_identifier": "RETNW"
+            },
+            {
+               "_identifier": "RETND"
+            },
+            {
+               "_identifier": "RETNQ"
+            },
+            {
+               "_identifier": "RETFW"
+            },
+            {
+               "_identifier": "RETFD"
+            },
+            {
+               "_identifier": "RETFQ"
+            },
+            {
+               "_identifier": "RDRAND"
+            },
+            {
+               "_identifier": "ADCX"
+            },
+            {
+               "_identifier": "ADOX"
+            },
+            {
+               "_identifier": "ANDN"
+            },
+            {
+               "_identifier": "BEXTR"
+            },
+            {
+               "_identifier": "BLSI"
+            },
+            {
+               "_identifier": "BLSMSK"
+            },
+            {
+               "_identifier": "BLSR"
+            },
+            {
+               "_identifier": "BZHI"
+            },
+            {
+               "_identifier": "CLAC"
+            },
+            {
+               "_identifier": "MULX"
+            },
+            {
+               "_identifier": "PDEP"
+            },
+            {
+               "_identifier": "PEXT"
+            },
+            {
+               "_identifier": "RORX"
+            },
+            {
+               "_identifier": "SARX"
+            },
+            {
+               "_identifier": "SHLX"
+            },
+            {
+               "_identifier": "SHRX"
+            },
+            {
+               "_identifier": "STAC"
+            },
+            {
+               "_identifier": "TZCNT"
+            },
+            {
+               "_identifier": "XSAVEOPT"
+            },
+            {
+               "_identifier": "INVPCID"
+            },
+            {
+               "_identifier": "RDSEED"
+            },
+            {
+               "_identifier": "RDFSBASE"
+            },
+            {
+               "_identifier": "RDGSBASE"
+            },
+            {
+               "_identifier": "WRFSBASE"
+            },
+            {
+               "_identifier": "WRGSBASE"
+            },
+            {
+               "_identifier": "VADDPD"
+            },
+            {
+               "_identifier": "VADDPS"
+            },
+            {
+               "_identifier": "VADDSD"
+            },
+            {
+               "_identifier": "VADDSS"
+            },
+            {
+               "_identifier": "VADDSUBPD"
+            },
+            {
+               "_identifier": "VADDSUBPS"
+            },
+            {
+               "_identifier": "VAESDEC"
+            },
+            {
+               "_identifier": "VAESDECLAST"
+            },
+            {
+               "_identifier": "VAESENC"
+            },
+            {
+               "_identifier": "VAESENCLAST"
+            },
+            {
+               "_identifier": "VAESIMC"
+            },
+            {
+               "_identifier": "VAESKEYGENASSIST"
+            },
+            {
+               "_identifier": "VANDNPD"
+            },
+            {
+               "_identifier": "VANDNPS"
+            },
+            {
+               "_identifier": "VANDPD"
+            },
+            {
+               "_identifier": "VANDPS"
+            },
+            {
+               "_identifier": "VBLENDPD"
+            },
+            {
+               "_identifier": "VBLENDPS"
+            },
+            {
+               "_identifier": "VBLENDVPD"
+            },
+            {
+               "_identifier": "VBLENDVPS"
+            },
+            {
+               "_identifier": "VBROADCASTF128"
+            },
+            {
+               "_identifier": "VBROADCASTI128"
+            },
+            {
+               "_identifier": "VBROADCASTSD"
+            },
+            {
+               "_identifier": "VBROADCASTSS"
+            },
+            {
+               "_identifier": "VCMPPD"
+            },
+            {
+               "_identifier": "VCMPPS"
+            },
+            {
+               "_identifier": "VCMPSD"
+            },
+            {
+               "_identifier": "VCMPSS"
+            },
+            {
+               "_identifier": "VCOMISD"
+            },
+            {
+               "_identifier": "VCOMISS"
+            },
+            {
+               "_identifier": "VCVTDQ2PD"
+            },
+            {
+               "_identifier": "VCVTDQ2PS"
+            },
+            {
+               "_identifier": "VCVTPD2DQ"
+            },
+            {
+               "_identifier": "VCVTPD2PS"
+            },
+            {
+               "_identifier": "VCVTPH2PS"
+            },
+            {
+               "_identifier": "VCVTPS2DQ"
+            },
+            {
+               "_identifier": "VCVTPS2PD"
+            },
+            {
+               "_identifier": "VCVTPS2PH"
+            },
+            {
+               "_identifier": "VCVTSD2SI"
+            },
+            {
+               "_identifier": "VCVTSD2SS"
+            },
+            {
+               "_identifier": "VCVTSI2SD"
+            },
+            {
+               "_identifier": "VCVTSI2SS"
+            },
+            {
+               "_identifier": "VCVTSS2SD"
+            },
+            {
+               "_identifier": "VCVTSS2SI"
+            },
+            {
+               "_identifier": "VCVTTPD2DQ"
+            },
+            {
+               "_identifier": "VCVTTPS2DQ"
+            },
+            {
+               "_identifier": "VCVTTSD2SI"
+            },
+            {
+               "_identifier": "VCVTTSS2SI"
+            },
+            {
+               "_identifier": "VDIVPD"
+            },
+            {
+               "_identifier": "VDIVPS"
+            },
+            {
+               "_identifier": "VDIVSD"
+            },
+            {
+               "_identifier": "VDIVSS"
+            },
+            {
+               "_identifier": "VDPPD"
+            },
+            {
+               "_identifier": "VDPPS"
+            },
+            {
+               "_identifier": "VEXTRACTF128"
+            },
+            {
+               "_identifier": "VEXTRACTI128"
+            },
+            {
+               "_identifier": "VEXTRACTPS"
+            },
+            {
+               "_identifier": "VFMADD132PD"
+            },
+            {
+               "_identifier": "VFMADD132PS"
+            },
+            {
+               "_identifier": "VFMADD132SD"
+            },
+            {
+               "_identifier": "VFMADD132SS"
+            },
+            {
+               "_identifier": "VFMADD213PD"
+            },
+            {
+               "_identifier": "VFMADD213PS"
+            },
+            {
+               "_identifier": "VFMADD213SD"
+            },
+            {
+               "_identifier": "VFMADD213SS"
+            },
+            {
+               "_identifier": "VFMADD231PD"
+            },
+            {
+               "_identifier": "VFMADD231PS"
+            },
+            {
+               "_identifier": "VFMADD231SD"
+            },
+            {
+               "_identifier": "VFMADD231SS"
+            },
+            {
+               "_identifier": "VFMADDSUB132PD"
+            },
+            {
+               "_identifier": "VFMADDSUB132PS"
+            },
+            {
+               "_identifier": "VFMADDSUB213PD"
+            },
+            {
+               "_identifier": "VFMADDSUB213PS"
+            },
+            {
+               "_identifier": "VFMADDSUB231PD"
+            },
+            {
+               "_identifier": "VFMADDSUB231PS"
+            },
+            {
+               "_identifier": "VFMSUB132PD"
+            },
+            {
+               "_identifier": "VFMSUB132PS"
+            },
+            {
+               "_identifier": "VFMSUB132SD"
+            },
+            {
+               "_identifier": "VFMSUB132SS"
+            },
+            {
+               "_identifier": "VFMSUB213PD"
+            },
+            {
+               "_identifier": "VFMSUB213PS"
+            },
+            {
+               "_identifier": "VFMSUB213SD"
+            },
+            {
+               "_identifier": "VFMSUB213SS"
+            },
+            {
+               "_identifier": "VFMSUB231PD"
+            },
+            {
+               "_identifier": "VFMSUB231PS"
+            },
+            {
+               "_identifier": "VFMSUB231SD"
+            },
+            {
+               "_identifier": "VFMSUB231SS"
+            },
+            {
+               "_identifier": "VFMSUBADD132PD"
+            },
+            {
+               "_identifier": "VFMSUBADD132PS"
+            },
+            {
+               "_identifier": "VFMSUBADD213PD"
+            },
+            {
+               "_identifier": "VFMSUBADD213PS"
+            },
+            {
+               "_identifier": "VFMSUBADD231PD"
+            },
+            {
+               "_identifier": "VFMSUBADD231PS"
+            },
+            {
+               "_identifier": "VFNMADD132PD"
+            },
+            {
+               "_identifier": "VFNMADD132PS"
+            },
+            {
+               "_identifier": "VFNMADD132SD"
+            },
+            {
+               "_identifier": "VFNMADD132SS"
+            },
+            {
+               "_identifier": "VFNMADD213PD"
+            },
+            {
+               "_identifier": "VFNMADD213PS"
+            },
+            {
+               "_identifier": "VFNMADD213SD"
+            },
+            {
+               "_identifier": "VFNMADD213SS"
+            },
+            {
+               "_identifier": "VFNMADD231PD"
+            },
+            {
+               "_identifier": "VFNMADD231PS"
+            },
+            {
+               "_identifier": "VFNMADD231SD"
+            },
+            {
+               "_identifier": "VFNMADD231SS"
+            },
+            {
+               "_identifier": "VFNMSUB132PD"
+            },
+            {
+               "_identifier": "VFNMSUB132PS"
+            },
+            {
+               "_identifier": "VFNMSUB132SD"
+            },
+            {
+               "_identifier": "VFNMSUB132SS"
+            },
+            {
+               "_identifier": "VFNMSUB213PD"
+            },
+            {
+               "_identifier": "VFNMSUB213PS"
+            },
+            {
+               "_identifier": "VFNMSUB213SD"
+            },
+            {
+               "_identifier": "VFNMSUB213SS"
+            },
+            {
+               "_identifier": "VFNMSUB231PD"
+            },
+            {
+               "_identifier": "VFNMSUB231PS"
+            },
+            {
+               "_identifier": "VFNMSUB231SD"
+            },
+            {
+               "_identifier": "VFNMSUB231SS"
+            },
+            {
+               "_identifier": "VGATHERDPS"
+            },
+            {
+               "_identifier": "VGATHERDPD"
+            },
+            {
+               "_identifier": "VGATHERQPS"
+            },
+            {
+               "_identifier": "VGATHERQPD"
+            },
+            {
+               "_identifier": "VHADDPD"
+            },
+            {
+               "_identifier": "VHADDPS"
+            },
+            {
+               "_identifier": "VHSUBPD"
+            },
+            {
+               "_identifier": "VHSUBPS"
+            },
+            {
+               "_identifier": "VINSERTF128"
+            },
+            {
+               "_identifier": "VINSERTI128"
+            },
+            {
+               "_identifier": "VINSERTPS"
+            },
+            {
+               "_identifier": "VLDDQU"
+            },
+            {
+               "_identifier": "VLDMXCSR"
+            },
+            {
+               "_identifier": "VMASKMOVDQU"
+            },
+            {
+               "_identifier": "VMASKMOVPD"
+            },
+            {
+               "_identifier": "VMASKMOVPS"
+            },
+            {
+               "_identifier": "VMAXPD"
+            },
+            {
+               "_identifier": "VMAXPS"
+            },
+            {
+               "_identifier": "VMAXSD"
+            },
+            {
+               "_identifier": "VMAXSS"
+            },
+            {
+               "_identifier": "VMINPD"
+            },
+            {
+               "_identifier": "VMINPS"
+            },
+            {
+               "_identifier": "VMINSD"
+            },
+            {
+               "_identifier": "VMINSS"
+            },
+            {
+               "_identifier": "VMOVAPD"
+            },
+            {
+               "_identifier": "VMOVAPS"
+            },
+            {
+               "_identifier": "VMOVD"
+            },
+            {
+               "_identifier": "VMOVDDUP"
+            },
+            {
+               "_identifier": "VMOVDQA"
+            },
+            {
+               "_identifier": "VMOVDQU"
+            },
+            {
+               "_identifier": "VMOVHLPS"
+            },
+            {
+               "_identifier": "VMOVHPD"
+            },
+            {
+               "_identifier": "VMOVHPS"
+            },
+            {
+               "_identifier": "VMOVLHPS"
+            },
+            {
+               "_identifier": "VMOVLPD"
+            },
+            {
+               "_identifier": "VMOVLPS"
+            },
+            {
+               "_identifier": "VMOVMSKPD"
+            },
+            {
+               "_identifier": "VMOVMSKPS"
+            },
+            {
+               "_identifier": "VMOVNTDQ"
+            },
+            {
+               "_identifier": "VMOVNTDQA"
+            },
+            {
+               "_identifier": "VMOVNTPD"
+            },
+            {
+               "_identifier": "VMOVNTPS"
+            },
+            {
+               "_identifier": "VMOVNTSD"
+            },
+            {
+               "_identifier": "VMOVNTSS"
+            },
+            {
+               "_identifier": "VMOVQ"
+            },
+            {
+               "_identifier": "VMOVSD"
+            },
+            {
+               "_identifier": "VMOVSHDUP"
+            },
+            {
+               "_identifier": "VMOVSLDUP"
+            },
+            {
+               "_identifier": "VMOVSS"
+            },
+            {
+               "_identifier": "VMOVUPD"
+            },
+            {
+               "_identifier": "VMOVUPS"
+            },
+            {
+               "_identifier": "VMPSADBW"
+            },
+            {
+               "_identifier": "VMULPD"
+            },
+            {
+               "_identifier": "VMULPS"
+            },
+            {
+               "_identifier": "VMULSD"
+            },
+            {
+               "_identifier": "VMULSS"
+            },
+            {
+               "_identifier": "VORPD"
+            },
+            {
+               "_identifier": "VORPS"
+            },
+            {
+               "_identifier": "VPABSB"
+            },
+            {
+               "_identifier": "VPABSD"
+            },
+            {
+               "_identifier": "VPABSW"
+            },
+            {
+               "_identifier": "VPACKSSDW"
+            },
+            {
+               "_identifier": "VPACKSSWB"
+            },
+            {
+               "_identifier": "VPACKUSDW"
+            },
+            {
+               "_identifier": "VPACKUSWB"
+            },
+            {
+               "_identifier": "VPADDB"
+            },
+            {
+               "_identifier": "VPADDD"
+            },
+            {
+               "_identifier": "VPADDQ"
+            },
+            {
+               "_identifier": "VPADDSB"
+            },
+            {
+               "_identifier": "VPADDSW"
+            },
+            {
+               "_identifier": "VPADDUSB"
+            },
+            {
+               "_identifier": "VPADDUSW"
+            },
+            {
+               "_identifier": "VPADDW"
+            },
+            {
+               "_identifier": "VPALIGNR"
+            },
+            {
+               "_identifier": "VPAND"
+            },
+            {
+               "_identifier": "VPANDN"
+            },
+            {
+               "_identifier": "VPAVGB"
+            },
+            {
+               "_identifier": "VPAVGW"
+            },
+            {
+               "_identifier": "VPBLENDD"
+            },
+            {
+               "_identifier": "VPBLENDVB"
+            },
+            {
+               "_identifier": "VPBLENDW"
+            },
+            {
+               "_identifier": "VPBROADCASTB"
+            },
+            {
+               "_identifier": "VPBROADCASTD"
+            },
+            {
+               "_identifier": "VPBROADCASTQ"
+            },
+            {
+               "_identifier": "VPBROADCASTW"
+            },
+            {
+               "_identifier": "VPCLMULQDQ"
+            },
+            {
+               "_identifier": "VPCMPEQB"
+            },
+            {
+               "_identifier": "VPCMPEQD"
+            },
+            {
+               "_identifier": "VPCMPEQQ"
+            },
+            {
+               "_identifier": "VPCMPEQW"
+            },
+            {
+               "_identifier": "VPCMPESTRI"
+            },
+            {
+               "_identifier": "VPCMPESTRM"
+            },
+            {
+               "_identifier": "VPCMPGTB"
+            },
+            {
+               "_identifier": "VPCMPGTD"
+            },
+            {
+               "_identifier": "VPCMPGTQ"
+            },
+            {
+               "_identifier": "VPCMPGTW"
+            },
+            {
+               "_identifier": "VPCMPISTRI"
+            },
+            {
+               "_identifier": "VPCMPISTRM"
+            },
+            {
+               "_identifier": "VPERM2F128"
+            },
+            {
+               "_identifier": "VPERM2I128"
+            },
+            {
+               "_identifier": "VPERMD"
+            },
+            {
+               "_identifier": "VPERMILPD"
+            },
+            {
+               "_identifier": "VPERMILPS"
+            },
+            {
+               "_identifier": "VPERMPD"
+            },
+            {
+               "_identifier": "VPERMPS"
+            },
+            {
+               "_identifier": "VPERMQ"
+            },
+            {
+               "_identifier": "VPEXTRB"
+            },
+            {
+               "_identifier": "VPEXTRD"
+            },
+            {
+               "_identifier": "VPEXTRQ"
+            },
+            {
+               "_identifier": "VPEXTRW"
+            },
+            {
+               "_identifier": "VPGATHERDD"
+            },
+            {
+               "_identifier": "VPGATHERDQ"
+            },
+            {
+               "_identifier": "VPGATHERQD"
+            },
+            {
+               "_identifier": "VPGATHERQQ"
+            },
+            {
+               "_identifier": "VPHADDD"
+            },
+            {
+               "_identifier": "VPHADDSW"
+            },
+            {
+               "_identifier": "VPHADDW"
+            },
+            {
+               "_identifier": "VPHMINPOSUW"
+            },
+            {
+               "_identifier": "VPHSUBD"
+            },
+            {
+               "_identifier": "VPHSUBSW"
+            },
+            {
+               "_identifier": "VPHSUBW"
+            },
+            {
+               "_identifier": "VPINSRB"
+            },
+            {
+               "_identifier": "VPINSRD"
+            },
+            {
+               "_identifier": "VPINSRQ"
+            },
+            {
+               "_identifier": "VPINSRW"
+            },
+            {
+               "_identifier": "VPMADDUBSW"
+            },
+            {
+               "_identifier": "VPMADDWD"
+            },
+            {
+               "_identifier": "VPMASKMOVD"
+            },
+            {
+               "_identifier": "VPMASKMOVQ"
+            },
+            {
+               "_identifier": "VPMAXSB"
+            },
+            {
+               "_identifier": "VPMAXSD"
+            },
+            {
+               "_identifier": "VPMAXSW"
+            },
+            {
+               "_identifier": "VPMAXUB"
+            },
+            {
+               "_identifier": "VPMAXUD"
+            },
+            {
+               "_identifier": "VPMAXUW"
+            },
+            {
+               "_identifier": "VPMINSB"
+            },
+            {
+               "_identifier": "VPMINSD"
+            },
+            {
+               "_identifier": "VPMINSW"
+            },
+            {
+               "_identifier": "VPMINUB"
+            },
+            {
+               "_identifier": "VPMINUD"
+            },
+            {
+               "_identifier": "VPMINUW"
+            },
+            {
+               "_identifier": "VPMOVMSKB"
+            },
+            {
+               "_identifier": "VPMOVSXBD"
+            },
+            {
+               "_identifier": "VPMOVSXBQ"
+            },
+            {
+               "_identifier": "VPMOVSXBW"
+            },
+            {
+               "_identifier": "VPMOVSXDQ"
+            },
+            {
+               "_identifier": "VPMOVSXWD"
+            },
+            {
+               "_identifier": "VPMOVSXWQ"
+            },
+            {
+               "_identifier": "VPMOVZXBD"
+            },
+            {
+               "_identifier": "VPMOVZXBQ"
+            },
+            {
+               "_identifier": "VPMOVZXBW"
+            },
+            {
+               "_identifier": "VPMOVZXDQ"
+            },
+            {
+               "_identifier": "VPMOVZXWD"
+            },
+            {
+               "_identifier": "VPMOVZXWQ"
+            },
+            {
+               "_identifier": "VPMULDQ"
+            },
+            {
+               "_identifier": "VPMULHRSW"
+            },
+            {
+               "_identifier": "VPMULHUW"
+            },
+            {
+               "_identifier": "VPMULHW"
+            },
+            {
+               "_identifier": "VPMULLD"
+            },
+            {
+               "_identifier": "VPMULLW"
+            },
+            {
+               "_identifier": "VPMULUDQ"
+            },
+            {
+               "_identifier": "VPOR"
+            },
+            {
+               "_identifier": "VPSADBW"
+            },
+            {
+               "_identifier": "VPSHUFB"
+            },
+            {
+               "_identifier": "VPSHUFD"
+            },
+            {
+               "_identifier": "VPSHUFHW"
+            },
+            {
+               "_identifier": "VPSHUFLW"
+            },
+            {
+               "_identifier": "VPSIGNB"
+            },
+            {
+               "_identifier": "VPSIGND"
+            },
+            {
+               "_identifier": "VPSIGNW"
+            },
+            {
+               "_identifier": "VPSLLD"
+            },
+            {
+               "_identifier": "VPSLLDQ"
+            },
+            {
+               "_identifier": "VPSLLQ"
+            },
+            {
+               "_identifier": "VPSLLVD"
+            },
+            {
+               "_identifier": "VPSLLVQ"
+            },
+            {
+               "_identifier": "VPSLLW"
+            },
+            {
+               "_identifier": "VPSRAD"
+            },
+            {
+               "_identifier": "VPSRAVD"
+            },
+            {
+               "_identifier": "VPSRAW"
+            },
+            {
+               "_identifier": "VPSRLD"
+            },
+            {
+               "_identifier": "VPSRLDQ"
+            },
+            {
+               "_identifier": "VPSRLQ"
+            },
+            {
+               "_identifier": "VPSRLVD"
+            },
+            {
+               "_identifier": "VPSRLVQ"
+            },
+            {
+               "_identifier": "VPSRLW"
+            },
+            {
+               "_identifier": "VPSUBB"
+            },
+            {
+               "_identifier": "VPSUBD"
+            },
+            {
+               "_identifier": "VPSUBQ"
+            },
+            {
+               "_identifier": "VPSUBSB"
+            },
+            {
+               "_identifier": "VPSUBSW"
+            },
+            {
+               "_identifier": "VPSUBUSB"
+            },
+            {
+               "_identifier": "VPSUBUSW"
+            },
+            {
+               "_identifier": "VPSUBW"
+            },
+            {
+               "_identifier": "VPTEST"
+            },
+            {
+               "_identifier": "VPUNPCKHBW"
+            },
+            {
+               "_identifier": "VPUNPCKHDQ"
+            },
+            {
+               "_identifier": "VPUNPCKHQDQ"
+            },
+            {
+               "_identifier": "VPUNPCKHWD"
+            },
+            {
+               "_identifier": "VPUNPCKLBW"
+            },
+            {
+               "_identifier": "VPUNPCKLDQ"
+            },
+            {
+               "_identifier": "VPUNPCKLQDQ"
+            },
+            {
+               "_identifier": "VPUNPCKLWD"
+            },
+            {
+               "_identifier": "VPXOR"
+            },
+            {
+               "_identifier": "VRCPPS"
+            },
+            {
+               "_identifier": "VRCPSS"
+            },
+            {
+               "_identifier": "VROUNDPD"
+            },
+            {
+               "_identifier": "VROUNDPS"
+            },
+            {
+               "_identifier": "VROUNDSD"
+            },
+            {
+               "_identifier": "VROUNDSS"
+            },
+            {
+               "_identifier": "VRSQRTPS"
+            },
+            {
+               "_identifier": "VRSQRTSS"
+            },
+            {
+               "_identifier": "VSHUFPD"
+            },
+            {
+               "_identifier": "VSHUFPS"
+            },
+            {
+               "_identifier": "VSQRTPD"
+            },
+            {
+               "_identifier": "VSQRTPS"
+            },
+            {
+               "_identifier": "VSQRTSD"
+            },
+            {
+               "_identifier": "VSQRTSS"
+            },
+            {
+               "_identifier": "VSTMXCSR"
+            },
+            {
+               "_identifier": "VSUBPD"
+            },
+            {
+               "_identifier": "VSUBPS"
+            },
+            {
+               "_identifier": "VSUBSD"
+            },
+            {
+               "_identifier": "VSUBSS"
+            },
+            {
+               "_identifier": "VTESTPD"
+            },
+            {
+               "_identifier": "VTESTPS"
+            },
+            {
+               "_identifier": "VUCOMISD"
+            },
+            {
+               "_identifier": "VUCOMISS"
+            },
+            {
+               "_identifier": "VUNPCKHPD"
+            },
+            {
+               "_identifier": "VUNPCKHPS"
+            },
+            {
+               "_identifier": "VUNPCKLPD"
+            },
+            {
+               "_identifier": "VUNPCKLPS"
+            },
+            {
+               "_identifier": "VXORPD"
+            },
+            {
+               "_identifier": "VXORPS"
+            },
+            {
+               "_identifier": "VZEROALL"
+            },
+            {
+               "_identifier": "VZEROUPPER"
+            },
+            {
+               "_identifier": "XABORT"
+            },
+            {
+               "_identifier": "XBEGIN"
+            },
+            {
+               "_identifier": "XEND"
+            },
+            {
+               "_identifier": "XTEST"
+            },
+            {
+               "_identifier": "VMGETINFO"
+            },
+            {
+               "_identifier": "VMSETINFO"
+            },
+            {
+               "_identifier": "VMDXDSBL"
+            },
+            {
+               "_identifier": "VMDXENBL"
+            },
+            {
+               "_identifier": "VMCPUID"
+            },
+            {
+               "_identifier": "VMHLT"
+            },
+            {
+               "_identifier": "VMSPLAF"
+            },
+            {
+               "_identifier": "VMPUSHFD"
+            },
+            {
+               "_identifier": "VMPOPFD"
+            },
+            {
+               "_identifier": "VMCLI"
+            },
+            {
+               "_identifier": "VMSTI"
+            },
+            {
+               "_identifier": "VMIRETD"
+            },
+            {
+               "_identifier": "VMSGDT"
+            },
+            {
+               "_identifier": "VMSIDT"
+            },
+            {
+               "_identifier": "VMSLDT"
+            },
+            {
+               "_identifier": "VMSTR"
+            },
+            {
+               "_identifier": "VMSDTE"
+            },
+            {
+               "_identifier": "VPCEXT"
+            },
+            {
+               "_identifier": "VFMADDSUBPS"
+            },
+            {
+               "_identifier": "VFMADDSUBPD"
+            },
+            {
+               "_identifier": "VFMSUBADDPS"
+            },
+            {
+               "_identifier": "VFMSUBADDPD"
+            },
+            {
+               "_identifier": "VFMADDPS"
+            },
+            {
+               "_identifier": "VFMADDPD"
+            },
+            {
+               "_identifier": "VFMADDSS"
+            },
+            {
+               "_identifier": "VFMADDSD"
+            },
+            {
+               "_identifier": "VFMSUBPS"
+            },
+            {
+               "_identifier": "VFMSUBPD"
+            },
+            {
+               "_identifier": "VFMSUBSS"
+            },
+            {
+               "_identifier": "VFMSUBSD"
+            },
+            {
+               "_identifier": "VFNMADDPS"
+            },
+            {
+               "_identifier": "VFNMADDPD"
+            },
+            {
+               "_identifier": "VFNMADDSS"
+            },
+            {
+               "_identifier": "VFNMADDSD"
+            },
+            {
+               "_identifier": "VFNMSUBPS"
+            },
+            {
+               "_identifier": "VFNMSUBPD"
+            },
+            {
+               "_identifier": "VFNMSUBSS"
+            },
+            {
+               "_identifier": "VFNMSUBSD"
+            }
+         ]
+      },
+      "operationJmps": {
+         "operation": [
+            {
+               "_identifier": "JE"
+            },
+            {
+               "_identifier": "JNE"
+            },
+            {
+               "_identifier": "JG"
+            },
+            {
+               "_identifier": "JGE"
+            },
+            {
+               "_identifier": "JL"
+            },
+            {
+               "_identifier": "JLE"
+            },
+            {
+               "_identifier": "JA"
+            },
+            {
+               "_identifier": "JAE"
+            },
+            {
+               "_identifier": "JB"
+            },
+            {
+               "_identifier": "JBE"
+            },
+            {
+               "_identifier": "JNB"
+            },
+            {
+               "_identifier": "JO"
+            },
+            {
+               "_identifier": "JNO"
+            },
+            {
+               "_identifier": "JC"
+            },
+            {
+               "_identifier": "JNC"
+            },
+            {
+               "_identifier": "JS"
+            },
+            {
+               "_identifier": "JNS"
+            },
+            {
+               "_identifier": "JZ"
+            },
+            {
+               "_identifier": "JNZ"
+            },
+            {
+               "_identifier": "CALL"
+            },
+            {
+               "_identifier": "JMP"
+            },
+            {
+               "_identifier": "JCXZ"
+            },
+            {
+               "_identifier": "JP"
+            },
+            {
+               "_identifier": "JECXZ"
+            },
+            {
+               "_identifier": "JNP"
+            },
+            {
+               "_identifier": "JPO"
+            },
+            {
+               "_identifier": "RET"
+            },
+            {
+               "_identifier": "RETN"
+            }
+         ]
+      },
+      "registers": {
+         "register": [
+            {
+               "_identifier": "AH",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "BH",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "CH",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "DH",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "AL",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "BL",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "CL",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "DL",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R8B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R9B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R10B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R11B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R12B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R13B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R14B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "R15B",
+               "_category": "GEN",
+               "_length": "8"
+            },
+            {
+               "_identifier": "AX",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "BX",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "CX",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "DX",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R8W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R9W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R10W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R11W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R12W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R13W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R14W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "R15W",
+               "_category": "GEN",
+               "_length": "16"
+            },
+            {
+               "_identifier": "EAX",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "EBX",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "ECX",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "EDX",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R8D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R9D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R10D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R11D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R12D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R13D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R14D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "R15D",
+               "_category": "GEN",
+               "_length": "32"
+            },
+            {
+               "_identifier": "RAX",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RBX",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RCX",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RDX",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RSI",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RDI",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RBP",
+               "_category": "PTR",
+               "_length": "64"
+            },
+            {
+               "_identifier": "RSP",
+               "_category": "PRT",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R8",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R9",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R10",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R11",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R12",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R13",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R14",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "R15",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM0",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM1",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM2",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM3",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM4",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM5",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM6",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "MM7",
+               "_category": "GEN",
+               "_length": "64"
+            },
+            {
+               "_identifier": "XMM0",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM1",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM2",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM3",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM4",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM5",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM6",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "XMM7",
+               "_category": "GEN",
+               "_length": "128"
+            },
+            {
+               "_identifier": "CS",
+               "_category": "SEG",
+               "_length": "16"
+            },
+            {
+               "_identifier": "DS",
+               "_category": "SEG",
+               "_length": "16"
+            },
+            {
+               "_identifier": "ES",
+               "_category": "SEG",
+               "_length": "16"
+            },
+            {
+               "_identifier": "FS",
+               "_category": "SEG",
+               "_length": "16"
+            },
+            {
+               "_identifier": "GS",
+               "_category": "SEG",
+               "_length": "16"
+            },
+            {
+               "_identifier": "SS",
+               "_category": "SEG",
+               "_length": "16"
+            },
+            {
+               "_identifier": "EDI",
+               "_category": "IND",
+               "_length": "16"
+            },
+            {
+               "_identifier": "DI",
+               "_category": "IND",
+               "_length": "16"
+            },
+            {
+               "_identifier": "ESI",
+               "_category": "IND",
+               "_length": "16"
+            },
+            {
+               "_identifier": "SI",
+               "_category": "IND",
+               "_length": "16"
+            },
+            {
+               "_identifier": "EBP",
+               "_category": "PTR",
+               "_length": "16"
+            },
+            {
+               "_identifier": "BP",
+               "_category": "PTR",
+               "_length": "16"
+            },
+            {
+               "_identifier": "ESP",
+               "_category": "PTR",
+               "_length": "16"
+            },
+            {
+               "_identifier": "SP",
+               "_category": "PTR",
+               "_length": "16"
+            },
+            {
+               "_identifier": "EIP",
+               "_category": "PTR",
+               "_length": "16"
+            },
+            {
+               "_identifier": "IP",
+               "_category": "PTR",
+               "_length": "16"
+            },
+            {
+               "_identifier": "CF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "PF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "AF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "ZF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "SF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "TF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "IF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "DF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "OF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "IOPL",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "NT",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "RF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "VM",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "AC",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "VIF",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "VIP",
+               "_category": "FLG",
+               "_length": "1"
+            },
+            {
+               "_identifier": "ID",
+               "_category": "FLG",
+               "_length": "1"
+            }
+         ]
+      },
+      "lengthKeywords": {
+         "lengthKeyWord": [
+            {
+               "_identifier": "BYTE",
+               "_length": "8"
+            },
+            {
+               "_identifier": "WORD",
+               "_length": "16"
+            },
+            {
+               "_identifier": "DWORD",
+               "_length": "32"
+            },
+            {
+               "_identifier": "QWORD",
+               "_length": "64"
+            },
+            {
+               "_identifier": "XMMWORD",
+               "_length": "128"
+            }
+         ]
+      },
+      "jmpKeywords": {
+         "string": [
+            "large",
+            "short",
+            "far"
+         ]
+      },
+      "lineFormats": {
+         "syntax": [
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>[\\S\\s]+)[\\s]*,[\\s]*(?<OPN2>[\\S\\s]+),[\\s]*(?<OPN3>[\\S\\s]+)",
+               "_numberOfOperand": "3"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>[\\S\\s]+)[\\s]*,[\\s]*(?<OPN2>[\\S\\s]+)",
+               "_numberOfOperand": "2"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+(?<OPN1>[\\S\\s]+)",
+               "_numberOfOperand": "1"
+            },
+            {
+               "lineRegex": "(?<OPT>[\\S]+)[\\s]+",
+               "_numberOfOperand": "0"
+            }
+         ]
+      },
+      "constantVariableRegex": "([0-9A-Fa-f]{3,10}(h|H)$)",
+      "memoryVariableRegex": "(^DS:)|(^ds:)|([\\s\\S]*\\[[\\s\\S]+\\])"
+   }
+}
