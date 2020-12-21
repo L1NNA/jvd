@@ -29,6 +29,7 @@ import struct
 # byte range within the first and returning basic blocks, this helps to reduce FP features
 SECURITY_COOKIE_BYTES_DELTA = 0x40
 PATTERN_HEXNUM = re.compile(r"[+\-]\s*(?P<num>0x[a-fA-F0-9]+)")
+PATTERN_HEXNUM_2 = re.compile(r"[+\-]\s*(?P<num>[a-fA-F0-9]+)[hH]")
 PATTERN_SINGLENUM = re.compile(r"[+\-]\s*(?P<num>[0-9])")
 
 
@@ -54,6 +55,11 @@ def extract_insn_api_features(f, bb, insn):
     """
 
     unit: DataUnit = f.unit
+
+    if insn.mne in unit.syntax.operations:
+        if not unit.syntax.operations[insn.mne].jmp:
+            return
+
     for c in insn.cr + insn.dr:
         if str(c) in unit.obj.bin.import_functions:
             module, func, _ = unit.obj.bin.import_functions[str(c)]
@@ -69,7 +75,7 @@ def extract_insn_api_features(f, bb, insn):
             if _next not in unit.map_f:
                 break
             c_f = unit.map_f[_next]
-            if c_f.bbs_len != 1:
+            if len(c_f.blocks) != 1:
                 break
             if len(c_f.blocks[0].ins) != 1:
                 break
@@ -118,9 +124,7 @@ def extract_insn_number_features(f, bb, insn):
         if unit.syntax.operations[insn.mne].jmp:
             return
 
-    for const in get_opr_constant(insn.oprs, insn.oprs_tp):
-        if isinstance(const, str):
-            const = int(const, 16)
+    for const in get_opr_constant(insn.oprs, insn.oprs_tp, True):
         yield Number(const), insn.ea
         yield Number(const, arch=get_arch(f)), insn.ea
 
@@ -148,7 +152,8 @@ def extract_insn_bytes_features(f, bb, insn):
         # then check referenced data
         if ref in f.unit.obj.bin.data:
             found = f.unit.obj.bin.data[ref]
-            found = struct.pack('<Q', int(found, base=16))
+            # found = struct.pack('<Q', int(found, base=16))
+            found = bytes.fromhex(found)
             yield Bytes(found), insn.ea
         # if ref != insn.ea:
         #     extracted_bytes = __read_byte(
@@ -190,16 +195,18 @@ def extract_insn_offset_features(f, bb, insn):
     syntax = f.unit.syntax
     for operand in insn.oprs:
         operand = operand.lower()
-        if not "ptr" in operand:
-            continue
         if any(reg in operand for reg in syntax.registers_cat['ptr'].keys()):
             continue
         number = 0
         number_hex = re.search(PATTERN_HEXNUM, operand)
+        number_hex_2 = re.search(PATTERN_HEXNUM_2, operand)
         number_int = re.search(PATTERN_SINGLENUM, operand)
         if number_hex:
             number = int(number_hex.group("num"), 16)
             number = -1 * number if number_hex.group().startswith("-") else number
+        elif number_hex_2:
+            number = int(number_hex_2.group("num"), 16)
+            number = -1 * number if number_hex_2.group().startswith("-") else number
         elif number_int:
             number = int(number_int.group("num"))
             number = -1 * number if number_int.group().startswith("-") else number
@@ -279,9 +286,9 @@ def extract_insn_peb_access_characteristic_features(f, bb, insn):
     operands = insn.oprs
     for operand in operands:
         operand = operand.lower()
-        if "fs:" in operand and "0x30" in operand:
+        if "fs:" in operand and ("0x30" in operand or "30h" in operand):
             yield Characteristic("peb access"), insn.ea
-        elif "gs:" in operand and "0x60" in operand:
+        elif "gs:" in operand and ("0x60" in operand or "60h" in operand):
             yield Characteristic("peb access"), insn.ea
 
 
@@ -304,7 +311,7 @@ def extract_insn_cross_section_cflow(f, bb, insn):
     u = f.unit
     s: Assembly
     s = u.syntax
-    mne = insn.mne.lower()
+    mne = insn.mne
     if mne in s.operations and s.operations[mne].jmp is True:
         if len(insn.cr) > 0:
             for target in insn.cr:
@@ -355,8 +362,8 @@ def extract_function_indirect_call_characteristic_features(f, bb, insn):
     u = f.unit
     s: Assembly
     s = u.syntax
-    mne = insn.mne.lower()
-    if 'call' in mne:
+    mne = insn.mne
+    if 'CALL' in mne:
         if len(insn.oprs) > 0:
             opr = insn.oprs[0].lower()
             if opr.startswith("0x"):

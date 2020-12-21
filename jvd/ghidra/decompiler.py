@@ -24,17 +24,13 @@ class Ghidra(DisassemblerAbstract):
 
     def _process(self, file, file_type, output_file_path, decompile=False):
         log = None
-        js_file = os.path.join(
-            os.path.dirname(file),
-            os.path.basename(file) + '.asm.json')
-        if not os.path.exists(js_file):
-            js_file, log = process(file, decompile=decompile)
+        if not os.path.exists(output_file_path):
+            js_file, log = process(file,  output_file_path, decompile=decompile)
         return js_file, log
 
 
-def process(file, json_suffix='.asm.json.gz', project_suffix='.ghidra',
+def process(file, json_file, project_suffix='.ghidra',
             decompile=False, load=False):
-    json_file = file + json_suffix
     project_dir = file + project_suffix
 
     json_file = os.path.abspath(json_file)

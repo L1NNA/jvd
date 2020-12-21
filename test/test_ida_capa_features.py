@@ -28,14 +28,14 @@ fixtures.get_function = get_function_jvd
 
 
 @lru_cache()
-def get_jvd_ghidra_extractor(path):
+def get_jvd_ida_extractor(path):
     from jvd import get_disassembler
     from jvd.capa import JVDExtractor
     from jvd.disassembler import DisassemblerAbstract
 
     disassembler = get_disassembler(disassembler='ida')
     disassembler: DisassemblerAbstract
-    gz_file, logs = disassembler.disassemble(path, cleanup=False)
+    gz_file, logs = disassembler.disassemble(path, cleanup=False, additional_ext='.ida')
     extractor = JVDExtractor(gz_file, path)
     return extractor
 
@@ -49,7 +49,7 @@ def test_jvd_ida_features(sample, scope, feature, expected):
     with xfail(sys.version_info < (3, 0), reason="JVD only works on py3"):
         with xfail(not ida_available, reason="IDA is not available"):
             do_test_feature_presence(
-                get_jvd_ghidra_extractor, sample, scope, feature, expected)
+                get_jvd_ida_extractor, sample, scope, feature, expected)
 
 
 @parametrize(
@@ -60,5 +60,5 @@ def test_jvd_ida_features(sample, scope, feature, expected):
 def test_jvd_ida_feature_counts(sample, scope, feature, expected):
     with xfail(sys.version_info < (3, 0), reason="JVD only works on py3"):
         with xfail(not ida_available, reason="IDA is not available"):
-            do_test_feature_count(get_jvd_ghidra_extractor,
+            do_test_feature_count(get_jvd_ida_extractor,
                                   sample, scope, feature, expected)

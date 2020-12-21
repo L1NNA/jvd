@@ -33,15 +33,16 @@ class DisassemblerAbstract(metaclass=ABCMeta):
 
     def disassemble(
             self, file, decompile=False, cleanup=False, cfg=False,
-            no_result=False, file_type=None, capa=False, verbose=-1):
-        js_file = file + '.asm.json.gz'
+            no_result=False, file_type=None, capa=False, verbose=-1,
+            additional_ext=''):
+        js_file = file + '{}.asm.json.gz'.format(additional_ext)
         res = None
         log = []
         file_type = file_type if file_type else magic.from_file(file)
         if os.path.exists(js_file):
             log.append('directly reading the generated json file')
         else:
-            tmp_folder = file + '.tmp'
+            tmp_folder = file + '{}.tmp'.format(additional_ext)
             try:
                 os.mkdir(tmp_folder)
                 new_file = os.path.join(tmp_folder, os.path.basename(file))
@@ -61,7 +62,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     raise e
                 return None, log
             finally:
-                rmtree(tmp_folder)
+                # rmtree(tmp_folder)
+                pass
 
         try:
             res = read_gz_js(js_file)

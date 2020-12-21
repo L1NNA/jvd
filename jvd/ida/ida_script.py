@@ -13,7 +13,7 @@ print('Waiting for idapro...')
 idaapi.auto_wait()
 print('start persisting...')
 
-file_name = os.path.splitext(idc.get_idb_path())[0] + '.asm.json'
+file_name = os.path.splitext(idc.get_idb_path())[0] + '.asm.json.gz'
 output_file = os.getenv('output_file_path', file_name)
 
 data = ida_utils.get_all(with_blocks=True)

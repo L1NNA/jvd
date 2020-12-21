@@ -34,7 +34,7 @@ def get_jvd_ghidra_extractor(path):
 
     disassembler = get_disassembler(disassembler='ghidra')
     disassembler: DisassemblerAbstract
-    gz_file, logs = disassembler.disassemble(path, cleanup=False)
+    gz_file, logs = disassembler.disassemble(path, cleanup=False, additional_ext='.ghr')
     extractor = JVDExtractor(gz_file, path)
     return extractor
 

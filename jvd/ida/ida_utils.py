@@ -25,7 +25,6 @@ from idaapi import *
 from ida_name import *
 from idc import *
 import idaapi
-import ida_func
 import json
 from collections import defaultdict
 import sys
@@ -48,34 +47,30 @@ def _iter_extra_comments(ea, start):
     return "\n".join(lines)
 
 
-def get_comments(binary_id, function_id, block_id, ea, created_at):
+def get_comments(ea, created_at):
     comments = []
     text = idc.get_cmt(ea, 1)
     if text and len(text) > 0:
-        comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'blk_id': block_id, 'author': 'ida', 'category': 'repeatable',
+        comments.append({'author': 'ida', 'category': 'repeatable',
                          'content': text, 'address': ea, 'created_at': created_at})
     text = idc.get_cmt(ea, 0)
     if text and len(text) > 0:
-        comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'blk_id': block_id, 'author': 'ida', 'category': 'regular',
+        comments.append({'author': 'ida', 'category': 'regular',
                          'content': text, 'address': ea, 'created_at': created_at})
     text = _iter_extra_comments(ea, E_PREV)
     if text and len(text) > 0:
-        comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'blk_id': block_id, 'author': 'ida', 'category': 'anterior',
+        comments.append({'author': 'ida', 'category': 'anterior',
                          'content': text, 'address': ea, 'created_at': created_at})
     text = _iter_extra_comments(ea, E_NEXT)
     if text and len(text) > 0:
-        comments.append({'binary_id': binary_id, 'function_id': function_id,
-                         'blk_id': block_id, 'author': 'ida', 'category': 'posterior',
+        comments.append({'author': 'ida', 'category': 'posterior',
                          'content': text, 'address': ea, 'created_at': created_at})
     return comments
 
 
 def get_apis(func_addr):
     calls = 0
-    apis = {}
+    apis = []
     flags = get_func_attr(func_addr, FUNCATTR_FLAGS)
     # ignore library functions
     if flags & FUNC_LIB or flags & FUNC_THUNK:
@@ -171,7 +166,7 @@ def get_binary_with_functions():
     binary['name'] = binary_name
     binary['sha256'] = get_bin_hash()
     binary['base'] = get_imagebase()
-    binary['entry_points'] =  [get_entry(i) for i in range(get_entry_qty())]
+    binary['entry_points'] = [get_entry(i) for i in range(get_entry_qty())]
 
     info = get_inf_structure()
     bits = "b32"
@@ -188,10 +183,12 @@ def get_binary_with_functions():
     binary['disassembler'] = 'ida'
     binary['compiler'] = get_compiler_name(info.cc.id)
     binary['description'] = ""
+    strs = Strings()
+    strs.setup(strtypes=[i for i in range(11)])
     binary['strings'] = {
         st.ea: str(st)
-        for st in Strings() if len(str(st).strip()) > 0}
-    binary['dat'] = {
+        for st in strs if st.length > 1}
+    binary['data'] = {
 
     }
 
@@ -204,6 +201,7 @@ def get_binary_with_functions():
         if not name:
             print("Failed to get import module name for #%d" % i)
             continue
+        name = name.lower()
 
         def imp_cb(ea, f_name, ord):
             if f_name and ea:
@@ -222,8 +220,7 @@ def get_binary_with_functions():
     binary['disassembled_at'] = now_str()
     binary['seg'] = {}
     for seg_ea in Segments():
-        binary['seg'][seg_ea] = idaapi.get_segm_name(seg_ea)
-
+        binary['seg'][seg_ea] = idc.get_segm_name(seg_ea)
 
     functions = get_functions()
     binary['functions_count'] = len(functions)
@@ -241,24 +238,25 @@ def get_functions():
             function['description'] = ''
             function['addr_start'] = function_ea
             function['addr_end'] = find_func_end(function_ea)
-            function['bin_id'] = sha256
-            function['api'] = get_apis(function_ea)[1]
-            function['calls'] = []
+            # function['bin_id'] = sha256
+            # function['api'] = get_apis(function_ea)[1]
+            function['calls'] = set()
             # functions['xref'] = []
             function['tags'] = ['ida-lib'] if isLibrary(function_ea) else []
             functions[function_ea] = function
             func_blocks = list(idaapi.FlowChart(idaapi.get_func(function_ea)))
             function['bbs_len'] = len(func_blocks)
 
-    callees = defaultdict(set)
-    for seg_ea in Segments():
-        for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
-            for ref_ea in CodeRefsTo(function_ea, 0):
-                ref_func = get_func(ref_ea)
-                if ref_func and ref_func.start_ea in functions:
-                    functions[function_ea]['calls'].append(
-                        functions[ref_func.start_ea]['addr_start'])
-                # functions[function_ea]['xref'].append(ref_ea)
+    # for seg_ea in Segments():
+    #     for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
+    #         for caller in CodeRefsTo(function_ea, 0):
+    #             caller = get_func(caller)
+    #             if caller:
+    #                 caller = functions.get(caller.start_ea, None)
+    #                 if caller:
+    #                     if function_ea not in caller['calls']:
+    #                         caller['calls'].append(function_ea)
+            # functions[function_ea]['xref'].append(ref_ea)
     return functions
 
 
@@ -283,7 +281,7 @@ def get_all(function_eas: list = None, with_blocks=True):
             func_blocks = FlowChart(get_func(function_ea))
             function = functions[function_ea]
             for bblock in func_blocks:
-
+                sblock = {}
                 sblock['addr_start'] = bblock.start_ea
                 if processor == 'arm':
                     sblock['addr_start'] += get_sreg(bblock.start_ea, 'T')
@@ -311,16 +309,26 @@ def get_all(function_eas: list = None, with_blocks=True):
 
                 sblock = blocks[bblock.start_ea]
                 sblock['ins'] = []
-                dat = {}
-                sblock['dat'] = dat
                 decoded = None
 
                 for head in Heads(bblock.start_ea, bblock.end_ea):
-                    comments.extend(get_comments(head, time_str))
+
+                    drs = []
                     refdata = list(DataRefsFrom(head))
-                    if len(refdata) > 0:
-                        for ref in refdata:
-                            dat[head] = format(get_qword(ref), 'x')[::-1]
+                    for dr in refdata:
+                        depth = 0
+                        while depth < 10:
+                            depth += 1
+                            dr_rfs = list(DataRefsFrom(dr))
+                            if len(dr_rfs) > 0:
+                                dr = dr_rfs[0]
+                        drs.append(dr)
+
+                    comments.extend(get_comments(head, time_str))
+                    for ref in drs:
+                        if ref not in binary['strings'] and ref not in binary['data']:
+                            binary['data'][ref] = get_bytes(
+                                head, get_item_size(head)).hex()
 
                     mne = print_insn_mnem(head)
                     if mne == "":
@@ -340,11 +348,13 @@ def get_all(function_eas: list = None, with_blocks=True):
 
                         if tp == 5:
                             if not decoded:
-                                decoded = idautils.DecodeInstruction(head)
+                                decoded = DecodeInstruction(head)
                             dt = decoded.ops[i].dtype
                             tp = tp * (dt + 1)
                             # tp/5 to get the size
                         oprs_tp.append(tp)
+
+                    cr = list(CodeRefsFrom(head, False))
 
                     if is_call_insn(head):
                         calls = [x.to for x in XrefsFrom(
@@ -356,21 +366,26 @@ def get_all(function_eas: list = None, with_blocks=True):
                                     eea_ending_blk['calls'].append(
                                         sblock['addr_start'])
 
+                        function['calls'].update(cr) 
+
                     sblock['ins'].append({
                         'ea': head,
                         'mne': mne,
                         'oprs': oprs,
                         'oprs_tp': oprs_tp,
-                        'dr': list(idautils.DataRefsFrom(head)),
-                        'cr': list(idautils.CodeRefsFrom(head, False)),
+                        'dr': drs,
+                        'cr': cr,
                     })
+                    
                 sblock['ins_c'] = len(sblock['ins'])
 
                 # flow chart
                 for succ_block in bblock.succs():
                     succ_block = func_blks[succ_block.id]
-                    sblock['calls'].append(blocks[succ_block.start_ea]['addr_start'])
+                    sblock['calls'].append(
+                        blocks[succ_block.start_ea]['addr_start'])
                 sblock['calls'] = list(set(sblock['calls']))
+            function['calls'] = list(function['calls'])
     return {
         'bin': binary,
         'functions': [f for f in functions.values() if f['addr_start'] in set_function_eas],

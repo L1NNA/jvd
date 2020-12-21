@@ -3,6 +3,7 @@ from typing import Dict, List
 import os
 import struct
 from collections import defaultdict
+import numbers
 
 
 class Register:
@@ -58,7 +59,7 @@ def loadDefinition(data):
     a.processor = data['processor']
     for opr in data['operations']['operation'] + data['operationJmps']['operation']:
         o = Operation()
-        o.identifier = opr['_identifier'].lower()
+        o.identifier = opr['_identifier'].upper()
         if 'suffixGroup' in opr:
             o.suffix = [s.lower() for sg in opr['suffixGroup']
                         if sg in suffix for s in suffix[sg] if s]
@@ -70,7 +71,7 @@ def loadDefinition(data):
         a.operations[o.identifier] = o
 
     for opr in data['operationJmps']['operation']:
-        identifier = opr['_identifier'].lower()
+        identifier = opr['_identifier']
         if identifier in a.operations:
             a.operations[identifier].jmp = True
 
@@ -80,7 +81,7 @@ def loadDefinition(data):
         r.type = reg['_category'].lower()
         r.size = int(reg['_length'])
         a.registers[r.identifer] = r
-        a.registers_cat[r.type][r.identifer]=r
+        a.registers_cat[r.type][r.identifer] = r
     return a
 
 
@@ -120,15 +121,29 @@ def get_definition(arc) -> Assembly:
     return None
 
 
-def is_constant(o, t):
-    if t == 5 or (t & 0x00000008) or (t & 0x00004000):
-        if isinstance(o, int) or all(c in '01234567890abcdefx' for c in o):
-            return True
-    return False
+def is_constant(o, t, return_number=False):
+    if isinstance(o, numbers.Number):
+        return o if return_number else True
+    if o.endswith('h'):
+        o = o[:-1]
+    if t % 5 == 0 or (t & 0x00000008) or (t & 0x00004000):
+        if all(c in '01234567890abcdefxABCDEFX' for c in o):
+            if return_number:
+                try:
+                    val = int(o, 16)
+                    return val
+                except ValueError:
+                    pass
+            else:
+                return True
+    return None if return_number else False
 
 
 def is_mem_ref(o, t):
-    if t == 2 or t == 4 or (t & 0x00000004):
+    if t < 15:
+        if t== 3 or t == 4:
+            return True
+    elif t & 0x00000004:
         return True
     return False
 
@@ -139,51 +154,53 @@ def is_reg(o, t):
     return False
 
 
-
-def get_opr_constant(op, op_types):
+def get_opr_constant(op, op_types, return_number=False):
     # ref: https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/
     # Framework/SoftwareModeling/src/main/java/ghidra/program/model/
     # lang/OperandType.java#L90
-    tps = [(o, int(t)) for o, t in zip(op, op_types)]
-    ops = [o.lower() for o, t in tps if is_constant(o, t)]
-    return ops
+    vals=[]
+    for o, t in zip(op, op_types):
+        val=is_constant(o, t, return_number)
+        if val:
+            vals.append(val if return_number else o.lower())
+    return vals
 
 
 def get_opr_imm_str(opr, opr_type):
-    t = int(opr_type)
+    t=int(opr_type)
     if not is_constant(opr, opr_type):
         return None, None
 
-    op_value = opr if isinstance(opr, int) else int(opr, 16)
+    op_value=opr if isinstance(opr, int) else int(opr, 16)
 
-    size = None
+    size=None
     if t & 0x00010000 or t/5 == 0:
-        size = 1
-        chars = struct.pack("<B", op_value & 0xFF)
+        size=1
+        chars=struct.pack("<B", op_value & 0xFF)
     elif t & 0x00020000 or t/5 == 5:
-        size = 2
-        chars = struct.pack("<H", op_value & 0xFFFF)
+        size=2
+        chars=struct.pack("<H", op_value & 0xFFFF)
     elif t/5 == 2:
-        size = 4
-        chars = struct.pack("<I", op_value & 0xFFFFFFFF)
+        size=4
+        chars=struct.pack("<I", op_value & 0xFFFFFFFF)
     elif t & 0x00040000 or t/5 == 7:
-        size = 8
-        chars = struct.pack("<Q", op_value & 0xFFFFFFFFFFFFFFFF)
+        size=8
+        chars=struct.pack("<Q", op_value & 0xFFFFFFFFFFFFFFFF)
     else:
-        size = 4
-        chars = struct.pack("<I", op_value & 0xFFFFFFFF)
+        size=4
+        chars=struct.pack("<I", op_value & 0xFFFFFFFF)
         try:
             chars.decode()
         except Exception:
-            chars = None
-            size = None
+            chars=None
+            size=None
 
     return chars, size
 
 
 def norm_opr(mne, arc=None):
-    mne = mne.lower()
-    arc = get_definition(arc)
+    mne=mne.lower()
+    arc=get_definition(arc)
     if arc and mne in arc.operations:
         return arc.operations[mne]
     if not arc:

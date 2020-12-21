@@ -43,6 +43,7 @@ class IDA(DisassemblerAbstract):
                     shutil.copyfile(file, db)
                 file = db
             cmd = [program, '-A', '-S{}'.format(IDA_script), file]
+            print(cmd)
             sub_env = os.environ.copy()
             sub_env["output_file_path"] = output_file_path
             # print(cmd)

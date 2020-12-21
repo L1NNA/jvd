@@ -56,7 +56,8 @@ def is_mov_imm_to_stack(f, insn):
     if len(insn.oprs) < 2:
         return insn.is_mv_stack
 
-    if not is_constant(insn.oprs[1], insn.oprs_tp[1]):
+    val = is_constant(insn.oprs[1], insn.oprs_tp[1], True)
+    if not val:
         return insn.is_mv_stack
 
     if f and f.unit and f.unit.syntax:
@@ -64,12 +65,8 @@ def is_mov_imm_to_stack(f, insn):
         syntax = f.unit.syntax
         stk = insn.oprs[0].lower()
         if any(reg in stk for reg in syntax.registers_cat['ptr'].keys()):
-            try:
-                val = int(insn.oprs[1], 16)
-                insn.is_mv_stack = val, insn.oprs_tp[1]
-                return insn.is_mv_stack
-            except ValueError:
-                pass
+            insn.is_mv_stack = val, insn.oprs_tp[1]
+            return insn.is_mv_stack
     return insn.is_mv_stack
 
 
