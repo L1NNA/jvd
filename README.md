@@ -1,6 +1,6 @@
 # JARV1S-Disassembler
 
-[![](https://github.com/L1NNA/JARV1S-Ghidra/workflows/Build%20and%20Release%20JAR/badge.svg)](https://github.com/L1NNA/JARV1S-Ghidra/actions) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?&maxAge=86400)
+ ![Build and Release Ghidra JAR](https://github.com/L1NNA/JARV1S-Disassembler/workflows/Build%20and%20Release%20Ghidra%20JAR/badge.svg) ![Ghidra Extractor for Capa](https://github.com/L1NNA/JARV1S-Disassembler/workflows/Ghidra%20Extractor%20for%20Capa/badge.svg) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?&maxAge=86400)
 
 Universal disassembly generation and processing for JARV1S/Kam1n0
 
