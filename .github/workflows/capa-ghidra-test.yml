@@ -1,4 +1,4 @@
-name: Testing with Capa
+name: Ghidra Extractor for Capa
 
 on:
   push:
