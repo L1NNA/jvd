@@ -26,10 +26,7 @@ class IDA(DisassemblerAbstract):
 
     def _process(self, file, file_type, output_file_path, decompile=False):
         log = None
-        js_file = os.path.join(
-            os.path.dirname(file),
-            os.path.basename(file) + '.asm.json')
-        if not os.path.exists(js_file):
+        if not os.path.exists(output_file_path):
             program = 'ida64'
             extension = None
             if file_type.startswith('IDA '):
@@ -55,7 +52,7 @@ class IDA(DisassemblerAbstract):
                 stdout=PIPE,
                 stderr=STDOUT)
             log, _ = p.communicate()
-        return js_file, log
+        return output_file_path, log
 
     def disassemble_in_context(self, function_addresses=None, with_ins_comments=True):
         from jvd.ida.ida_utils import get_all

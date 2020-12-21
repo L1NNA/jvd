@@ -5,6 +5,7 @@ import sys
 import os
 import idaapi
 import idc
+import gzip
 sys.path.append(os.path.dirname(__file__))
 
 print('jarv1s script for idapro is now running...')
@@ -17,7 +18,14 @@ output_file = os.getenv('output_file_path', file_name)
 
 data = ida_utils.get_all(with_blocks=True)
 
-with codecs.open(output_file, 'w', encoding='utf-8') as outfile:
-    json.dump(data, outfile, ensure_ascii=False)
+content = json.dumps(
+    data, ensure_ascii=False
+).encode('utf-8')
+
+# with codecs.open(output_file, 'w', encoding='utf-8') as outfile:
+#     json.dump(data, outfile, ensure_ascii=False)
+
+with gzip.GzipFile(output_file, 'w') as gf:
+    gf.write(content)
 
 idc.qexit(0)
