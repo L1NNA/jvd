@@ -174,7 +174,7 @@ public class GhidraDecompiler {
         // messageLog, monitor);
         // project.initializeProgram(program, false);
 
-        program = project.importProgram(this.binaryFile);
+        // program = project.importProgram(this.binaryFile);
         basicBlockModel = new BasicBlockModel(program);
         functionManager = program.getFunctionManager();
         GhidraProject.analyze(program);
