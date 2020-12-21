@@ -28,12 +28,15 @@ import ca.l1nna.ghidra.Model.Ins;
 import generic.stl.Pair;
 import ghidra.GhidraJarApplicationLayout;
 import ghidra.app.decompiler.DecompInterface;
+import ghidra.app.plugin.core.analysis.AutoAnalysisManager;
 import ghidra.app.util.bin.ByteProvider;
 import ghidra.base.project.GhidraProject;
 import ghidra.framework.Application;
 import ghidra.framework.ApplicationConfiguration;
 import ghidra.framework.HeadlessGhidraApplicationConfiguration;
 import ghidra.framework.Platform;
+import ghidra.framework.model.DomainFolder;
+import ghidra.framework.model.DomainObject;
 import ghidra.program.flatapi.FlatProgramAPI;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.address.AddressIterator;
@@ -42,6 +45,7 @@ import ghidra.program.model.block.CodeBlock;
 import ghidra.program.model.block.CodeBlockIterator;
 import ghidra.program.model.block.CodeBlockReference;
 import ghidra.program.model.block.CodeBlockReferenceIterator;
+import ghidra.program.model.lang.LanguageCompilerSpecPair;
 import ghidra.program.model.listing.CodeUnit;
 import ghidra.program.model.listing.CodeUnitFormat;
 import ghidra.program.model.listing.CodeUnitFormatOptions;
@@ -57,6 +61,7 @@ import ghidra.program.model.symbol.RefType;
 import ghidra.program.model.symbol.Reference;
 import ghidra.program.model.symbol.Symbol;
 import ghidra.program.model.symbol.SymbolTable;
+import ghidra.program.util.DefaultLanguageService;
 import ghidra.test.TestProgramManager;
 import ghidra.util.InvalidNameException;
 import ghidra.util.exception.CancelledException;
@@ -65,11 +70,19 @@ import ghidra.util.exception.VersionException;
 import ghidra.util.task.TaskMonitor;
 
 import ghidra.app.util.bin.MemoryByteProvider;
+import ghidra.app.util.bin.RandomAccessByteProvider;
 import ghidra.app.util.bin.format.pe.OptionalHeader;
 import ghidra.app.util.bin.format.pe.PortableExecutable;
+import ghidra.app.util.importer.LoadSpecChooser;
+import ghidra.app.util.importer.MessageLog;
+import ghidra.app.util.importer.MultipleProgramsStrategy;
+import ghidra.app.util.importer.OptionChooser;
+import ghidra.app.util.opinion.LoadSpec;
+import ghidra.app.util.opinion.LoaderMap;
+import ghidra.app.util.opinion.LoaderService;
 import generic.continues.RethrowContinuesFactory;
 import ghidra.program.model.address.AddressFactory;
-
+import ghidra.app.util.Option;
 import ghidra.app.util.XReferenceUtil;
 
 public class GhidraDecompiler {
@@ -104,24 +117,79 @@ public class GhidraDecompiler {
 
         // Create a Ghidra project
         project = GhidraProject.createProject(projPath, "TempProject", true);
+
+        MessageLog messageLog = new MessageLog();
+        DomainFolder fd = (DomainFolder) null;
+
+        try (ByteProvider provider = new RandomAccessByteProvider(this.binaryFile)) {
+            // follows
+            // https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/Features/Base/src/main/java/ghidra/app/util/importer/AutoImporter.java#L161
+
+            LoaderMap loaderMap = LoaderService.getSupportedLoadSpecs(provider, LoaderService.ACCEPT_ALL);
+            LoadSpec loadSpec = LoadSpecChooser.CHOOSE_THE_FIRST_PREFERRED.choose(loaderMap);
+            LanguageCompilerSpecPair languageCompilerSpecPair = loadSpec.getLanguageCompilerSpec();
+            AddressFactory addrFactory = null;// Address type options not permitted if null
+            if (languageCompilerSpecPair != null) {
+                // It is assumed that if languageCompilerSpecPair exists, then language will be
+                // found
+                addrFactory = DefaultLanguageService.getLanguageService()
+                        .getLanguage(languageCompilerSpecPair.languageID).getAddressFactory();
+            }
+            List<Option> loaderOptions = OptionChooser.DEFAULT_OPTIONS
+                    .choose(loadSpec.getLoader().getDefaultOptions(provider, loadSpec, null, false), addrFactory);
+            
+            for (Option o : loaderOptions){
+                // avoid loading libraries (causing a lot of errors on windows)
+                if (o.getName().equals("Create Export Symbol Files"))
+                    o.setValue(false);
+                if (o.getName().equals("Load External Libraries"))
+                    o.setValue(false);
+            }
+            
+            loaderOptions.stream().forEach(o->System.out.println("ccc " + o.toString()));
+
+            String programName = loadSpec.getLoader().getPreferredFileName(provider);
+            List<DomainObject> domainObjects = loadSpec.getLoader().load(provider, programName, fd, loadSpec,
+                    loaderOptions, messageLog, project, monitor);
+
+            List<Program> programs = new ArrayList<Program>();
+            for (DomainObject domainObject : domainObjects) {
+                if (domainObject instanceof Program) {
+                    programs.add((Program) domainObject);
+                }
+            }
+
+            programs = MultipleProgramsStrategy.ONE_PROGRAM_OR_NULL.handlePrograms(programs, project);
+            if (programs != null && programs.size() == 1) {
+                program = programs.get(0);
+                program.startTransaction("Batch Processing");
+                AutoAnalysisManager mgr = AutoAnalysisManager.getAnalysisManager(program);
+                mgr.initializeOptions();
+            }
+
+            // https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/Features/Base/src/main/java/ghidra/base/project/GhidraProject.java#L664
+        }
+
+        // program = AutoImporter.importByUsingBestGuess(file, domainFolder, this,
+        // messageLog, monitor);
+        // project.initializeProgram(program, false);
+
         program = project.importProgram(this.binaryFile);
         basicBlockModel = new BasicBlockModel(program);
         functionManager = program.getFunctionManager();
         GhidraProject.analyze(program);
-
 
         FlatProgramAPI fapi = new FlatProgramAPI(program);
         Listing listing = program.getListing();
 
         // force analysis
         for (MemoryBlock b : program.getMemory().getBlocks()) {
-            if(b.isExecute()){
+            if (b.isExecute()) {
                 Address start = b.getStart();
                 Address end = b.getEnd();
-                while(start.getOffset() <= end.getOffset()){
-                    if(!listing.isInFunction(start))
-                        fapi.createFunction(
-                            start, "NEW_" + Long.toHexString(start.getOffset()));
+                while (start.getOffset() <= end.getOffset()) {
+                    if (!listing.isInFunction(start))
+                        fapi.createFunction(start, "NEW_" + Long.toHexString(start.getOffset()));
                     start = start.next();
                 }
             }

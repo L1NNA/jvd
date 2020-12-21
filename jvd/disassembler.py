@@ -123,7 +123,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             path_or_files,
             multiprocessing=True,
             decompile=False,
-            cleanup=True,
+            cleanup=False,
             cfg=False,
             file_ext='.bin',
             capa=False,

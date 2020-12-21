@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
         if os.path.isfile(f) and not os.path.isdir(f):
             _, logs = disassember.disassemble(
-                f, cleanup=True, cfg=flags.cfg, capa=flags.capa, no_result=True, verbose=flags.verbose)
+                f, cfg=flags.cfg, capa=flags.capa, no_result=True, verbose=flags.verbose)
         else:
             disassember.disassemble_all(
                 f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa, verbose=parser.verbose)
