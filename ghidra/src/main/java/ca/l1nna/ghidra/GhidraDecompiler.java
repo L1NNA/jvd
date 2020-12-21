@@ -188,8 +188,11 @@ public class GhidraDecompiler {
                 Address start = b.getStart();
                 Address end = b.getEnd();
                 while (start.getOffset() <= end.getOffset()) {
-                    if (!listing.isInFunction(start))
+                    if (!listing.isInFunction(start)){
+                        
+                        fapi.disassemble(start);
                         fapi.createFunction(start, "NEW_" + Long.toHexString(start.getOffset()));
+                    }
                     start = start.next();
                 }
             }
@@ -265,8 +268,11 @@ public class GhidraDecompiler {
                 long offset = dat.getMinAddress().getOffset();
                 if (dat.hasStringValue())
                     bin.strings.put(offset, dat.getValue().toString());
-                else if (dat.isConstant())
+                else if (dat.isConstant()){
+                    long from = dat.getMinAddress().getOffset();
+                    long size = dat.getLength();
                     bin.data.put(offset, dat.getValue().toString());
+                }
                 dataMap.put(offset, dat);
             }
 
