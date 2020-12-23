@@ -30,6 +30,7 @@ public class Model {
         public Map<Long, String> data = new HashMap<>();
         public String compiler = "";
         public String name;
+        public String sha256;
         public List<Long> entry_points = new ArrayList<>();
 
     }

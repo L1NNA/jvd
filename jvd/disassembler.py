@@ -13,7 +13,7 @@ from shutil import copyfile, rmtree, unpack_archive
 import magic
 from tqdm import tqdm
 
-from jvd.utils import read_gz_js
+from jvd.utils import read_gz_js, write_gz_js
 from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
@@ -62,7 +62,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     raise e
                 return None, log
             finally:
-                # rmtree(tmp_folder)
+                rmtree(tmp_folder)
                 pass
 
         try:
@@ -90,6 +90,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         except Exception as e:
             log.append('Failed ' + file + ' msg: ' + str(e))
             if verbose > 1:
+                print(log)
                 raise e
             return None, log
         finally:

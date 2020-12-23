@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,11 +12,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import java.util.zip.GZIPOutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.hash.Hashing;
 
 import ca.l1nna.ghidra.Model.Binary;
 import ca.l1nna.ghidra.Model.Block;
@@ -28,6 +25,7 @@ import ca.l1nna.ghidra.Model.Ins;
 import generic.stl.Pair;
 import ghidra.GhidraJarApplicationLayout;
 import ghidra.app.decompiler.DecompInterface;
+import ghidra.app.decompiler.DecompiledFunction;
 import ghidra.app.plugin.core.analysis.AutoAnalysisManager;
 import ghidra.app.util.bin.ByteProvider;
 import ghidra.base.project.GhidraProject;
@@ -69,10 +67,7 @@ import ghidra.util.exception.DuplicateNameException;
 import ghidra.util.exception.VersionException;
 import ghidra.util.task.TaskMonitor;
 
-import ghidra.app.util.bin.MemoryByteProvider;
 import ghidra.app.util.bin.RandomAccessByteProvider;
-import ghidra.app.util.bin.format.pe.OptionalHeader;
-import ghidra.app.util.bin.format.pe.PortableExecutable;
 import ghidra.app.util.importer.LoadSpecChooser;
 import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.importer.MultipleProgramsStrategy;
@@ -80,10 +75,8 @@ import ghidra.app.util.importer.OptionChooser;
 import ghidra.app.util.opinion.LoadSpec;
 import ghidra.app.util.opinion.LoaderMap;
 import ghidra.app.util.opinion.LoaderService;
-import generic.continues.RethrowContinuesFactory;
 import ghidra.program.model.address.AddressFactory;
 import ghidra.app.util.Option;
-import ghidra.app.util.XReferenceUtil;
 
 public class GhidraDecompiler {
     private File binaryFile = null;
@@ -98,7 +91,7 @@ public class GhidraDecompiler {
     private DecompInterface decomp = null;
     private boolean decompiled;
 
-    GhidraDecompiler(String binPath, String projPath, boolean decompiled)
+    GhidraDecompiler(String binPath, String projPath, boolean decompiled, List<Long> functionStarts)
             throws IOException, VersionException, CancelledException, DuplicateNameException, InvalidNameException {
 
         this.binaryFile = new File(binPath);
@@ -137,16 +130,16 @@ public class GhidraDecompiler {
             }
             List<Option> loaderOptions = OptionChooser.DEFAULT_OPTIONS
                     .choose(loadSpec.getLoader().getDefaultOptions(provider, loadSpec, null, false), addrFactory);
-            
-            for (Option o : loaderOptions){
+
+            for (Option o : loaderOptions) {
                 // avoid loading libraries (causing a lot of errors on windows)
                 if (o.getName().equals("Create Export Symbol Files"))
                     o.setValue(false);
                 if (o.getName().equals("Load External Libraries"))
                     o.setValue(false);
             }
-            
-            loaderOptions.stream().forEach(o->System.out.println("ccc " + o.toString()));
+
+            loaderOptions.stream().forEach(o -> System.out.println("ccc " + o.toString()));
 
             String programName = loadSpec.getLoader().getPreferredFileName(provider);
             List<DomainObject> domainObjects = loadSpec.getLoader().load(provider, programName, fd, loadSpec,
@@ -183,13 +176,20 @@ public class GhidraDecompiler {
         Listing listing = program.getListing();
 
         // force analysis
+        if (functionStarts.size() > 0) {
+            for (Long s : functionStarts) {
+                Address entry = fapi.getAddressFactory().getAddress(Long.toHexString(s));
+                if (fapi.getFunctionAt(entry) == null)
+                    fapi.createFunction(entry, "NEW_SP_" + Long.toHexString(s));
+            }
+        }
+
         for (MemoryBlock b : program.getMemory().getBlocks()) {
             if (b.isExecute()) {
                 Address start = b.getStart();
                 Address end = b.getEnd();
                 while (start.getOffset() <= end.getOffset()) {
-                    if (!listing.isInFunction(start)){
-                        
+                    if (!listing.isInFunction(start)) {
                         fapi.disassemble(start);
                         fapi.createFunction(start, "NEW_" + Long.toHexString(start.getOffset()));
                     }
@@ -215,6 +215,7 @@ public class GhidraDecompiler {
             Model model = new Model();
 
             Binary bin = new Binary();
+            bin.sha256 = program.getExecutableSHA256();
 
             SymbolTable sm = program.getSymbolTable();
             HashSet<String> modules = new HashSet<>();
@@ -268,10 +269,16 @@ public class GhidraDecompiler {
                 long offset = dat.getMinAddress().getOffset();
                 if (dat.hasStringValue())
                     bin.strings.put(offset, dat.getValue().toString());
-                else if (dat.isConstant()){
-                    long from = dat.getMinAddress().getOffset();
-                    long size = dat.getLength();
-                    bin.data.put(offset, dat.getValue().toString());
+                else if (dat.isConstant()) {
+                    int size = dat.getLength();
+                    try {
+                        byte[] bytes = new byte[size];
+                        size = program.getMemory().getBytes(dat.getMinAddress(), bytes);
+                        if (size > 0)
+                            bin.data.put(offset, dat.getValue().toString());
+                    } catch (Exception e) {
+
+                    }
                 }
                 dataMap.put(offset, dat);
             }
@@ -291,12 +298,15 @@ public class GhidraDecompiler {
                 // f.isExternal())
                 // .map(f -> f.getName()).collect(Collectors.toList());
                 func.addr_end = currentFunction.getBody().getMaxAddress().getOffset();
-                model.functions.add(func);
 
                 if (this.decompiled) {
                     FuncSrc funcSrc = new FuncSrc();
-                    funcSrc.src = decomp.decompileFunction(currentFunction, 0, monitor).getDecompiledFunction().getC();
-                    model.functions_src.add(funcSrc);
+                    DecompiledFunction deFunc = decomp.decompileFunction(currentFunction, 0, monitor)
+                            .getDecompiledFunction();
+                    if (deFunc != null) {
+                        funcSrc.src = deFunc.getC();
+                        model.functions_src.add(funcSrc);
+                    }
                 }
 
                 CodeBlockIterator codeBlockIterator = basicBlockModel.getCodeBlocksContaining(currentFunction.getBody(),
@@ -347,6 +357,9 @@ public class GhidraDecompiler {
                         }
                     }
                 }
+
+                if (func.bbs_len > 0)
+                    model.functions.add(func);
             }
 
             // model.comments = ParseComments();

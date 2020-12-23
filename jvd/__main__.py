@@ -43,7 +43,11 @@ if __name__ == "__main__":
                         action='store_true', help='Generate CFG matrix')
     parser.add_argument('--capa', dest='capa',
                         action='store_true', help='Analyze by capa')
-    parser.add_argument('--verbose', dest='verbose', type=int, choices=range(-1, 3), default=-1)
+    parser.add_argument('--decompile', dest='decompile',
+                        action='store_true',
+                        help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
+    parser.add_argument('--verbose', dest='verbose',
+                        type=int, choices=range(-1, 3), default=-1)
     flags = parser.parse_args()
     if flags.dis is not None:
         disassember = flags.dis
@@ -55,10 +59,12 @@ if __name__ == "__main__":
 
         if os.path.isfile(f) and not os.path.isdir(f):
             _, logs = disassember.disassemble(
-                f, cfg=flags.cfg, capa=flags.capa, no_result=True, verbose=flags.verbose)
+                f, cfg=flags.cfg, capa=flags.capa, no_result=True,
+                verbose=flags.verbose, decompile=flags.decompile)
         else:
             disassember.disassemble_all(
-                f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa, verbose=parser.verbose)
+                f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa,
+                verbose=parser.verbose, decompile=flags.decompile)
         if len(logs) > 0:
             for l in logs:
                 print(logs)

@@ -24,15 +24,15 @@ class Ghidra(DisassemblerAbstract):
 
     def _process(self, file, file_type, output_file_path, decompile=False):
         log = None
-        if not os.path.exists(output_file_path):
-            js_file, log = process(file,  output_file_path, decompile=decompile)
+        js_file, log = process(file,  output_file_path, decompile=decompile)
         return js_file, log
 
 
 def process(file, json_file, project_suffix='.ghidra',
-            decompile=False, load=False):
+            decompile=False, func_entries=None):
     project_dir = file + project_suffix
 
+    file = os.path.abspath(file)
     json_file = os.path.abspath(json_file)
     project_dir = os.path.abspath(project_dir)
 
@@ -40,18 +40,14 @@ def process(file, json_file, project_suffix='.ghidra',
         os.mkdir(project_dir)
     cmd = [java, '-jar', jar, file, json_file,
            project_dir, str(decompile).lower()]
+    if func_entries is not None:
+        func_entries_file = file + '.func.entries.txt'
+        with open(func_entries_file, 'w') as wf:
+            wf.writelines(func_entries)
+        cmd.append(func_entries_file)
     p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
     out, err = p.communicate()
     # print(out.decode('utf-8'))
-    if os.path.exists(json_file):
-        if load:
-            with open(json_file) as of:
-                json_file = json.load(of)
-    else:
-        if isinstance(out, bytes):
-            out = out.decode('utf-8')
-        log.error(
-            'No json file generated. Info: {} Err: {}'.format(
-                out, err))
-        json_file = None
+    out = out.decode('utf-8')
+    json_file = None
     return json_file, out

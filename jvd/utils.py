@@ -62,3 +62,12 @@ def read_gz_js(file):
     json_str = json_bytes.decode('utf-8')
     data = json.loads(json_str)
     return data
+
+
+def write_gz_js(obj, file, cls=None):
+    content = json.dumps(
+        obj,
+        cls=cls,
+    ).encode('utf-8')
+    with gzip.GzipFile(file, 'w') as gf:
+        gf.write(content)
