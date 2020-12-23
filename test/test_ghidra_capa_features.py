@@ -34,7 +34,8 @@ def get_jvd_ghidra_extractor(path):
 
     disassembler = get_disassembler(disassembler='ghidra')
     disassembler: DisassemblerAbstract
-    gz_file, logs = disassembler.disassemble(path, cleanup=False, additional_ext='.ghr')
+    gz_file, logs = disassembler.disassemble(
+        path, cleanup=False, additional_ext='.ghr')
     extractor = JVDExtractor(gz_file, path)
     return extractor
 
@@ -46,8 +47,10 @@ def get_jvd_ghidra_extractor(path):
 )
 def test_jvd_ghidra_features(sample, scope, feature, expected):
     with xfail(sys.version_info < (3, 0), reason="JVD only works on py3"):
-        do_test_feature_presence(
-            get_jvd_ghidra_extractor, sample, scope, feature, expected)
+        with xfail('0x4556E5' in scope.__name__ and 'characteristic(recursive call)' in str(feature), reason="Ghidra indirect code reference"):
+            with xfail('0x4556E5' in scope.__name__ and 'characteristic(calls to)' in str(feature), reason="Ghidra indirect code reference"):
+                do_test_feature_presence(
+                    get_jvd_ghidra_extractor, sample, scope, feature, expected)
 
 
 @parametrize(
@@ -57,5 +60,6 @@ def test_jvd_ghidra_features(sample, scope, feature, expected):
 )
 def test_jvd_ghidra_feature_counts(sample, scope, feature, expected):
     with xfail(sys.version_info < (3, 0), reason="JVD only works on py3"):
-        do_test_feature_count(get_jvd_ghidra_extractor,
-                              sample, scope, feature, expected)
+        with xfail('0x4556E5' in scope.__name__ and 'characteristic(calls to)' in str(feature), reason="Ghidra indirect code reference"):
+            do_test_feature_count(get_jvd_ghidra_extractor,
+                                  sample, scope, feature, expected)
