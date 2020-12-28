@@ -24,6 +24,7 @@ from jvd.normalizer.syntax import get_opr_constant, Assembly, get_opr_imm_str, i
 import string
 import re
 import struct
+import base64
 
 # security cookie checks may perform non-zeroing XORs, these are expected within a certain
 # byte range within the first and returning basic blocks, this helps to reduce FP features
@@ -153,7 +154,8 @@ def extract_insn_bytes_features(f, bb, insn):
         if ref in f.unit.obj.bin.data:
             found = f.unit.obj.bin.data[ref]
             # found = struct.pack('<Q', int(found, base=16))
-            found = bytes.fromhex(found)
+            # found = bytes.fromhex(found)
+            found = base64.b64decode(found)
             yield Bytes(found), insn.ea
         # if ref != insn.ea:
         #     extracted_bytes = __read_byte(

@@ -10,10 +10,9 @@ from functools import partial
 from pathlib import Path
 from shutil import copyfile, rmtree, unpack_archive
 
-import magic
 from tqdm import tqdm
 
-from jvd.utils import read_gz_js, write_gz_js
+from jvd.utils import read_gz_js, write_gz_js, get_file_type
 from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
@@ -38,7 +37,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         js_file = file + '{}.asm.json.gz'.format(additional_ext)
         res = None
         log = []
-        file_type = file_type if file_type else magic.from_file(file)
+        file_type = file_type if file_type else get_file_type(file)
         if os.path.exists(js_file):
             log.append('directly reading the generated json file')
         else:

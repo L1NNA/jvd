@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
+import java.util.Base64;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -275,7 +276,7 @@ public class GhidraDecompiler {
                         byte[] bytes = new byte[size];
                         size = program.getMemory().getBytes(dat.getMinAddress(), bytes);
                         if (size > 0)
-                            bin.data.put(offset, dat.getValue().toString());
+                            bin.data.put(offset, Base64.getEncoder().encodeToString(bytes));
                     } catch (Exception e) {
 
                     }
