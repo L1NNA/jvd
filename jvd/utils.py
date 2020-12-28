@@ -11,38 +11,30 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 from shutil import unpack_archive
+import magic
 
 import requests
 from tqdm import tqdm
-
-home = os.path.join(
-    str(Path.home()), 'jvd-dependencies'
-)
 
 
 def fn_from_url(url):
     return os.path.basename(urllib.parse.urlparse(url).path)
 
 
-def download_file(url, dest_path=home, progress=False):
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
+def download_file(url, dest, progress=False):
 
-    if progress:
-        log.info('downloading from: %s', url)
-
-    fn = fn_from_url(url)
-    full_fn = os.path.join(dest_path, fn)
-
-    if os.path.exists(full_fn):
-        log.info('File %s already exists in %s ...' % (fn, dest_path))
+    if os.path.exists(dest) and progress:
+        log.info('File already exists {} ...'.format(dest))
     else:
+        if progress:
+            log.info('downloading from: %s to %s', url, dest)
+
         r = requests.get(url, stream=True)
         total_length = r.headers.get('content-length')
         pg = tqdm(total=int(total_length)) if (
             total_length is not None and progress) else None
         dl = 0
-        with open(full_fn, 'wb') as f:
+        with open(dest, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
                 if chunk:
                     if progress and pg:
@@ -52,7 +44,7 @@ def download_file(url, dest_path=home, progress=False):
         if progress and pg:
             pg.close()
 
-    return full_fn
+    return dest
 
 
 def read_gz_js(file):
@@ -71,3 +63,25 @@ def write_gz_js(obj, file, cls=None):
     ).encode('utf-8')
     with gzip.GzipFile(file, 'w') as gf:
         gf.write(content)
+
+
+def get_file_type(file):
+    return magic.from_file(file)
+
+
+def which(program):
+
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None

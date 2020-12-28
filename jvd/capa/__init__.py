@@ -6,7 +6,8 @@ import jvd.capa.file as e_file
 import jvd.capa.function as e_func
 import jvd.capa.ins as e_ins
 from jvd.capa.data import DataUnit
-from jvd.utils import download_file, home, read_gz_js
+from jvd.utils import download_file, read_gz_js
+from jvd.resources import ResourceAbstract, require
 
 import capa
 from capa.features.extractors import FeatureExtractor
@@ -15,8 +16,21 @@ from capa.main import (UnsupportedRuntimeError, find_capabilities, get_rules,
 from capa.render import convert_match_to_result_document, CapaJsonObjectEncoder
 
 
-url_rules = 'https://github.com/fireeye/capa-rules/archive/v1.4.0.zip'
 rules = []
+
+
+class CapaRules(ResourceAbstract):
+    def __init__(self):
+        super().__init__()
+        self.version = 'v1.4.0'
+        self.default = 'https://github.com/fireeye/capa-rules/archive/{}.zip'.format(
+            self.version)
+        self.check_update = False
+        self.unpack = True
+
+    def get(self):
+        folder = super().get()
+        return os.path.join(folder, 'capa-rules-{}'.format(self.version[1:]))
 
 
 class JVDExtractor(FeatureExtractor):
@@ -59,10 +73,7 @@ class JVDExtractor(FeatureExtractor):
 
 
 def install_rules(verbose=-1):
-    rules_path = os.path.join(home, 'capa-rules')
-    f_name = download_file(url=url_rules, progress=verbose > 0)
-    unpack_archive(f_name, rules_path)
-    return rules_path
+    return require('caparules')
 
 
 def capa_analyze(gz_file, bin_path, verbose=-1):
@@ -77,8 +88,9 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
     docs = []
 
     # (rule_name, matches)
-    items = [(dict(rs[r_name].meta), matches) for r_name, matches in capabilities.items()]
-    items.sort(key=lambda i: (i[0].get('namespace' ,''), i[0].get('name', '')))
+    items = [(dict(rs[r_name].meta), matches)
+             for r_name, matches in capabilities.items()]
+    items.sort(key=lambda i: (i[0].get('namespace', ''), i[0].get('name', '')))
 
     tactics = []
     mbcs = []
@@ -105,7 +117,6 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
             mbcs.append(doc)
         else:
             caps.append(doc)
-
 
     # docs.append(
     #     {

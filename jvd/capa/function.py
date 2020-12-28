@@ -5,8 +5,8 @@ from jvd.capa.data import DataUnit
 
 def extract_function_calls(f):
     unit: DataUnit = f.unit
-    print(f.calls)
-    print([f.addr_start for f in unit.map_f_xcall[f.addr_start]])
+    # print(f.calls)
+    # print([f.addr_start for f in unit.map_f_xcall[f.addr_start]])
     for callee in f.calls:
         if f.addr_start == callee:
             continue

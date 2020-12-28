@@ -10,12 +10,15 @@ from subprocess import Popen, PIPE, STDOUT
 from jvd.disassembler import DisassemblerAbstract
 import logging as log
 import traceback
-from jvd import ida_available
-from jvd.utils import read_gz_js, write_gz_js
+from jvd.utils import read_gz_js, write_gz_js, which
+import platform
 
 
 SRC = os.path.split(os.path.realpath(__file__))[0]
 IDA_script = os.path.join(SRC, 'ida_script.py')
+
+ida_available = which('ida64.exe' if platform.system()
+                      == 'Windows' else 'ida64') != None
 
 
 class IDA(DisassemblerAbstract):

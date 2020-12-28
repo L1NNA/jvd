@@ -3,6 +3,7 @@ import logging
 import argparse
 import os
 from jvd import ida_available, get_disassembler
+from jvd.resources import cache_all
 
 logging.basicConfig(
     level=logging.INFO,
@@ -39,32 +40,44 @@ if __name__ == "__main__":
         default='.bin',
         help='If the input is a folder, the file extension to include'
     )
-    parser.add_argument('--cfg', dest='cfg',
-                        action='store_true', help='Generate CFG matrix')
-    parser.add_argument('--capa', dest='capa',
-                        action='store_true', help='Analyze by capa')
-    parser.add_argument('--decompile', dest='decompile',
-                        action='store_true',
-                        help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
-    parser.add_argument('--verbose', dest='verbose',
-                        type=int, choices=range(-1, 3), default=-1)
+    parser.add_argument(
+        '--cfg', dest='cfg',
+        action='store_true', help='Generate CFG matrix')
+    parser.add_argument(
+        '--capa', dest='capa',
+        action='store_true', help='Analyze by capa')
+    parser.add_argument(
+        '--decompile', dest='decompile',
+        action='store_true',
+        help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
+    parser.add_argument(
+        '--verbose', dest='verbose',
+        type=int, choices=range(-1, 3), default=-1)
+    parser.add_argument(
+        '--cache', dest='cache',
+        action='store_true',
+        help='Download all the dependencies for offline usage.')
     flags = parser.parse_args()
-    if flags.dis is not None:
-        disassember = flags.dis
-    f = flags.file
-    if not f:
-        logging.error('You have to supply at least a file or a path.')
-    else:
-        disassember = get_disassembler(disassember)
 
-        if os.path.isfile(f) and not os.path.isdir(f):
-            _, logs = disassember.disassemble(
-                f, cfg=flags.cfg, capa=flags.capa, no_result=True,
-                verbose=flags.verbose, decompile=flags.decompile)
+    if flags.cache:
+        cache_all()
+    else:
+        if flags.dis is not None:
+            disassember = flags.dis
+        f = flags.file
+        if not f:
+            logging.error('You have to supply at least a file or a path.')
         else:
-            disassember.disassemble_all(
-                f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa,
-                verbose=parser.verbose, decompile=flags.decompile)
-        if len(logs) > 0:
-            for l in logs:
-                print(logs)
+            disassember = get_disassembler(disassember)
+
+            if os.path.isfile(f) and not os.path.isdir(f):
+                _, logs = disassember.disassemble(
+                    f, cfg=flags.cfg, capa=flags.capa, no_result=True,
+                    verbose=flags.verbose, decompile=flags.decompile)
+            else:
+                disassember.disassemble_all(
+                    f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa,
+                    verbose=parser.verbose, decompile=flags.decompile)
+            if len(logs) > 0:
+                for l in logs:
+                    print(logs)

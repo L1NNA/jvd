@@ -53,7 +53,6 @@
               <url>https://github.com/L1NNA/JARV1S-Disassembler/releases/download/v0.0.1/ghidra-1.0.jar</url>
               <unpack>false</unpack>
               <outputDirectory>${project.basedir}/lib/nsa/ghidra/1.0/</outputDirectory>
-              <!-- <md5>df65b5642f33676313ebe4d5b69a3fff</md5> -->
             </configuration>
           </execution>
         </executions>
@@ -65,8 +64,7 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-                <copy file="target/jarv1s-ghidra.jar" todir="${user.home}/jvd-dependencies">
-                </copy>
+                <copy file="target/jarv1s-ghidra.jar" todir="${user.home}/jv-dependencies/ghidrajar"></copy>
               </tasks>
             </configuration>
             <goals>
