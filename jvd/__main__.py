@@ -3,7 +3,7 @@ import logging
 import argparse
 import os
 from jvd import ida_available, get_disassembler
-from jvd.resources import cache_all
+from jvd.installer import make
 
 logging.basicConfig(
     level=logging.INFO,
@@ -54,13 +54,13 @@ if __name__ == "__main__":
         '--verbose', dest='verbose',
         type=int, choices=range(-1, 3), default=-1)
     parser.add_argument(
-        '--cache', dest='cache',
+        '--make', dest='make',
         action='store_true',
-        help='Download all the dependencies for offline usage.')
+        help='Make the installer for offline usage.')
     flags = parser.parse_args()
 
-    if flags.cache:
-        cache_all()
+    if flags.make:
+        make()
     else:
         if flags.dis is not None:
             disassember = flags.dis

@@ -42,7 +42,5 @@ class JDK(ResourceAbstract):
             'darwin': 'jdk-11.0.9.1+1-jre/jdk/Contents/Home/bin/java',
         }[platform.system().lower()]
         root = super().get()
-        java = os.path.join(root, java.format(self.jdk))
-        if not os.path.exists(java):
-            super().get()
+        java = os.path.join(root, java)
         return java

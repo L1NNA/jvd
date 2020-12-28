@@ -1,5 +1,6 @@
 import os
 from shutil import unpack_archive
+from collections import defaultdict
 
 import jvd.capa.block as e_block
 import jvd.capa.file as e_file
@@ -77,8 +78,11 @@ def install_rules(verbose=-1):
 
 
 def capa_analyze(gz_file, bin_path, verbose=-1):
+
+    rule_path = install_rules(verbose)
+
     if len(rules) < 1:
-        rules.extend(get_rules(install_rules(verbose),
+        rules.extend(get_rules(rule_path,
                                disable_progress=verbose < 1))
     rs = capa.rules.RuleSet(rules)
     extractor = JVDExtractor(gz_file, bin_path)
@@ -109,7 +113,30 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
         if meta.get("capa/subscope"):
             continue
 
-        doc = (meta, )
+        # doc = (meta, )
+        doc = meta
+
+        meta['capa/path'] = os.path.abspath(meta['capa/path']).replace(
+            os.path.abspath(
+                rule_path), ''
+            # 'https://github.com/fireeye/capa-rules/blob/master'
+        )
+
+        loc = defaultdict(list)
+
+        for _, m in matches:
+            for l, statement in collect_locations(m):
+                loc[l].append(statement)
+        doc['loc'] = loc
+        if 'examples' in doc:
+            del doc['examples']
+        if 'author' in doc:
+            del doc['author']
+        # del doc['scope']
+        if 'references' in doc:
+            del doc['references']
+        if 'namespace' in doc:
+            del doc['namespace']
 
         if meta.get("att&ck"):
             tactics.append(doc)
@@ -127,3 +154,12 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
     #     })
 
     return {'tac': tactics, 'mbc': mbcs, 'cap': caps}
+
+
+def collect_locations(result):
+    if result.success:
+        for l in result.locations:
+            yield l, str(result.statement)
+    for c in result.children:
+        for l, st in collect_locations(c):
+            yield l, st

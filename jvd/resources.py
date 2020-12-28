@@ -31,9 +31,11 @@ class ResourceAbstract(metaclass=ABCMeta):
         url = self.default if not url else url
         return self._download(url, show_progress=True, unpack_if_needed=True)
 
-    def _download(self, url, show_progress, unpack_if_needed):
+    def _download(self, url, show_progress, unpack_if_needed, home=None):
+        if home is None:
+            home = self.home
         folder = os.path.join(
-            self.home, self.__class__.__name__.lower(),
+            home, self.__class__.__name__.lower(),
         )
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -81,25 +83,28 @@ class ResourceAbstract(metaclass=ABCMeta):
         else:
             return file
 
-    def cache(self):
+    def cache(self, root):
         if self.windows:
             self._download(
-                self.windows, show_progress=True, unpack_if_needed=True)
+                self.windows, show_progress=True,
+                unpack_if_needed=False, home=root)
         if self.linux:
             self._download(
-                self.linux, show_progress=True, unpack_if_needed=True)
+                self.linux, show_progress=True,
+                unpack_if_needed=False, home=root)
         if self.darwin:
             self._download(
-                self.darwin, show_progress=True, unpack_if_needed=True)
+                self.darwin, show_progress=True,
+                unpack_if_needed=False, home=root)
         if self.default:
             self._download(
-                self.default, show_progress=True, unpack_if_needed=True)
+                self.default, show_progress=True,
+                unpack_if_needed=False, home=root)
 
 
-def cache():
+def cache_all(root=ResourceAbstract.home):
     for res in ResourceAbstract.__subclasses__():
-        res = res()
-        res.cache()
+        res = res().cache(root)
 
 
 def require(library):
@@ -107,8 +112,3 @@ def require(library):
         if res.__name__.lower() == library.lower():
             res = res()
             return res.get()
-
-
-def cache_all():
-    for res in ResourceAbstract.__subclasses__():
-        res().cache()

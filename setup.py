@@ -14,7 +14,8 @@ if path.exists(readme):
 setup(
     name='jvd',
     packages=['jvd'],
-    package_data={'jvd': ['jvd/*.py', 'jvd/**/*.py', 'jvd/*.json', 'jvd/**/*.json']},
+    package_data={'jvd': ['jvd/*.py', 'jvd/**/*.py',
+                          'jvd/*.json', 'jvd/**/*.json']},
     version='0.0.9',
     include_package_data=True,
     license='Apache 2.0',
@@ -29,9 +30,14 @@ setup(
     install_requires=[
         'requests',
         'tqdm',
+        'pytz',
+        'flask-socketio',
+        'python-dateutil',
         'python-magic-bin; sys_platform == "win32"',
         'python-magic-bin; sys_platform == "darwin"',
         'python-magic; sys_platform == "linux"',
+        'flare-capa',
+        'setuptools',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

@@ -1,9 +1,1 @@
-requests
-tqdm
-pytz
-flask-socketio
-python-dateutil
-python-magic-bin; sys_platform == 'win32'
-python-magic-bin; sys_platform == 'darwin'
-python-magic; sys_platform == 'linux'
-flare-capa
+.
