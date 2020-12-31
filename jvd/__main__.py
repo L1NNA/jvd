@@ -17,6 +17,9 @@ if not ida:
     logging.info('IDA is not available. Will use Ghidra instead.')
 
 
+is_src_dir = os.path.exists('setup.py')
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
@@ -53,13 +56,14 @@ if __name__ == "__main__":
     parser.add_argument(
         '--verbose', dest='verbose',
         type=int, choices=range(-1, 3), default=-1)
-    parser.add_argument(
-        '--make', dest='make',
-        action='store_true',
-        help='Make the installer for offline usage.')
+    if is_src_dir:
+        parser.add_argument(
+            '--make', dest='make',
+            action='store_true',
+            help='Make the installer for offline usage.')
     flags = parser.parse_args()
 
-    if flags.make:
+    if is_src_dir and flags.make:
         make()
     else:
         if flags.dis is not None:

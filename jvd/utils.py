@@ -11,6 +11,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 from shutil import unpack_archive
+import hashlib
 import magic
 
 import requests
@@ -66,7 +67,10 @@ def write_gz_js(obj, file, cls=None):
 
 
 def get_file_type(file):
-    return magic.from_file(file)
+    if isinstance(file, str):
+        return magic.from_file(file)
+    else:
+        return magic.from_buffer(file)
 
 
 def which(program):
@@ -85,3 +89,16 @@ def which(program):
                 return exe_file
 
     return None
+
+
+def sha256sum(filename):
+    if isinstance(filename, str):
+        h = hashlib.sha256()
+        b = bytearray(128*1024)
+        mv = memoryview(b)
+        with open(filename, 'rb', buffering=0) as f:
+            for n in iter(lambda: f.readinto(mv), 0):
+                h.update(mv[:n])
+        return h.hexdigest()
+    else:
+        return hashlib.sha256(filename).hexdigest()
