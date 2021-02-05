@@ -138,10 +138,10 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
         if 'namespace' in doc:
             del doc['namespace']
 
-        if meta.get("att&ck"):
-            tactics.append(doc)
-        elif meta.get("mbc"):
+        if meta.get("mbc"):
             mbcs.append(doc)
+        elif meta.get("att&ck"):
+            tactics.append(doc)
         else:
             caps.append(doc)
 

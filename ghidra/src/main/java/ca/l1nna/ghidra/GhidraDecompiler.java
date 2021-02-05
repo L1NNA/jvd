@@ -302,6 +302,7 @@ public class GhidraDecompiler {
 
                 if (this.decompiled) {
                     FuncSrc funcSrc = new FuncSrc();
+                    funcSrc.addr_start = func.addr_start;
                     DecompiledFunction deFunc = decomp.decompileFunction(currentFunction, 0, monitor)
                             .getDecompiledFunction();
                     if (deFunc != null) {
@@ -390,16 +391,16 @@ public class GhidraDecompiler {
 
     public List<Comment> ParseComments() throws CancelledException {
         List<Comment> comments = new ArrayList<>();
-        ArrayList<Pair<String, Integer>> comment_category_map = new ArrayList<>();
-        comment_category_map.add(new Pair<>("anterior", CodeUnit.PRE_COMMENT));
-        comment_category_map.add(new Pair<>("posterior", CodeUnit.POST_COMMENT));
-        comment_category_map.add(new Pair<>("regular", CodeUnit.PLATE_COMMENT));
-        comment_category_map.add(new Pair<>("repeatable", CodeUnit.REPEATABLE_COMMENT));
+        ArrayList<Pair<Integer, Integer>> comment_category_map = new ArrayList<>();
+        comment_category_map.add(new Pair<>(0, CodeUnit.PRE_COMMENT));
+        comment_category_map.add(new Pair<>(1, CodeUnit.POST_COMMENT));
+        comment_category_map.add(new Pair<>(3, CodeUnit.PLATE_COMMENT));
+        comment_category_map.add(new Pair<>(2, CodeUnit.REPEATABLE_COMMENT));
 
         Listing listing = program.getListing();
-        for (Pair<String, Integer> p : comment_category_map) {
+        for (Pair<Integer, Integer> p : comment_category_map) {
             int comment_category = p.second;
-            String comment_type = p.first;
+            int comment_type = p.first;
 
             AddressIterator forward_comment_itr = listing.getCommentAddressIterator(comment_category,
                     program.getMemory(), true);
@@ -417,6 +418,10 @@ public class GhidraDecompiler {
                 comment.content = content;
                 // This assumes simple block model so no overlap is possible
                 comment.address = address.getOffset();
+                CodeBlock block_containing_comment = basicBlockModel.getFirstCodeBlockContaining(address,
+                        TaskMonitor.DUMMY);
+
+                comment.blk = block_containing_comment == null ? -1 : block_containing_comment.getFirstStartAddress().getOffset();
                 comment.author = "Ghidra";
                 comment.created_at = date_formatter.format(Calendar.getInstance().getTime());
 

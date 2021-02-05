@@ -49,24 +49,24 @@ def _iter_extra_comments(ea, start):
     return "\n".join(lines)
 
 
-def get_comments(ea, created_at):
+def get_comments(ea, created_at, blk_ea):
     comments = []
     text = idc.get_cmt(ea, 1)
     if text and len(text) > 0:
-        comments.append({'author': 'ida', 'category': 'repeatable',
-                         'content': text, 'address': ea, 'created_at': created_at})
+        comments.append({'author': 'ida', 'category': 2,
+                         'content': text, 'blk': blk_ea, 'address': ea, 'created_at': created_at})
     text = idc.get_cmt(ea, 0)
     if text and len(text) > 0:
-        comments.append({'author': 'ida', 'category': 'regular',
-                         'content': text, 'address': ea, 'created_at': created_at})
+        comments.append({'author': 'ida', 'category': 3,
+                         'content': text, 'blk': blk_ea, 'address': ea, 'created_at': created_at})
     text = _iter_extra_comments(ea, E_PREV)
     if text and len(text) > 0:
-        comments.append({'author': 'ida', 'category': 'anterior',
-                         'content': text, 'address': ea, 'created_at': created_at})
+        comments.append({'author': 'ida', 'category': 0,
+                         'content': text, 'blk': blk_ea, 'address': ea, 'created_at': created_at})
     text = _iter_extra_comments(ea, E_NEXT)
     if text and len(text) > 0:
-        comments.append({'author': 'ida', 'category': 'posterior',
-                         'content': text, 'address': ea, 'created_at': created_at})
+        comments.append({'author': 'ida', 'category': 1,
+                         'content': text, 'blk': blk_ea, 'address': ea, 'created_at': created_at})
     return comments
 
 
@@ -326,7 +326,7 @@ def get_all(function_eas: list = None, with_blocks=True):
                                 dr = dr_rfs[0]
                         drs.append(dr)
 
-                    comments.extend(get_comments(head, time_str))
+                    comments.extend(get_comments(head, time_str, head))
                     for ref in drs:
                         if ref not in binary['strings']:
                             str_val = find_string_at(ref)
@@ -385,7 +385,7 @@ def get_all(function_eas: list = None, with_blocks=True):
                         'cr': cr,
                     })
 
-                sblock['ins_c'] = len(sblock['ins'])
+                # sblock['ins_c'] = len(sblock['ins'])
 
                 # flow chart
                 for succ_block in bblock.succs():

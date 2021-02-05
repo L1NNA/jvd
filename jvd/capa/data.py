@@ -46,21 +46,32 @@ class DataUnit:
             f.unit = self
             f.blocks = self.map_b.get(f.addr_start, [])
             self.map_f[f.addr_start] = f
+            if not hasattr(f, 'calls'):
+                f.calls = []
             for c in f.calls:
                 self.map_f_xcall[c].append(f)
-        
+
         self.map_b = {}
         for b in self.obj.blocks:
             self.map_b[b.addr_start] = b
 
         self.ins_dat_ref = {}
         for b in self.obj.blocks:
+            if not hasattr(b, 'calls'):
+                b.calls = []
             for i in b.ins:
+                if not hasattr(i, 'dr'):
+                    i.dr = []
+                if not hasattr(i, 'cr'):
+                    i.cr = []
+                if not hasattr(i, 'oprs'):
+                    i.oprs = []
                 if len(i.dr) > 0:
                     self.ins_dat_ref[i.ea] = i.dr
         # print('##', self.obj.bin.architecture)
         self.syntax = get_definition(self.obj.bin.architecture)
-        self.import_names = None #self.obj.bin.import_functions
-        self.seg_addr = sorted([int(k) for k in self.obj.bin.seg.keys()]) + [sys.maxsize]
+        self.import_names = None  # self.obj.bin.import_functions
+        self.seg_addr = sorted(
+            [int(k) for k in self.obj.bin.seg.keys()]) + [sys.maxsize]
         self.find_seg = lambda v: next(
             x[0] for x in enumerate(self.seg_addr) if x[1] > v)
