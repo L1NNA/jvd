@@ -19,7 +19,6 @@ public class Model {
         public Map<Long, List<String>> import_functions = new HashMap<>();
         public Map<Long, String> export_functions = new HashMap<>();
         public Map<Long, String> seg = new HashMap<>();
-        public String description = "";
         public String disassembled_at = "";
         public int functions_count = 0;
         public String architecture = "";
@@ -40,11 +39,11 @@ public class Model {
         public List<Long> calls = new ArrayList<>();
         public int bbs_len = 0;
         public long addr_end;
-        public String description = "";
         public String name = "";
     }
 
     public static class FuncSrc {
+        public long addr_start;
         public String src = "";
     }
 
@@ -67,10 +66,11 @@ public class Model {
     }
 
     public static class Comment {
-        public String category = "";
+        public int category = 3;
         public String content = "";
         public String author = "ghidra";
         public String created_at = "";
         public long address;
+        public long blk;
     }
 }

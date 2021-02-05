@@ -109,10 +109,9 @@ test_folder
 log.txt
 *.jar
 test/*.json
-installer
 .pytest_cache
 target
 .DS_Store
 .project 
 .settings
-jvd_installer
+jvd_installer*
