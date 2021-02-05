@@ -30,6 +30,7 @@ from collections import defaultdict
 import sys
 from ida_entry import get_entry, get_entry_qty
 import base64
+from capa.features.extractors.ida.helpers import find_string_at
 
 
 def now_str(): return datetime.now().isoformat()
@@ -327,9 +328,15 @@ def get_all(function_eas: list = None, with_blocks=True):
 
                     comments.extend(get_comments(head, time_str))
                     for ref in drs:
-                        if ref not in binary['strings'] and ref not in binary['data']:
+                        if ref not in binary['strings']:
+                            str_val = find_string_at(ref)
+                            if str_val and len(str_val) > 0:
+                                binary['strings'][ref] = str_val
+
+                        elif ref not in binary['strings'] and ref not in binary['data']:
                             binary['data'][ref] = base64.b64encode(get_bytes(
                                 head, get_item_size(head)))
+                        
 
                     mne = print_insn_mnem(head)
                     if mne == "":
