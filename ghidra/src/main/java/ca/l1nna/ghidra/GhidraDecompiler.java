@@ -418,16 +418,17 @@ public class GhidraDecompiler {
                 comment.content = content;
                 // This assumes simple block model so no overlap is possible
                 comment.address = address.getOffset();
-                CodeBlock block_containing_comment = basicBlockModel.getFirstCodeBlockContaining(address,
-                        TaskMonitor.DUMMY);
+                // CodeBlock block_containing_comment = basicBlockModel.getFirstCodeBlockContaining(address,
+                //         TaskMonitor.DUMMY);
 
-                comment.blk = block_containing_comment == null ? -1 : block_containing_comment.getFirstStartAddress().getOffset();
+                // comment.blk = block_containing_comment == null ? -1 : block_containing_comment.getFirstStartAddress().getOffset();
                 comment.author = "Ghidra";
                 comment.created_at = date_formatter.format(Calendar.getInstance().getTime());
 
                 Function function = program.getFunctionManager().getFunctionContaining(address);
                 if (function != null) {
                     comment.address = address.getOffset();
+                    comment.func = function.getEntryPoint().getOffset();
                     comments.add(comment);
                 }
             }

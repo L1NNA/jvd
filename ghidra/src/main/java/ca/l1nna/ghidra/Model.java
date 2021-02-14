@@ -71,6 +71,6 @@ public class Model {
         public String author = "ghidra";
         public String created_at = "";
         public long address;
-        public long blk;
+        public long func;
     }
 }
