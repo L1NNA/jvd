@@ -78,10 +78,10 @@ if __name__ == "__main__":
                 _, logs = disassember.disassemble(
                     f, cfg=flags.cfg, capa=flags.capa, no_result=True,
                     verbose=flags.verbose, decompile=flags.decompile)
+                if len(logs) > 0:
+                    for l in logs:
+                        print(logs)
             else:
                 disassember.disassemble_all(
                     f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa,
-                    verbose=parser.verbose, decompile=flags.decompile)
-            if len(logs) > 0:
-                for l in logs:
-                    print(logs)
+                    verbose=flags.verbose, decompile=flags.decompile)

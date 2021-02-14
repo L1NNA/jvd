@@ -39,7 +39,7 @@ def process(java, jar, file, json_file, project_suffix='.ghidra',
     if func_entries is not None:
         func_entries_file = file + '.func.entries.txt'
         with open(func_entries_file, 'w') as wf:
-            wf.writelines(func_entries)
+            wf.writelines([str(l)+os.linesep for l in func_entries])
         cmd.append(func_entries_file)
     p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
     out, err = p.communicate()
