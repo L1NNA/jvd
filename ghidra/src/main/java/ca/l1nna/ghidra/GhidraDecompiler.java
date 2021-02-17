@@ -185,19 +185,20 @@ public class GhidraDecompiler {
             }
         }
 
-        for (MemoryBlock b : program.getMemory().getBlocks()) {
-            if (b.isExecute()) {
-                Address start = b.getStart();
-                Address end = b.getEnd();
-                while (start.getOffset() <= end.getOffset()) {
-                    if (!listing.isInFunction(start)) {
-                        fapi.disassemble(start);
-                        fapi.createFunction(start, "NEW_" + Long.toHexString(start.getOffset()));
+        if(System.getenv("CI") != null || System.getenv("PYTEST_CURRENT_TEST") != null)
+            for (MemoryBlock b : program.getMemory().getBlocks()) {
+                if (b.isExecute()) {
+                    Address start = b.getStart();
+                    Address end = b.getEnd();
+                    while (start.getOffset() <= end.getOffset()) {
+                        if (!listing.isInFunction(start)) {
+                            fapi.disassemble(start);
+                            fapi.createFunction(start, "NEW_" + Long.toHexString(start.getOffset()));
+                        }
+                        start = start.next();
                     }
-                    start = start.next();
                 }
             }
-        }
 
         if (decompiled) {
             decomp = new DecompInterface();
