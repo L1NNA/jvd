@@ -12,7 +12,7 @@ from shutil import copyfile, rmtree, unpack_archive
 
 from tqdm import tqdm
 
-from jvd.utils import read_gz_js, write_gz_js, get_file_type
+from jvd.utils import read_gz_js, write_gz_js, get_file_type, grep_ext, m_map
 from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
@@ -133,8 +133,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         if isinstance(path_or_files, str):
             logging.info('processing {} with {} '.format(
                 path_or_files, file_ext))
-            files = [str(p) for p in Path(
-                path_or_files).rglob('*') if p.is_file() and p.suffix == file_ext]
+            files = grep_ext(path_or_files, ext=file_ext)
         else:
             files = path_or_files
 
@@ -142,12 +141,15 @@ class DisassemblerAbstract(metaclass=ABCMeta):
 
         def gen():
             if multiprocessing:
+                yield from m_map(
+                    partial(
+                        self.disassemble, decompile=decompile,
+                        cleanup=cleanup, cfg=cfg, no_result=True,
+                        capa=capa, verbose=verbose), files
+                )
                 with ProcessPoolExecutor(max_workers=50) as e:
                     for ind, extracted in enumerate(
-                            e.map(partial(
-                                self.disassemble, decompile=decompile,
-                                cleanup=cleanup, cfg=cfg, no_result=True,
-                                capa=capa, verbose=verbose), files)):
+                            e.map()):
                         yield ind, extracted
             else:
                 for ind, f in enumerate(files):

@@ -184,7 +184,7 @@ def get_binary_with_functions():
     binary['bits'] = bits
     binary['disassembler'] = 'ida'
     binary['compiler'] = get_compiler_name(info.cc.id)
-    binary['description'] = ""
+    # binary['description'] = ""
     strs = Strings()
     strs.setup(strtypes=[i for i in range(11)])
     binary['strings'] = {

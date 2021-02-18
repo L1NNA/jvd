@@ -1,7 +1,9 @@
 import datetime
 import gzip
+import hashlib
 import json
 import logging as log
+import multiprocessing
 import os
 import platform
 import re
@@ -9,11 +11,12 @@ import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from shutil import unpack_archive
-import hashlib
-import magic
+from functools import partial
 
+import magic
 import requests
 from tqdm import tqdm
 
@@ -102,3 +105,23 @@ def sha256sum(filename):
         return h.hexdigest()
     else:
         return hashlib.sha256(filename).hexdigest()
+
+
+def grep_ext(folder, ext=None):
+    paths = [p for p in Path(
+        folder).rglob('*') if p.is_file()]
+    paths = [str(p) for p in paths if len(ext) < 1 or p.suffix == ext]
+    return paths
+
+
+def m_map(func, inputs, max_workers=-1):
+    if max_workers < 1:
+        max_workers = multiprocessing.cpu_count()
+    if platform.system() == 'Windows':
+        # windows hard limit is 61
+        max_workers = min(max_workers, 55)
+
+    with ProcessPoolExecutor(max_workers=max_workers) as e:
+        for ind, result in enumerate(
+                e.map(func, inputs)):
+            yield ind, result

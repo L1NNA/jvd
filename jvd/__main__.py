@@ -4,6 +4,7 @@ import argparse
 import os
 from jvd import ida_available, get_disassembler
 from jvd.installer import make
+from jvd.unpacker import unpack_all
 
 logging.basicConfig(
     level=logging.INFO,
@@ -40,7 +41,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--ext',
-        default='.bin',
+        default='',
         help='If the input is a folder, the file extension to include'
     )
     parser.add_argument(
@@ -54,6 +55,10 @@ if __name__ == "__main__":
         action='store_true',
         help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
     parser.add_argument(
+        '--unpack', dest='unpack',
+        action='store_true',
+        help='Unpack files if applicable.')
+    parser.add_argument(
         '--verbose', dest='verbose',
         type=int, choices=range(-1, 3), default=-1)
     if is_src_dir:
@@ -65,6 +70,8 @@ if __name__ == "__main__":
 
     if is_src_dir and flags.make:
         make()
+    elif flags.unpack:
+        unpack_all(flags.file, flags.ext)
     else:
         if flags.dis is not None:
             disassember = flags.dis
