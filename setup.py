@@ -38,6 +38,7 @@ setup(
         'python-magic; sys_platform == "linux"',
         'flare-capa',
         'setuptools',
+        'unipacker >=1.0.4'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

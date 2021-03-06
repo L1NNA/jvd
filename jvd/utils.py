@@ -110,11 +110,14 @@ def sha256sum(filename):
 def grep_ext(folder, ext=None):
     paths = [p for p in Path(
         folder).rglob('*') if p.is_file()]
-    paths = [str(p) for p in paths if len(ext) < 1 or p.suffix == ext]
+    if ext:
+        paths = [str(p) for p in paths if len(ext) < 1 or p.suffix == ext]
+    else:
+        paths = [str(p) for p in paths]
     return paths
 
 
-def m_map(func, inputs, max_workers=-1):
+def m_map(func, inputs, max_workers=-1,):
     if max_workers < 1:
         max_workers = multiprocessing.cpu_count()
     if platform.system() == 'Windows':
@@ -122,6 +125,66 @@ def m_map(func, inputs, max_workers=-1):
         max_workers = min(max_workers, 55)
 
     with ProcessPoolExecutor(max_workers=max_workers) as e:
-        for ind, result in enumerate(
-                e.map(func, inputs)):
+        for ind, result in tqdm(enumerate(
+                e.map(func, inputs)), total=len(inputs)):
             yield ind, result
+
+
+class JVSample:
+
+    def __init__(self, file, resource=None):
+        parts = os.path.basename(file).split('.')
+        self.file = file
+        self.file_type = get_file_type(file)
+        self._sha256 = sha256sum(file)
+        if len(parts) < 4:
+            self.resource = resource if resource else self._sha256
+            self.labels = set(['na'])
+            self.packers = set(['na'])
+            self.save()
+        else:
+            self.resource = parts[0]
+            self.labels = set(parts[1].split('-'))
+            self.packers = set(parts[2].split('-'))
+
+    def get_file_name(self,):
+        base_name = '.'.join([
+            self.resource,
+            '-'.join(sorted(self.labels)),
+            '-'.join(sorted(self.packers)),
+            self.file_type.split()[0].lower(),
+            'bin'
+        ])
+        return os.path.join(
+            os.path.dirname(self.file),
+            base_name
+        )
+
+    def save(self):
+        new_file = self.get_file_name()
+        os.rename(self.file, new_file)
+        self.file = str(new_file)
+
+    def add_label(self, new_label):
+        new_label = new_label.strip()
+        if not new_label or new_label == 'na' or len(new_label) == 0:
+            return
+        if len(self.labels) == 1 and list(self.labels)[0] == 'na':
+            self.labels.clear()
+        self.labels.add(new_label)
+        self.save()
+
+    def add_packer(self, new_label):
+        new_label = new_label.strip()
+        if not new_label or new_label == 'na' or len(new_label) == 0:
+            return
+        if len(self.packers) == 1 and list(self.packers)[0] == 'na':
+            self.packers.clear()
+        self.packers.add(new_label)
+        self.save()
+
+    def get_sha256(self):
+        if self._sha256:
+            return self._sha256
+        sha256 = sha256sum(self.file)
+        return sha256

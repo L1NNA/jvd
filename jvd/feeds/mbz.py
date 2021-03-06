@@ -5,11 +5,17 @@ from lxml import html
 from tqdm import tqdm
 import urllib.request as ur
 from zipfile import ZipFile
+from jvd.unpacker import unpack_all
+from jvd.utils import grep_ext, download_file
 from jvd.ida.ida import IDA
 import sys
+import io
+from csv import reader as csv_reader
+from jvd.resources import ResourceAbstract
 
 
 files = "https://mb-api.abuse.ch/downloads/"
+url_csv = 'https://bazaar.abuse.ch/export/csv/full/'
 
 
 def _download_all(data_path):
@@ -37,25 +43,7 @@ def _process_entry(entry):
         zf.extractall(ext, pwd=b'infected')
 
 
-def _ren_dis_entry(ext):
-    for bin_file in os.listdir(ext):
-        sha256, tp = os.path.splitext(os.path.basename(bin_file))
-        target = os.path.join(ext, sha256+'.bin')
-        source = os.path.join(ext, bin_file)
-        if os.path.exists(target):
-            os.remove(source)
-        else:
-            os.rename(
-                source,
-                target)
-
-
-def _disassemble_all(path):
-    disassember = IDA()
-    disassember.disassemble_all(
-        path, cfg=False, as_gzip=True
-    )
-
-
 if __name__ == '__main__':
-    _download_all('I:/MalBinZoo/ftp')
+    # _download_all('I:/MalBinZoo/ftp')
+    pass
+    # label_folder('I:/MalBinZoo/2020-06-29_extracted')

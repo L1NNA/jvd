@@ -2,9 +2,8 @@ import sys
 import logging
 import argparse
 import os
-from jvd import ida_available, get_disassembler
+from jvd import ida_available, get_disassembler, process_folder
 from jvd.installer import make
-from jvd.unpacker import unpack_all
 
 logging.basicConfig(
     level=logging.INFO,
@@ -21,7 +20,7 @@ if not ida:
 is_src_dir = os.path.exists('setup.py')
 
 
-if __name__ == "__main__":
+def entry_point():
 
     parser = argparse.ArgumentParser(
         usage='python -m jvd <file> [options]',
@@ -55,10 +54,6 @@ if __name__ == "__main__":
         action='store_true',
         help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
     parser.add_argument(
-        '--unpack', dest='unpack',
-        action='store_true',
-        help='Unpack files if applicable.')
-    parser.add_argument(
         '--verbose', dest='verbose',
         type=int, choices=range(-1, 3), default=-1)
     if is_src_dir:
@@ -70,25 +65,19 @@ if __name__ == "__main__":
 
     if is_src_dir and flags.make:
         make()
-    elif flags.unpack:
-        unpack_all(flags.file, flags.ext)
     else:
         if flags.dis is not None:
-            disassember = flags.dis
+            disassembler = flags.dis
         f = flags.file
         if not f:
             logging.error('You have to supply at least a file or a path.')
         else:
-            disassember = get_disassembler(disassember)
+            process_folder(
+                f, cfg=flags.cfg, capa=flags.capa, decompile=flags.decompile,
+                clean_up=False, ext=flags.ext, disassembler=disassembler,
+                verbose=flags.verbose
+            )
 
-            if os.path.isfile(f) and not os.path.isdir(f):
-                _, logs = disassember.disassemble(
-                    f, cfg=flags.cfg, capa=flags.capa, no_result=True,
-                    verbose=flags.verbose, decompile=flags.decompile)
-                if len(logs) > 0:
-                    for l in logs:
-                        print(logs)
-            else:
-                disassember.disassemble_all(
-                    f, file_ext=flags.ext, cfg=flags.cfg, capa=flags.capa,
-                    verbose=flags.verbose, decompile=flags.decompile)
+
+if __name__ == "__main__":
+    entry_point()

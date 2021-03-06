@@ -31,7 +31,7 @@ class ResourceAbstract(metaclass=ABCMeta):
         url = self.default if not url else url
         return self._download(url, show_progress=True, unpack_if_needed=True)
 
-    def _download(self, url, show_progress, unpack_if_needed, home=None):
+    def _download(self, url, show_progress, unpack_if_needed, home=None, file=None):
         if home is None:
             home = self.home
         folder = os.path.join(
@@ -39,7 +39,8 @@ class ResourceAbstract(metaclass=ABCMeta):
         )
         if not os.path.exists(folder):
             os.makedirs(folder)
-        file = fn_from_url(url)
+        if not file:
+            file = fn_from_url(url)
         file = os.path.join(
             folder, file)
         # file_unpack = os.path.join(folder, "unpacked")
