@@ -1,4 +1,4 @@
-name: Ghidra Extractor for Capa
+name: Source Lexer/AST-Parsers
 
 on:
   push:
@@ -6,13 +6,10 @@ on:
       - master
     paths:
       - "jvd/**"
-      - "ghidra/**"
       - "test/**"
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'jvd/**'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -41,4 +38,4 @@ jobs:
       - name: Test with pytest
         run: |
           pip install pytest
-          pytest test/test_ghidra_capa_features.py
+          pytest test/test_src.py

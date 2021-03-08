@@ -5,54 +5,54 @@ on:
     branches:
       - master
     paths:
-      - 'ghidra/**'
-      - '.github/workflows/ghidra-jar.yml'
+      - "ghidra/**"
+      - ".github/workflows/ghidra-jar.yml"
+      - "test/**"
   pull_request:
     branches:
       - master
     paths:
-      - 'ghidra/**'
-      - '.github/workflows/ghidra-jar.yml'
+      - "ghidra/**"
+      - ".github/workflows/ghidra-jar.yml"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-      with:
-        lfs: true
-    - name: Set up JDK 13 
-      uses: actions/setup-java@v1
-      with:
-        java-version: 13 
-#     this is the jar we built locally (not the lastest)
-#     (now we switch to download the latest ghidra release and build the single jar. see code below.)
-#     - name: download dependencies
-#       run: wget -q https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar -P lib/nsa/ghidra/1.0/
-    - name: download official Ghidra single jar
-      run: |
-        wget -q https://ghidra-sre.org/ghidra_9.2_PUBLIC_20201113.zip
-        unzip -q ghidra_9.2_PUBLIC_20201113.zip
-    - name: generate single JAR ghidra
-      run: |
-        ls -alh
-        ./ghidra_9.2_PUBLIC/support/buildGhidraJar
-        ls -alh
-        ls -alh ghidra/lib/nsa/ghidra/1.0/
-        mv ghidra.jar ghidra-1.0.jar
-        cp ghidra-1.0.jar ghidra/lib/nsa/ghidra/1.0/ghidra-1.0.jar
-    - name: package
-      run: |
-        cd ghidra
-        mvn --no-transfer-progress package
-    - name: Upload to release
-      uses: L1NNA/github-release@master
-      with:
-        tag: v0.0.1
-        files: ghidra/target/jarv1s-ghidra.jar ghidra-1.0.jar
-        gzip: false
-        body: latest jar built
-        token: ${{ secrets.GITHUB_TOKEN }}
-        allow_override: true
+      - uses: actions/checkout@v1
+        with:
+          lfs: true
+      - name: Set up JDK 13
+        uses: actions/setup-java@v1
+        with:
+          java-version: 13
+      #     this is the jar we built locally (not the lastest)
+      #     (now we switch to download the latest ghidra release and build the single jar. see code below.)
+      #     - name: download dependencies
+      #       run: wget -q https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar -P lib/nsa/ghidra/1.0/
+      - name: download official Ghidra single jar
+        run: |
+          wget -q https://ghidra-sre.org/ghidra_9.2_PUBLIC_20201113.zip
+          unzip -q ghidra_9.2_PUBLIC_20201113.zip
+      - name: generate single JAR ghidra
+        run: |
+          ls -alh
+          ./ghidra_9.2_PUBLIC/support/buildGhidraJar
+          ls -alh
+          ls -alh ghidra/lib/nsa/ghidra/1.0/
+          mv ghidra.jar ghidra-1.0.jar
+          cp ghidra-1.0.jar ghidra/lib/nsa/ghidra/1.0/ghidra-1.0.jar
+      - name: package
+        run: |
+          cd ghidra
+          mvn --no-transfer-progress package
+      - name: Upload to release
+        uses: L1NNA/github-release@master
+        with:
+          tag: v0.0.1
+          files: ghidra/target/jarv1s-ghidra.jar ghidra-1.0.jar
+          gzip: false
+          body: latest jar built
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allow_override: true

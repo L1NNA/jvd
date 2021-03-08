@@ -130,6 +130,57 @@ def m_map(func, inputs, max_workers=-1,):
             yield ind, result
 
 
+class AttrDict(dict):
+    """ Dictionary subclass whose entries can be accessed by attributes
+        (as well as normally). (Added attributes will be ignored)
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(AttrDict, self).__init__(*args, **kwargs)
+        self.__dict__ = self
+
+    @staticmethod
+    def from_nested_dict(data):
+        """ Construct nested AttrDicts from nested dictionaries. """
+        if isinstance(data, dict):
+            return AttrDict({key: AttrDict.from_nested_dict(data[key])
+                             for key in data})
+        if isinstance(data, list):
+            return [AttrDict.from_nested_dict(d) for d in data]
+        return data
+
+    def __int__(self):
+        if hasattr(self, 'addr_start'):
+            return getattr(self, 'addr_start')
+        return None
+
+
+def toAttrDict(obj, classkey=None):
+    obj_as_dict = todict(obj, classkey=classkey)
+    return AttrDict.from_nested_dict(obj_as_dict)
+
+
+def todict(obj, classkey=None):
+    if isinstance(obj, dict):
+        data = {}
+        for (k, v) in obj.items():
+            data[k] = todict(v, classkey)
+        return data
+    elif hasattr(obj, "_ast"):
+        return todict(obj._ast())
+    elif hasattr(obj, "__iter__") and not isinstance(obj, str):
+        return [todict(v, classkey) for v in obj]
+    elif hasattr(obj, "__dict__"):
+        data = dict([(key, todict(value, classkey))
+                     for key, value in obj.__dict__.items()
+                     if not callable(value) and not key.startswith('_')])
+        if classkey is not None and hasattr(obj, "__class__"):
+            data[classkey] = obj.__class__.__name__
+        return data
+    else:
+        return obj
+
+
 class JVSample:
 
     def __init__(self, file, resource=None):

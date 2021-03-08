@@ -1,31 +1,7 @@
 from collections import defaultdict
 from jvd.normalizer.syntax import get_definition
 import sys
-
-
-class AttrDict(dict):
-    """ Dictionary subclass whose entries can be accessed by attributes
-        (as well as normally). (Added attributes will be ignored)
-    """
-
-    def __init__(self, *args, **kwargs):
-        super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self
-
-    @staticmethod
-    def from_nested_dict(data):
-        """ Construct nested AttrDicts from nested dictionaries. """
-        if isinstance(data, dict):
-            return AttrDict({key: AttrDict.from_nested_dict(data[key])
-                             for key in data})
-        if isinstance(data, list):
-            return [AttrDict.from_nested_dict(d) for d in data]
-        return data
-
-    def __int__(self):
-        if hasattr(self, 'addr_start'):
-            return getattr(self, 'addr_start')
-        return None
+from jvd.utils import AttrDict
 
 
 class DataUnit:
