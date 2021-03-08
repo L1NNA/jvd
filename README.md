@@ -9,34 +9,41 @@ The package will detect if IDA Pro is available in the path. If not, it will dow
 ### :rocket: Installation:
 Required: Python 3+. [Optional: OpenJDK 13+]
 ```bash
+# install from github:
 pip install git+https://github.com/L1NNA/JARV1S-Ghidra@master
+
+# install from offline installer:
+python jvd_installer_windows.zip
 ```
 ### :fire: Usage:
 Example:
 ```bash
-python -m jvd binary_file_to_decompile
+jvd binary_file_to_decompile
 ```
 Batch mode: (process files end with `.o` in the `bins` folder)
 ```bash
-python -m jvd bins --ext=.o
+jvd bins --ext=.o
 ```
 If IDA Pro is not in the path, Ghidra jar will be downloaded and installed. 
 During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-ghidra` if needed.
 Options:
 ```bash
-usage: python -m jvd <file> [options]
+usage: jvd <file> [options]
 
 positional arguments:
   file                  The binary file.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --dis {ida,ghidra}    The disassembler
+  --dis {ghidra}        The disassembler
   --ext EXT             If the input is a folder, the file extension to
                         include
   --cfg                 Generate CFG matrix
   --capa                Analyze by capa
+  --decompile           Decomiple the code (if IDA is chosen as disassembler,
+                        it will use Ghidra to decompile and merge.
   --verbose {-1,0,1,2}
+  --make                Make the installer for offline usage.
 
 ```
 
