@@ -25,13 +25,13 @@ Batch mode: (process files end with `.o` in the `bins` folder)
 jvd bins --ext=.o
 ```
 If IDA Pro is not in the path, Ghidra jar will be downloaded and installed. 
-During the first run, the required jar and JDK will be downloaded to `~/.jarv1s-ghidra` if needed.
+If not using the offline installer, during the first run, the required jar and JDK will be downloaded to `~/jv-dependences` if needed.
 Options:
 ```bash
 usage: jvd <file> [options]
 
 positional arguments:
-  file                  The binary file.
+  file                  The binary file or the targeted path.
 
 optional arguments:
   -h, --help            show this help message and exit
