@@ -46,6 +46,18 @@ optional arguments:
   --make                Make the installer for offline usage.
 
 ```
+Packed binaries will be unapcked (in order) by:
+```
+- p7zip (zip, rar, tar, gzip, etc)
+- upx (original version)
+- un{i}packer
+  - ASPack: Advanced commercial packer with a high compression ratio
+  - FSG: Freeware, fast to unpack
+  - MEW: Specifically designed for small binaries
+  - MPRESS: Free, more complex packer
+  - PEtite: Freeware packer, similar to ASPack
+  - UPX: Cross-platform, open source packer (including modified UPX)
+```
 
 ### :star: Contributors:
 - Steven Ding - Queen's Computing
