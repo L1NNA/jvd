@@ -1,4 +1,4 @@
-name: Source Lexer/AST-Parsers
+name: Source Lexer/AST/CPG-Parsers
 
 on:
   push:
