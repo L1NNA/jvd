@@ -38,6 +38,9 @@ def get_disassembler(disassembler=None):
 
 def _process_single(s, cfg=False, capa=False, decompile=False,
                     clean_up=False, disassembler=None, verbose=-1):
+    if not isinstance(s, JVSample):
+        s = JVSample(s)
+        s.save()
     samples = unpack(s)
     for v in samples:
         label(v)

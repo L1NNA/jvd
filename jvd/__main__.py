@@ -23,12 +23,12 @@ is_src_dir = os.path.exists('setup.py')
 def entry_point():
 
     parser = argparse.ArgumentParser(
-        usage='python -m jvd <file> [options]',
+        usage='jvd <file> [options]',
     )
     parser.add_argument(
         'file',
         nargs='?',
-        help='The binary file.'
+        help='The binary file or the targeted path.'
     )
     disassember = 'ghidra' if not ida else 'ida'
     disassemblers = ['ghidra'] if not ida else ['ida', 'ghidra']
