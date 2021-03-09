@@ -185,11 +185,12 @@ class JVSample:
 
     def __init__(self, file, resource=None):
         parts = os.path.basename(file).split('.')
+        original_name = str(Path(file).with_suffix('').name).replace('.', '_')
         self.file = file
         self.file_type = get_file_type(file)
         self._sha256 = sha256sum(file)
-        if len(parts) < 4:
-            self.resource = resource if resource else self._sha256
+        if len(parts) < 4 or not file.endswith('.bin'):
+            self.resource = resource if resource else original_name  # self._sha256
             self.labels = set(['na'])
             self.packers = set(['na'])
             self.save()

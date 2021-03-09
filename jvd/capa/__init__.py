@@ -23,7 +23,7 @@ rules = []
 class CapaRules(ResourceAbstract):
     def __init__(self):
         super().__init__()
-        self.version = 'v1.4.0'
+        self.version = 'v1.5.1'
         self.default = 'https://github.com/fireeye/capa-rules/archive/{}.zip'.format(
             self.version)
         self.check_update = False

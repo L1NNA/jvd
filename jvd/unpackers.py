@@ -207,10 +207,10 @@ class UniPacker(Unpacker):
             if os.path.exists(dest):
                 os.remove(dest)
         finally:
-            if uni_sample:
-                tmp_file = uni_sample.unpacker.dumper.brokenimport_dump_file
-                if os.path.exists(tmp_file):
-                    os.remove(tmp_file)
+            # if uni_sample:
+            #     tmp_file = uni_sample.unpacker.dumper.brokenimport_dump_file
+            #     if os.path.exists(tmp_file):
+            #         os.remove(tmp_file)
             pass
 
         return [sample]

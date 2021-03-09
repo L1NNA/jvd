@@ -57,7 +57,8 @@ def process_folder(
         clean_up=False, ext=None, disassembler=None, verbose=-1):
     if os.path.isfile(folder):
         files = [folder]
-    files = grep_ext(folder, ext=ext)
+    else:
+        files = grep_ext(folder, ext=ext)
     samples = [JVSample(f) for f in files]
 
     for s in samples:

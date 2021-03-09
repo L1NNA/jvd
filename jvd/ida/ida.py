@@ -48,7 +48,7 @@ class IDA(DisassemblerAbstract):
         cmd = [program, '-A', '-S{}'.format(IDA_script), file]
         # print(cmd)
         sub_env = os.environ.copy()
-        # sub_env["output_file_path"] = output_file_path
+        sub_env["output_file_path"] = os.path.abspath(output_file_path)
         # print(cmd)
         p = Popen(
             cmd,
