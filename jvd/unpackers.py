@@ -177,6 +177,8 @@ class UniPacker(Unpacker):
             self, sample: JVSample, inplace=True):
         dest = sample.file + '_unipacker_'
         uni_sample = None
+        if not sample.file_type.lower().startswith('pe'):
+            return [sample]
         try:
             logs = None
             uni_sample = Sample(

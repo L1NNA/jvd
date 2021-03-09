@@ -51,12 +51,14 @@ def download_file(url, dest, progress=False):
     return dest
 
 
-def read_gz_js(file):
+def read_gz_js(file, as_attrdict=False):
     with gzip.open(file, 'r') as fin:
         json_bytes = fin.read()
 
     json_str = json_bytes.decode('utf-8')
     data = json.loads(json_str)
+    if as_attrdict:
+        return AttrDict.from_nested_dict(data)
     return data
 
 
@@ -111,7 +113,8 @@ def grep_ext(folder, ext=None):
     paths = [p for p in Path(
         folder).rglob('*') if p.is_file()]
     if ext:
-        paths = [str(p) for p in paths if len(ext) < 1 or p.suffix == ext]
+        paths = [str(p) for p in paths if len(ext) < 1
+                 or p.suffix == ext or str(p).endswith(ext)]
     else:
         paths = [str(p) for p in paths]
     return paths
@@ -193,7 +196,7 @@ class JVSample:
             self.resource = resource if resource else original_name  # self._sha256
             self.labels = set(['na'])
             self.packers = set(['na'])
-            self.save()
+            # self.save()
         else:
             self.resource = parts[0]
             self.labels = set(parts[1].split('-'))

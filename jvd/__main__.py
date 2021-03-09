@@ -47,6 +47,9 @@ def entry_point():
         '--cfg', dest='cfg',
         action='store_true', help='Generate CFG matrix')
     parser.add_argument(
+        '--dis-only', dest='dis_only',
+        action='store_true', help='Disable auto unpacking, labeling and renaming.')
+    parser.add_argument(
         '--capa', dest='capa',
         action='store_true', help='Analyze by capa')
     parser.add_argument(
@@ -75,7 +78,7 @@ def entry_point():
             process_folder(
                 f, cfg=flags.cfg, capa=flags.capa, decompile=flags.decompile,
                 clean_up=False, ext=flags.ext, disassembler=disassembler,
-                verbose=flags.verbose
+                verbose=flags.verbose, dis_only=flags.dis_only
             )
 
 
