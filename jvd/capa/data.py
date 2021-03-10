@@ -11,6 +11,10 @@ class DataUnit:
             self.fbytes = f.read()
 
         self.obj = AttrDict.from_nested_dict(json_obj)
+        if not 'data' in self.obj.bin:
+            self.obj.bin.data = {}
+        if not 'strings' in self.obj.bin:
+            self.obj.bin.strings = {}
         self.map_b = defaultdict(list)
         for b in self.obj.blocks:
             self.map_b[b.addr_f].append(b)

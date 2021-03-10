@@ -50,6 +50,7 @@ class P7zip(ResourceAbstract, Unpacker):
         self.darwin = 'https://github.com/jinfeihan57/p7zip/releases/download/v17.03/macos-p7zip.zip'
         self.windows = 'https://www.7-zip.org/a/7z1900-x64.exe'
         self.check_update = False
+        self.with_permission = True
         self.unpack = True
         self.x7z = None
 

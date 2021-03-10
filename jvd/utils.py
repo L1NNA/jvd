@@ -1,3 +1,4 @@
+from zipfile import ZipFile, ZipInfo
 import datetime
 import gzip
 import hashlib
@@ -12,9 +13,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from concurrent.futures import ProcessPoolExecutor
+from functools import partial
 from pathlib import Path
 from shutil import unpack_archive
-from functools import partial
 
 import magic
 import requests
@@ -243,3 +244,23 @@ class JVSample:
             return self._sha256
         sha256 = sha256sum(self.file)
         return sha256
+
+
+class ZipFileWithPermissions(ZipFile):
+    def _extract_member(self, member, targetpath, pwd):
+        if not isinstance(member, ZipInfo):
+            member = self.getinfo(member)
+
+        targetpath = super()._extract_member(member, targetpath, pwd)
+
+        attr = member.external_attr >> 16
+        if attr != 0:
+            os.chmod(targetpath, attr)
+        return targetpath
+
+
+def unzip_with_permission(zip_file, dest):
+    if not os.path.exists(dest):
+        with ZipFileWithPermissions(zip_file) as zfp:
+            zfp.extractall(dest)
+    return dest

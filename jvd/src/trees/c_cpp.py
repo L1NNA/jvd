@@ -1,25 +1,13 @@
+from jvd.unpackers import unpack
 import os
 from subprocess import PIPE, STDOUT, Popen
 from tempfile import TemporaryDirectory
-from zipfile import ZipFile, ZipInfo
 import networkx as nx
 import pydot
 
 from jvd.resources import ResourceAbstract
 from jvd.src.defines import GraphExtractor
-
-
-class ZipFileWithPermissions(ZipFile):
-    def _extract_member(self, member, targetpath, pwd):
-        if not isinstance(member, ZipInfo):
-            member = self.getinfo(member)
-
-        targetpath = super()._extract_member(member, targetpath, pwd)
-
-        attr = member.external_attr >> 16
-        if attr != 0:
-            os.chmod(targetpath, attr)
-        return targetpath
+from jvd.utils import unzip_with_permission
 
 
 class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
@@ -27,13 +15,10 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
         super().__init__()
         self.default = 'https://github.com/ShiftLeftSecurity/joern/releases/download/v1.1.123/joern-cli.zip'
         self.unpack = False
+        self.with_permission = True
 
     def get(self):
-        zip_file = super().get()
-        unpacked_dir = zip_file + '_unpacked'
-        if not os.path.exists(unpacked_dir):
-            with ZipFileWithPermissions(zip_file) as zfp:
-                zfp.extractall(unpacked_dir)
+        unpacked_dir = super().get()
         home = os.path.join(
             unpacked_dir, 'joern-cli'
         )

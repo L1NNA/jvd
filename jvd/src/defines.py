@@ -1,3 +1,4 @@
+from pygments.lexers import get_all_lexers
 from pygments.lexers import guess_lexer, LEXERS, get_lexer_by_name
 from pygments.lexer import Lexer
 from pygments.token import String, Comment, Number, Name
@@ -40,6 +41,10 @@ def str2num(t_type, t_val):
 def guess_lang(src):
     lexer = guess_lexer(src.strip())
     return lexer.aliases[0]
+
+
+# all short names
+all_langs = [s for l in get_all_lexers() for s in l[1]]
 
 
 class SourceFragment():
@@ -88,3 +93,16 @@ class SourceFragment():
 
     def get_strings(self):
         return self.get_by_types(String)
+
+    def merge_all(self, skip_comments=True):
+        tokens = []
+        for t_cls, t in self.tokens:
+            if skip_comments and t_cls in Comment:
+                continue
+            if t_cls in Number:
+                for _hex in str2num(t_cls, t):
+                    tokens.append(_hex)
+            else:
+                if len(str(t).strip()) > 0:
+                    tokens.append(t)
+        return ' '.join(tokens)

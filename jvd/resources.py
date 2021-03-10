@@ -10,7 +10,19 @@ from shutil import rmtree, unpack_archive
 import pytz
 from dateutil.tz import tzlocal
 
-from jvd.utils import download_file, fn_from_url
+from jvd.utils import download_file, fn_from_url, unzip_with_permission
+
+
+def internet_on():
+    try:
+        urllib.request.urlopen('http://www.google.com/', timeout=1)
+        return True
+    except urllib.error.URLError as err:
+        return False
+
+
+# update dependencies only if internet is available
+online = internet_on()
 
 
 class ResourceAbstract(metaclass=ABCMeta):
@@ -25,6 +37,7 @@ class ResourceAbstract(metaclass=ABCMeta):
         self.default = None
         self.unpack = False
         self.check_update = False
+        self.with_permission = False
 
     def get(self):
         url = getattr(self, platform.system().lower())
@@ -47,7 +60,7 @@ class ResourceAbstract(metaclass=ABCMeta):
         file_unpack = file + '_unpacked'
 
         download = not os.path.exists(file)
-        if not download and self.check_update:
+        if not download and self.check_update and online:
             try:
                 u = urllib.request.urlopen(url)
                 meta = u.info()
@@ -79,7 +92,10 @@ class ResourceAbstract(metaclass=ABCMeta):
 
         if self.unpack and unpack_if_needed:
             if not os.path.exists(file_unpack):
-                unpack_archive(file, file_unpack)
+                if self.with_permission:
+                    unzip_with_permission(file, file_unpack)
+                else:
+                    unpack_archive(file, file_unpack)
             return file_unpack
         else:
             return file

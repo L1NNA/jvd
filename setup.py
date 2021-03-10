@@ -36,12 +36,12 @@ setup(
         'python-magic-bin; sys_platform == "win32"',
         'python-magic-bin; sys_platform == "darwin"',
         'python-magic; sys_platform == "linux"',
-        'flare-capa',
+        'flare-capa >= 1.6',
         'setuptools',
-        'unipacker >=1.0.4',
+        'unipacker >= 1.0.5',
         'pygments',
-        'javalang',
-        'pydot',
+        'javalang >= 0.13.0',
+        'pydot >= 1.4.2',
         'networkx'
     ],
     classifiers=[
