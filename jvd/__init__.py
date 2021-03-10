@@ -37,13 +37,14 @@ def get_disassembler(disassembler=None):
 
 
 def _process_single(s, cfg=False, capa=False, decompile=False,
-                    clean_up=False, disassembler=None, verbose=-1):
-    if not isinstance(s, JVSample):
-        s = JVSample(s)
-        s.save()
-    samples = unpack(s)
-    for v in samples:
-        label(v)
+                    clean_up=False, disassembler=None,
+                    dis_only=False, verbose=-1):
+    if dis_only:
+        samples = [s]
+    else:
+        samples = unpack(s, inplace=False)
+        for v in samples:
+            label(v)
     dis = get_disassembler(disassembler)
     for v in samples:
         v: JVSample
@@ -57,24 +58,26 @@ def _process_single(s, cfg=False, capa=False, decompile=False,
 
 def process_folder(
         folder, cfg=False, capa=False, decompile=False,
-        clean_up=False, ext=None, disassembler=None, verbose=-1):
+        clean_up=False, ext=None, disassembler=None, dis_only=False,
+        verbose=-1):
     if os.path.isfile(folder):
         files = [folder]
     else:
         files = grep_ext(folder, ext=ext)
     samples = [JVSample(f) for f in files]
 
-    for s in samples:
-        s.save()
-    if len(samples) > 0:
-        # call first time to update any necessary resource
-        label(samples[0])
+    if not dis_only:
+        for s in samples:
+            s.save()
+        if len(samples) > 0:
+            # call first time to update any necessary resource
+            label(samples[0])
 
     for _, result in m_map(
         partial(_process_single,
                 cfg=cfg, capa=capa, decompile=decompile,
                 clean_up=clean_up, disassembler=disassembler,
-                verbose=verbose
+                verbose=verbose, dis_only=dis_only,
                 ), samples):
         pass
     print('done!')
