@@ -29,13 +29,14 @@ def str2num(t_type, t_val):
         yield hex(struct.unpack('<I', struct.pack('<f', t_val))[0])
     if t_type in Number.Hex:
         t_val = re.sub(r'[^0-1a-fA-F]+', '', t_val)
-        yield t_val
+        yield hex(int(t_val, 16))
     if t_type in Number.Integer:
         t_val = re.sub(r'[^0-9]+', '', t_val)
         yield hex(int(t_val))
     if t_type in Number.Oct:
         t_val = re.sub(r'[^0-7]+', '', t_val)
         yield hex(int(t_val, 8))
+    yield t_val
 
 
 def guess_lang(src):
@@ -44,7 +45,7 @@ def guess_lang(src):
 
 
 # all short names
-all_langs = [s for l in get_all_lexers() for s in l[1]]
+all_langs = sorted([s for l in get_all_lexers() for s in l[1]])
 
 
 class SourceFragment():
@@ -95,14 +96,9 @@ class SourceFragment():
         return self.get_by_types(String)
 
     def merge_all(self, skip_comments=True):
-        tokens = []
-        for t_cls, t in self.tokens:
-            if skip_comments and t_cls in Comment:
-                continue
-            if t_cls in Number:
-                for _hex in str2num(t_cls, t):
-                    tokens.append(_hex)
-            else:
-                if len(str(t).strip()) > 0:
-                    tokens.append(t)
+        tokens = [*self.get_strings(), *self.get_names()]
+        numbers = self.get_numbers()
+        if len(numbers) > 10:
+            numbers = [n for n in numbers if len(n) > 4]
+        tokens.extend(numbers)
         return ' '.join(tokens)
