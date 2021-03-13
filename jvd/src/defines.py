@@ -108,4 +108,4 @@ class SourceFragment():
         if len(numbers) > 10:
             numbers = [n for n in numbers if len(n) > 4]
         tokens.extend(numbers)
-        return ' '.join(tokens)
+        return tokens
