@@ -101,22 +101,16 @@ class ResourceAbstract(metaclass=ABCMeta):
             return file
 
     def cache(self, root):
-        if self.windows:
-            self._download(
-                self.windows, show_progress=True,
-                unpack_if_needed=False, home=root)
+        url = self.default
         if self.linux:
-            self._download(
-                self.linux, show_progress=True,
-                unpack_if_needed=False, home=root)
+            url = self.linux
         if self.darwin:
-            self._download(
-                self.darwin, show_progress=True,
-                unpack_if_needed=False, home=root)
-        if self.default:
-            self._download(
-                self.default, show_progress=True,
-                unpack_if_needed=False, home=root)
+            url = self.darwin
+        if self.windows:
+            url = self.windows
+        self._download(
+            url, show_progress=True,
+            unpack_if_needed=False, home=root)
 
 
 def cache_all(root=ResourceAbstract.home):

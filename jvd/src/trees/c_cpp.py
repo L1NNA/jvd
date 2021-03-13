@@ -14,7 +14,7 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
     def __init__(self):
         super().__init__()
         self.default = 'https://github.com/ShiftLeftSecurity/joern/releases/download/v1.1.123/joern-cli.zip'
-        self.unpack = False
+        self.unpack = True
         self.with_permission = True
 
     def get(self):

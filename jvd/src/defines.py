@@ -22,21 +22,26 @@ class GraphExtractor():
 def str2num(t_type, t_val):
     if t_type in Number.Bin:
         t_val = re.sub(r'[^0-1]+', '', t_val)
-        yield hex(int(t_val, 2))
+        if len(t_val) > 0:
+            yield hex(int(t_val, 2))
     if t_type in Number.Float:
         t_val = re.sub(r'[^\d.]+', '', t_val)
-        yield hex(struct.unpack('<I', struct.pack('<d', t_val))[0])
-        yield hex(struct.unpack('<I', struct.pack('<f', t_val))[0])
+        if len(t_val) > 0:
+            t_val = float(t_val)
+            yield hex(struct.unpack('<Q', struct.pack('<d', t_val))[0])
+            yield hex(struct.unpack('<I', struct.pack('<f', t_val))[0])
     if t_type in Number.Hex:
         t_val = re.sub(r'[^0-1a-fA-F]+', '', t_val)
-        yield hex(int(t_val, 16))
+        if len(t_val) > 0:
+            yield hex(int(t_val, 16))
     if t_type in Number.Integer:
         t_val = re.sub(r'[^0-9]+', '', t_val)
-        yield hex(int(t_val))
+        if len(t_val) > 0:
+            yield hex(int(t_val))
     if t_type in Number.Oct:
         t_val = re.sub(r'[^0-7]+', '', t_val)
-        yield hex(int(t_val, 8))
-    yield t_val
+        if len(t_val) > 0:
+            yield hex(int(t_val, 8))
 
 
 def guess_lang(src):
@@ -83,6 +88,8 @@ class SourceFragment():
         for t_cls, t in self.tokens:
             if t_cls in Number:
                 for _hex in str2num(t_cls, t):
+                    if _hex.startswith('0x'):
+                        _hex = _hex[2:]
                     vals.append(_hex)
         return vals
 
