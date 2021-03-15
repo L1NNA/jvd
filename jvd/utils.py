@@ -1,7 +1,7 @@
-from zipfile import ZipFile, ZipInfo
 import datetime
 import gzip
 import hashlib
+import io
 import json
 import logging as log
 import multiprocessing
@@ -12,10 +12,12 @@ import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
-from concurrent.futures import ProcessPoolExecutor
+from multiprocessing import Pool
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from functools import partial
 from pathlib import Path
 from shutil import unpack_archive
+from zipfile import ZipFile, ZipInfo
 
 import magic
 import requests
@@ -128,9 +130,9 @@ def m_map(func, inputs, max_workers=-1,):
         # windows hard limit is 61
         max_workers = min(max_workers, 55)
 
-    with ProcessPoolExecutor(max_workers=max_workers) as e:
+    with Pool(max_workers) as e:
         for ind, result in tqdm(enumerate(
-                e.map(func, inputs)), total=len(inputs)):
+                e.imap_unordered(func, inputs)), total=len(inputs)):
             yield ind, result
 
 
@@ -187,28 +189,37 @@ def todict(obj, classkey=None):
 
 class JVSample:
 
-    def __init__(self, file, resource=None):
-        parts = os.path.basename(file).split('.')
-        original_name = str(Path(file).with_suffix('').name).replace('.', '_')
+    def __init__(self, file,):
         self.file = file
         self.file_type = get_file_type(file)
         self._sha256 = sha256sum(file)
-        if len(parts) < 4 or not file.endswith('.bin'):
-            self.resource = resource if resource else original_name  # self._sha256
+        original_name = str(Path(file).with_suffix('').name).replace('.', '_')
+        original_ext = Path(file).suffix
+        if len(original_ext) > 0:
+            original_ext = original_ext[1:]
+        original_type = self.file_type.split()[0].lower()
+        parts = os.path.basename(file).split('.')
+        if len(parts) < 6 or not file.endswith('.bin'):
             self.labels = set(['na'])
             self.packers = set(['na'])
+            self.resource = original_name  # self._sha256
+            self.resource_type = original_type
+            self.resource_ext = original_ext
             # self.save()
         else:
             self.resource = parts[0]
             self.labels = set(parts[1].split('-'))
             self.packers = set(parts[2].split('-'))
+            self.resource_type = parts[3]
+            self.resource_ext = parts[4]
 
     def get_file_name(self,):
         base_name = '.'.join([
             self.resource,
             '-'.join(sorted(self.labels)),
             '-'.join(sorted(self.packers)),
-            self.file_type.split()[0].lower(),
+            self.resource_type,
+            self.resource_ext,
             'bin'
         ])
         return os.path.join(
@@ -244,6 +255,14 @@ class JVSample:
             return self._sha256
         sha256 = sha256sum(self.file)
         return sha256
+
+
+@contextmanager
+def redirect_std():
+    f = io.StringIO()
+    with redirect_stdout(f):
+        with redirect_stderr(f):
+            yield f
 
 
 class ZipFileWithPermissions(ZipFile):

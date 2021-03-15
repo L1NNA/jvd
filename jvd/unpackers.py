@@ -13,7 +13,7 @@ from unipacker.core import Sample, UnpackerEngine, SimpleClient
 from unipacker.unpackers import AutomaticDefaultUnpacker, get_unpacker
 
 from jvd.resources import ResourceAbstract, require
-from jvd.utils import JVSample, get_file_type, grep_ext
+from jvd.utils import JVSample, get_file_type, grep_ext, redirect_std
 import time
 import traceback
 
@@ -87,7 +87,7 @@ class P7zip(ResourceAbstract, Unpacker):
     def unpack_if_applicable(
             self, sample: JVSample, inplace=True):
         packer = self.check_supported_archive(sample.file_type)
-        if packer:
+        if packer and packer not in sample.packers:
             if not self.x7z:
                 self.x7z = require('p7zip')
             unpack_dir = sample.file + '_unpack'
@@ -153,7 +153,7 @@ class UPX(ResourceAbstract, Unpacker):
     def unpack_if_applicable(
             self, sample: JVSample, inplace=True):
         try:
-            if self.check_upx(sample.file):
+            if 'upx' not in sample.packers and self.check_upx(sample.file):
                 # dest = str(Path(file).with_suffix('')) + '_upx.bin'
                 dest = sample.file + '_upx'
                 upx_action = check_output(
@@ -181,29 +181,30 @@ class UniPacker(Unpacker):
         if not sample.file_type.lower().startswith('pe'):
             return [sample]
         try:
-            logs = None
-            uni_sample = Sample(
-                sample.file, True)
-            unpacker = uni_sample.unpacker.__class__.__name__.lower().replace(
-                'unpacker', '')
-            dest = dest + unpacker
-            if not 'default' in unpacker and not unpacker in sample.packers:
+            with redirect_std() as unipacker_logs:
+                logs = None
+                uni_sample = Sample(
+                    sample.file, True)
+                unpacker = uni_sample.unpacker.__class__.__name__.lower().replace(
+                    'unpacker', '')
+                dest = dest + unpacker
+                if not 'default' in unpacker and not unpacker in sample.packers:
 
-                engine = UnpackerEngine(uni_sample, dest)
-                event = threading.Event()
-                client = SimpleClient(event)
-                engine.register_client(client)
-                threading.Thread(target=engine.emu).start()
-                event.wait()
-                engine.stop()
-                if os.path.exists(dest):
-                    os.remove(sample.file)
-                    sample.file_type = get_file_type(dest)
-                    os.rename(dest, sample.file)
-                    sample._sha256 = None
-                sample.add_packer(unpacker)
-                return [sample]
-                # dest = str(Path(file).with_suffix('')) + '_upx.bin'
+                    engine = UnpackerEngine(uni_sample, dest)
+                    event = threading.Event()
+                    client = SimpleClient(event)
+                    engine.register_client(client)
+                    threading.Thread(target=engine.emu).start()
+                    event.wait()
+                    engine.stop()
+                    if os.path.exists(dest):
+                        os.remove(sample.file)
+                        sample.file_type = get_file_type(dest)
+                        os.rename(dest, sample.file)
+                        sample._sha256 = None
+                    sample.add_packer(unpacker)
+                    return [sample]
+                    # dest = str(Path(file).with_suffix('')) + '_upx.bin'
         except Exception as e:
             traceback.print_exc()
             print(str(e))

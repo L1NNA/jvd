@@ -38,11 +38,11 @@ def get_disassembler(disassembler=None):
 
 def _process_single(s, cfg=False, capa=False, decompile=False,
                     clean_up=False, disassembler=None,
-                    dis_only=False, verbose=-1):
+                    dis_only=False, inplace=True, verbose=-1):
     if dis_only:
         samples = [s]
     else:
-        samples = unpack(s, inplace=False)
+        samples = unpack(s, inplace=inplace)
         for v in samples:
             label(v)
     dis = get_disassembler(disassembler)
