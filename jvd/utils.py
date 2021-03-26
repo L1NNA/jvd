@@ -12,12 +12,14 @@ import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
-from multiprocessing import Pool
 from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from functools import partial
+from multiprocessing import Pool
 from pathlib import Path
 from shutil import unpack_archive
+from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 from zipfile import ZipFile, ZipInfo
+import psutil
 
 import magic
 import requests
@@ -263,6 +265,32 @@ def redirect_std():
     with redirect_stdout(f):
         with redirect_stderr(f):
             yield f
+
+
+def kill(proc_pid):
+    process = psutil.Process(proc_pid)
+    for proc in process.children(recursive=True):
+        proc.kill()
+    process.kill()
+
+
+@contextmanager
+def check_output_ctx(cmd, timeout=None, env=None, stdin=None):
+    proc = None
+    try:
+        proc = subprocess.Popen(
+            cmd, stdout=PIPE, stderr=STDOUT, env=env,
+            stdin=stdin)
+        outputs, _ = proc.communicate(timeout=timeout)
+        yield outputs
+    except TimeoutExpired as te:
+        try:
+            kill(proc.pid)
+        except Exception as e:
+            pass
+        raise te
+    finally:
+        pass
 
 
 class ZipFileWithPermissions(ZipFile):

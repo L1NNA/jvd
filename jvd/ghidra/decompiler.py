@@ -8,6 +8,7 @@ from subprocess import PIPE, STDOUT, Popen
 
 from jvd.disassembler import DisassemblerAbstract
 from jvd.resources import require
+from jvd.utils import check_output_ctx
 
 
 class Ghidra(DisassemblerAbstract):
@@ -20,12 +21,12 @@ class Ghidra(DisassemblerAbstract):
         log = None
         js_file, log = process(
             self.java, self.jar, file,
-            output_file_path, decompile=decompile)
+            output_file_path, decompile=decompile, timeout=self.timeout*1.2)
         return js_file, log
 
 
 def process(java, jar, file, json_file, project_suffix='.ghidra',
-            decompile=False, func_entries=None):
+            decompile=False, func_entries=None, timeout=None):
     project_dir = file + project_suffix
 
     file = os.path.abspath(file)
@@ -41,9 +42,10 @@ def process(java, jar, file, json_file, project_suffix='.ghidra',
         with open(func_entries_file, 'w') as wf:
             wf.writelines([str(l)+os.linesep for l in func_entries])
         cmd.append(func_entries_file)
-    p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
-    out, err = p.communicate()
+    # p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
+    # out, err = p.communicate()
     # print(out.decode('utf-8'))
-    out = out.decode('utf-8')
-    json_file = None
-    return json_file, out
+    with check_output_ctx(cmd, timeout=timeout) as out:
+        out = out.decode('utf-8')
+        json_file = None
+        return json_file, out

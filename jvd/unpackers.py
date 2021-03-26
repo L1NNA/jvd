@@ -13,13 +13,14 @@ from unipacker.core import Sample, UnpackerEngine, SimpleClient
 from unipacker.unpackers import AutomaticDefaultUnpacker, get_unpacker
 
 from jvd.resources import ResourceAbstract, require
-from jvd.utils import JVSample, get_file_type, grep_ext, redirect_std
+from jvd.utils import JVSample, get_file_type, grep_ext, redirect_std, check_output_ctx
 import time
 import traceback
 
 
 class Unpacker:
     priority = 10
+    timeout = 3 * 60
 
     def unpack_if_applicable(
             self, sample: JVSample, inplace=True) -> List[JVSample]:
@@ -27,6 +28,7 @@ class Unpacker:
 
 
 class P7zip(ResourceAbstract, Unpacker):
+    timeout = None  # ignore timeout for archive file
     priority = 0
     supported = (
         '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
@@ -94,12 +96,17 @@ class P7zip(ResourceAbstract, Unpacker):
             if not os.path.exists(unpack_dir):
                 cmd = [*self.x7z, sample.file, '-o' + unpack_dir]
                 try:
-                    out_lines = check_output(
-                        cmd,  stdin=DEVNULL, start_new_session=True,
-                        stderr=STDOUT
-                    ).decode(
-                        'ascii', 'ignore').splitlines()
-                except Exception as e:
+                    # out_lines = check_output(
+                    #     cmd,  stdin=DEVNULL, start_new_session=True,
+                    #     stderr=STDOUT
+                    # ).decode(
+                    #     'ascii', 'ignore').splitlines()
+                    with check_output_ctx(
+                            cmd, timeout=self.timeout,
+                            stdin=DEVNULL) as out_lines:
+                        out_lines = out_lines.decode(
+                            'ascii', 'ignore').splitlines()
+                except:
                     if os.path.exists(unpack_dir):
                         rmtree(unpack_dir)
                     # log.error(str(e))
@@ -109,14 +116,18 @@ class P7zip(ResourceAbstract, Unpacker):
             files = [str(f) for f in files if f.is_file()]
             if inplace:
                 if len(files) != 1:
-                    rmtree(unpack_dir)
+                    if os.path.exists(unpack_dir):
+                        rmtree(unpack_dir)
                     return [sample]
                 else:
                     os.remove(sample.file)
                     sample.file_type = get_file_type(files[0])
                     os.rename(files[0], sample.file)
                     sample._sha256 = None
-                    rmtree(unpack_dir)
+                    if os.path.exists(unpack_dir):
+                        rmtree(unpack_dir)
+                    sample.resource_type = sample.file_type.split()[0].lower()
+                    sample.save()
                     return [sample]
             samples = [JVSample(f) for f in files]
             for s in samples:
@@ -147,8 +158,11 @@ class UPX(ResourceAbstract, Unpacker):
     def check_upx(self, file):
         if not self.upx_c:
             self.upx_c = require('upx')
-        upx_test = check_output([self.upx_c, '-t', file], stderr=STDOUT)
-        return b'[OK]' in upx_test
+        # upx_test = check_output([self.upx_c, '-t', file], stderr=STDOUT)
+        # return b'[OK]' in upx_test
+        with check_output_ctx(
+                [self.upx_c, '-t', file], timeout=self.timeout) as upx_test:
+            return b'[OK]' in upx_test
 
     def unpack_if_applicable(
             self, sample: JVSample, inplace=True):
@@ -156,15 +170,18 @@ class UPX(ResourceAbstract, Unpacker):
             if 'upx' not in sample.packers and self.check_upx(sample.file):
                 # dest = str(Path(file).with_suffix('')) + '_upx.bin'
                 dest = sample.file + '_upx'
-                upx_action = check_output(
-                    [self.upx_c, '-d', '-o', dest, sample.file], stderr=STDOUT)
-                if os.path.exists(dest) and b'Unpacked 1 file' in upx_action:
-                    os.remove(sample.file)
-                    sample.file_type = get_file_type(dest)
-                    os.rename(dest, sample.file)
-                    sample._sha256 = None
-                    sample.add_packer('upx')
-                    return [sample]
+                # upx_action = check_output(
+                #     [self.upx_c, '-d', '-o', dest, sample.file], stderr=STDOUT)
+                with check_output_ctx(
+                        [self.upx_c, '-d', '-o', dest, sample.file],
+                        timeout=self.timeout) as upx_action:
+                    if os.path.exists(dest) and b'Unpacked 1 file' in upx_action:
+                        os.remove(sample.file)
+                        sample.file_type = get_file_type(dest)
+                        os.rename(dest, sample.file)
+                        sample._sha256 = None
+                        sample.add_packer('upx')
+                        return [sample]
         except Exception as e:
             return [sample]
         return [sample]
@@ -181,27 +198,27 @@ class UniPacker(Unpacker):
         if not sample.file_type.lower().startswith('pe'):
             return [sample]
         try:
-            with redirect_std() as unipacker_logs:
-                logs = None
+            # with redirect_std() as unipacker_logs:
+            logs = None
+            with redirect_std():
                 uni_sample = Sample(
                     sample.file, True)
                 unpacker = uni_sample.unpacker.__class__.__name__.lower().replace(
                     'unpacker', '')
-                dest = dest + unpacker
-                if not 'default' in unpacker and not unpacker in sample.packers:
-
-                    engine = UnpackerEngine(uni_sample, dest)
-                    event = threading.Event()
-                    client = SimpleClient(event)
-                    engine.register_client(client)
-                    threading.Thread(target=engine.emu).start()
-                    event.wait()
-                    engine.stop()
+            dest = dest + unpacker
+            if not 'default' in unpacker and not unpacker in sample.packers:
+                cmds = ['python', '-m', 'unipacker.shell',
+                        sample.file, '-d', dest]
+                with check_output_ctx(cmds, timeout=self.timeout) as uni_log:
                     if os.path.exists(dest):
-                        os.remove(sample.file)
-                        sample.file_type = get_file_type(dest)
-                        os.rename(dest, sample.file)
-                        sample._sha256 = None
+                        files = os.listdir(dest)
+                        if len(files) == 1:
+                            d_file = os.path.join(dest, files[0])
+                            os.remove(sample.file)
+                            sample.file_type = get_file_type(d_file)
+                            os.rename(d_file, sample.file)
+                            sample._sha256 = None
+                        rmtree(dest)
                     sample.add_packer(unpacker)
                     return [sample]
                     # dest = str(Path(file).with_suffix('')) + '_upx.bin'
@@ -209,7 +226,7 @@ class UniPacker(Unpacker):
             traceback.print_exc()
             print(str(e))
             if os.path.exists(dest):
-                os.remove(dest)
+                rmtree(dest)
         finally:
             # if uni_sample:
             #     tmp_file = uni_sample.unpacker.dumper.brokenimport_dump_file

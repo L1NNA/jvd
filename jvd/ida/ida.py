@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE, STDOUT
 from jvd.disassembler import DisassemblerAbstract
 import logging as log
 import traceback
-from jvd.utils import read_gz_js, write_gz_js, which
+from jvd.utils import read_gz_js, write_gz_js, which, check_output_ctx
 import platform
 from jvd.resources import require
 
@@ -50,14 +50,15 @@ class IDA(DisassemblerAbstract):
         sub_env = os.environ.copy()
         sub_env["output_file_path"] = os.path.abspath(output_file_path)
         # print(cmd)
-        p = Popen(
-            cmd,
-            env=sub_env,
-            stdout=PIPE,
-            stderr=STDOUT)
-        log, _ = p.communicate()
-        if not log:
-            log = ''
+        # p = Popen(
+        #     cmd,
+        #     env=sub_env,
+        #     stdout=PIPE,
+        #     stderr=STDOUT)
+        # log, _ = p.communicate(timeout=self.timeout)
+        with check_output_ctx(cmd, timeout=self.timeout, env=sub_env) as log:
+            if not log:
+                log = ''
 
         if decompile:
             # assuming that IDA does not support decompilation

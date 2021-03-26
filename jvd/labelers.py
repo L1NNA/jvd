@@ -15,7 +15,7 @@ class MBZLabeler(ResourceAbstract, Labeler):
     def __init__(self):
         super().__init__()
         self.default = 'https://bazaar.abuse.ch/export/csv/full/'
-        self.check_update = True
+        self.check_update = False
         self.unpack = True
         self.signatures = None
 
