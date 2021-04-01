@@ -17,7 +17,7 @@ class Ghidra(DisassemblerAbstract):
         self.jar = require('ghidrajar')
         self.java = require('jdk')
 
-    def _process(self, file, file_type, output_file_path, decompile=False):
+    def _process(self, file, file_type, output_file_path, decompile=False, verbose=-1):
         log = None
         js_file, log = process(
             self.java, self.jar, file,

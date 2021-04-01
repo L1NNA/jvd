@@ -28,7 +28,7 @@ class IDA(DisassemblerAbstract):
         if not ida_available:
             raise FileNotFoundError('IDA is not found!')
 
-    def _process(self, file, file_type, output_file_path, decompile=False):
+    def _process(self, file, file_type, output_file_path, decompile=False, verbose=-1):
         log = None
         program = 'ida64'
         extension = None
@@ -56,6 +56,8 @@ class IDA(DisassemblerAbstract):
         #     stdout=PIPE,
         #     stderr=STDOUT)
         # log, _ = p.communicate(timeout=self.timeout)
+        if verbose > 1:
+            print(' '.join(cmd))
         with check_output_ctx(cmd, timeout=self.timeout, env=sub_env) as log:
             if not log:
                 log = ''

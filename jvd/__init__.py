@@ -10,7 +10,7 @@ from jvd.ghidra import Ghidra
 from jvd.resources import require
 import os
 from pathlib import Path
-from jvd.unpackers import unpack
+from jvd.unpackers import unpack_sample
 from jvd.labelers import label
 from jvd.utils import JVSample, grep_ext, m_map
 from tqdm import tqdm
@@ -37,28 +37,30 @@ def get_disassembler(disassembler=None):
 
 
 def _process_single(s, cfg=False, capa=False, decompile=False,
-                    clean_up=False, disassembler=None,
-                    dis_only=False, inplace=True, verbose=-1):
-    if dis_only:
+                    clean_up=False, disassembler=None, unpack=True,
+                    disassemble=True, inplace=True, verbose=-1):
+    if not unpack:
         samples = [s]
     else:
-        samples = unpack(s, inplace=inplace)
+        samples = unpack_sample(s, inplace=inplace)
         for v in samples:
             label(v)
     dis = get_disassembler(disassembler)
-    for v in samples:
-        v: JVSample
-        dis.disassemble(
-            v.file, decompile=decompile, cleanup=clean_up,
-            cfg=cfg, no_result=True, file_type=v.file_type,
-            capa=capa, verbose=verbose,
-        )
+    if disassemble:
+        for v in samples:
+            v: JVSample
+            dis.disassemble(
+                v.file, decompile=decompile, cleanup=clean_up,
+                cfg=cfg, no_result=True, file_type=v.file_type,
+                capa=capa, verbose=verbose,
+            )
     return samples
 
 
 def process_folder(
         folder, cfg=False, capa=False, decompile=False,
-        clean_up=False, ext=None, disassembler=None, dis_only=False,
+        clean_up=False, ext=None, disassembler=None, disassemble=True,
+        unpack=True,
         verbose=-1):
     if os.path.isfile(folder):
         files = [folder]
@@ -66,7 +68,7 @@ def process_folder(
         files = grep_ext(folder, ext=ext)
     samples = [JVSample(f) for f in files]
 
-    if not dis_only:
+    if unpack:
         for s in samples:
             s.save()
         if len(samples) > 0:
@@ -77,8 +79,8 @@ def process_folder(
         partial(_process_single,
                 cfg=cfg, capa=capa, decompile=decompile,
                 clean_up=clean_up, disassembler=disassembler,
-                verbose=verbose, dis_only=dis_only,
+                verbose=verbose, disassemble=disassemble,
+                unpack=unpack,
                 ), samples):
         pass
     print('done!')
-    # label(s)

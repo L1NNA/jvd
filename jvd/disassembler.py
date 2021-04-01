@@ -20,7 +20,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
     timeout = 10*60
 
     @abstractmethod
-    def _process(self, file, file_type, output_file_path, decompile=False):
+    def _process(self, file, file_type, output_file_path, decompile=False, verobse=-1):
         pass
 
     def _cfg(self, res):
@@ -50,7 +50,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     tmp_folder, os.path.basename(js_file))
                 copyfile(file, new_file)
                 _, out_log = self._process(
-                    new_file, file_type, output_file_path=new_file_js, decompile=decompile)
+                    new_file, file_type, output_file_path=new_file_js, decompile=decompile,
+                     verbose=verbose)
                 copyfile(new_file_js, js_file)
                 if isinstance(log, list):
                     log.extend(log)
@@ -67,6 +68,10 @@ class DisassemblerAbstract(metaclass=ABCMeta):
 
         try:
             res = read_gz_js(js_file)
+            if len(res['blocks']) < 1:
+                if os.path.exists(js_file):
+                    os.remove(js_file)
+                raise Exception('no basic blocks are generated.. skipping.')
             changed = False
             if 'f_type' not in res:
                 res['bin']['f_type'] = file_type

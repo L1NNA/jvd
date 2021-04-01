@@ -191,37 +191,37 @@ def todict(obj, classkey=None):
 
 class JVSample:
 
-    def __init__(self, file,):
+    def __init__(self, file, resource=None):
         self.file = file
         self.file_type = get_file_type(file)
-        self._sha256 = sha256sum(file)
-        original_name = str(Path(file).with_suffix('').name).replace('.', '_')
-        original_ext = Path(file).suffix
-        if len(original_ext) > 0:
-            original_ext = original_ext[1:]
-        original_type = self.file_type.split()[0].lower()
+        self.hash = sha256sum(file)
         parts = os.path.basename(file).split('.')
-        if len(parts) < 6 or not file.endswith('.bin'):
+        if len(parts) < 5 or not file.endswith('.bin'):
+            ext = Path(file).suffix
+            if len(ext) > 0:
+                ext = ext[1:]
+            if isinstance(resource, JVSample):
+                self.resource = resource.hash
+            elif resource:
+                self.resource = resource
+            else:
+                self.resource = Path(file).with_suffix('').name
             self.labels = set(['na'])
             self.packers = set(['na'])
-            self.resource = original_name  # self._sha256
-            self.resource_type = original_type
-            self.resource_ext = original_ext
-            # self.save()
+            self.ext = ext.replace('.', '_')
         else:
             self.resource = parts[0]
             self.labels = set(parts[1].split('-'))
             self.packers = set(parts[2].split('-'))
-            self.resource_type = parts[3]
-            self.resource_ext = parts[4]
+            self.ext = parts[3]
 
     def get_file_name(self,):
         base_name = '.'.join([
             self.resource,
             '-'.join(sorted(self.labels)),
             '-'.join(sorted(self.packers)),
-            self.resource_type,
-            self.resource_ext,
+            self.ext,
+            self.file_type.split()[0].lower(),
             'bin'
         ])
         return os.path.join(
@@ -234,13 +234,14 @@ class JVSample:
         os.rename(self.file, new_file)
         self.file = str(new_file)
 
-    def add_label(self, new_label):
-        new_label = new_label.strip()
-        if not new_label or new_label == 'na' or len(new_label) == 0:
+    def add_labels(self, new_labels):
+        new_labels = [l.strip() for l in new_labels
+                      if l != 'na' and len(l.strip()) > 0]
+        if len(new_labels) < 1:
             return
         if len(self.labels) == 1 and list(self.labels)[0] == 'na':
             self.labels.clear()
-        self.labels.add(new_label)
+        self.labels.update(new_labels)
         self.save()
 
     def add_packer(self, new_label):
@@ -252,11 +253,16 @@ class JVSample:
         self.packers.add(new_label)
         self.save()
 
-    def get_sha256(self):
-        if self._sha256:
-            return self._sha256
-        sha256 = sha256sum(self.file)
-        return sha256
+    def replace(self, file):
+        os.remove(self.file)
+        self.file_type = get_file_type(file)
+        self.hash = sha256sum(file)
+        ext = Path(file).suffix
+        if len(ext) > 0:
+            ext = ext[1:]
+        self.ext = ext.replace('.', '_')
+        os.rename(file, self.file)
+        self.save()
 
 
 @contextmanager

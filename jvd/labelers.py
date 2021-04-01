@@ -33,7 +33,7 @@ class MBZLabeler(ResourceAbstract, Labeler):
                     continue
                 sig = row[8].strip().lower()
                 av = int(float(row[10]))
-                signatures[row[1]] = [sig, f'av{av}']
+                signatures[row[1]] = [sig, f'_vt{av}']
         self.signatures = signatures
         return signatures
 
@@ -50,14 +50,15 @@ all_labelers = [c() for c in Labeler.__subclasses__()]
 
 
 def label(sample: JVSample):
+    all_labels = set()
     for up in all_labelers:
         up: Labeler
-        sample_labels = up.label(sample.get_sha256())
-        resource_labels = up.label(sample.resource)
+        sample_labels = up.label(sample.hash)
         if sample_labels:
-            for s in sample_labels:
-                sample.add_label(s)
+            all_labels.update(sample_labels)
+        resource_labels = up.label(sample.resource)
         if resource_labels:
-            for s in resource_labels:
-                sample.add_label(s)
+            all_labels.update(resource_labels)
+    sample.add_labels(all_labels)
     sample.save()
+    return list(all_labels)

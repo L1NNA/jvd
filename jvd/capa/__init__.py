@@ -80,12 +80,18 @@ def install_rules(verbose=-1):
 def capa_analyze(gz_file, bin_path, verbose=-1):
 
     rule_path = install_rules(verbose)
+    tactics = []
+    mbcs = []
+    caps = []
 
     if len(rules) < 1:
         rules.extend(get_rules(rule_path,
                                disable_progress=verbose < 1))
     rs = capa.rules.RuleSet(rules)
     extractor = JVDExtractor(gz_file, bin_path)
+    if not extractor.data_unit.syntax:
+        return {'tac': tactics, 'mbc': mbcs, 'cap': caps}
+
     capabilities, counts = find_capabilities(
         rs, extractor, disable_progress=verbose < 1)
 
@@ -95,10 +101,6 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
     items = [(dict(rs[r_name].meta), matches)
              for r_name, matches in capabilities.items()]
     items.sort(key=lambda i: (i[0].get('namespace', ''), i[0].get('name', '')))
-
-    tactics = []
-    mbcs = []
-    caps = []
 
     for meta, matches in items:
 

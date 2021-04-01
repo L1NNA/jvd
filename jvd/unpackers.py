@@ -31,10 +31,10 @@ class P7zip(ResourceAbstract, Unpacker):
     timeout = None  # ignore timeout for archive file
     priority = 0
     supported = (
-        '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
+        '7z', '7-zip', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
         'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
         'flac', 'gzip', 'iso', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
-        'rpm', 'rzip', 'shar', 'shn', 'tar', 'vhd', 'xz',
+        'rpm', 'rzip', 'shar', 'shn', 'vhd', 'xz',
         'zip', 'zoo', 'zpaq',
         'gztar', 'rar'
     )
@@ -96,11 +96,6 @@ class P7zip(ResourceAbstract, Unpacker):
             if not os.path.exists(unpack_dir):
                 cmd = [*self.x7z, sample.file, '-o' + unpack_dir]
                 try:
-                    # out_lines = check_output(
-                    #     cmd,  stdin=DEVNULL, start_new_session=True,
-                    #     stderr=STDOUT
-                    # ).decode(
-                    #     'ascii', 'ignore').splitlines()
                     with check_output_ctx(
                             cmd, timeout=self.timeout,
                             stdin=DEVNULL) as out_lines:
@@ -109,7 +104,6 @@ class P7zip(ResourceAbstract, Unpacker):
                 except:
                     if os.path.exists(unpack_dir):
                         rmtree(unpack_dir)
-                    # log.error(str(e))
                     return [sample]
             sample.add_packer(packer)
             files: List[Path] = list(Path(unpack_dir).rglob("*.*"))
@@ -120,24 +114,23 @@ class P7zip(ResourceAbstract, Unpacker):
                         rmtree(unpack_dir)
                     return [sample]
                 else:
-                    os.remove(sample.file)
-                    sample.file_type = get_file_type(files[0])
-                    os.rename(files[0], sample.file)
-                    sample._sha256 = None
-                    if os.path.exists(unpack_dir):
-                        rmtree(unpack_dir)
-                    sample.resource_type = sample.file_type.split()[0].lower()
-                    sample.save()
+                    sample.replace(files[0])
+                    rmtree(unpack_dir)
                     return [sample]
-            samples = [JVSample(f) for f in files]
+            samples = [JVSample(f, sample) for f in files]
             for s in samples:
                 s.save()
             return samples
         return [sample]
 
 
-class UPX(ResourceAbstract, Unpacker):
+class UnTar(P7zip):
     priority = 1
+    supported = ('tar',)
+
+
+class UPX(ResourceAbstract, Unpacker):
+    priority = 10
 
     def __init__(self):
         super().__init__()
@@ -176,11 +169,8 @@ class UPX(ResourceAbstract, Unpacker):
                         [self.upx_c, '-d', '-o', dest, sample.file],
                         timeout=self.timeout) as upx_action:
                     if os.path.exists(dest) and b'Unpacked 1 file' in upx_action:
-                        os.remove(sample.file)
-                        sample.file_type = get_file_type(dest)
-                        os.rename(dest, sample.file)
-                        sample._sha256 = None
                         sample.add_packer('upx')
+                        sample.replace(dest)
                         return [sample]
         except Exception as e:
             return [sample]
@@ -189,7 +179,7 @@ class UPX(ResourceAbstract, Unpacker):
 
 class UniPacker(Unpacker):
 
-    priority = 2
+    priority = 11
 
     def unpack_if_applicable(
             self, sample: JVSample, inplace=True):
@@ -198,8 +188,6 @@ class UniPacker(Unpacker):
         if not sample.file_type.lower().startswith('pe'):
             return [sample]
         try:
-            # with redirect_std() as unipacker_logs:
-            logs = None
             with redirect_std():
                 uni_sample = Sample(
                     sample.file, True)
@@ -207,17 +195,13 @@ class UniPacker(Unpacker):
                     'unpacker', '')
             dest = dest + unpacker
             if not 'default' in unpacker and not unpacker in sample.packers:
-                cmds = ['python', '-m', 'unipacker.shell',
-                        sample.file, '-d', dest]
-                with check_output_ctx(cmds, timeout=self.timeout) as uni_log:
+                cmd = ['python', '-m', 'unipacker.shell',
+                       sample.file, '-d', dest]
+                with check_output_ctx(cmd, timeout=self.timeout) as uni_log:
                     if os.path.exists(dest):
                         files = os.listdir(dest)
                         if len(files) == 1:
-                            d_file = os.path.join(dest, files[0])
-                            os.remove(sample.file)
-                            sample.file_type = get_file_type(d_file)
-                            os.rename(d_file, sample.file)
-                            sample._sha256 = None
+                            sample.replace(os.path.join(dest, files[0]))
                         rmtree(dest)
                     sample.add_packer(unpacker)
                     return [sample]
@@ -241,7 +225,7 @@ all_unpackers = sorted(
     [c() for c in Unpacker.__subclasses__()], key=lambda x: x.priority)
 
 
-def unpack(sample: JVSample, inplace=True):
+def unpack_sample(sample: JVSample, inplace=True):
     samples = [sample]
     for up in all_unpackers:
         up: Unpacker
