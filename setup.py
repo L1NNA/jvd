@@ -42,7 +42,8 @@ setup(
         'pygments',
         'javalang >= 0.13.0',
         'pydot >= 1.4.2',
-        'networkx'
+        'networkx',
+        'psutil'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
