@@ -21,6 +21,8 @@ IDA_script = os.path.join(SRC, 'ida_script.py')
 ida_available = which('ida64.exe' if platform.system()
                       == 'Windows' else 'ida64') != None
 
+ida64 = 'ida64' if platform.system() == 'Windows' else 'idat64'
+ida32 = 'ida' if platform.system() == 'Windows' else 'idat'
 
 class IDA(DisassemblerAbstract):
 
@@ -30,15 +32,15 @@ class IDA(DisassemblerAbstract):
 
     def _process(self, file, file_type, output_file_path, decompile=False, verbose=-1):
         log = None
-        program = 'ida64'
+        program = ida64
         extension = None
         if file_type.startswith('IDA '):
             # 32-bit database
-            program = 'ida'
+            program = ida32
             extension = '.idb'
         elif file_type.startswith('FoxPro FPT'):
             # 64-bit database
-            program = 'ida64'
+            program = ida64
             extension = '.i64'
         if extension:
             db = file + extension
