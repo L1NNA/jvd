@@ -17,7 +17,7 @@ from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
 class DisassemblerAbstract(metaclass=ABCMeta):
-    timeout = 10*60
+    timeout = 24*60
 
     @abstractmethod
     def _process(self, file, file_type, output_file_path, decompile=False, verobse=-1):
