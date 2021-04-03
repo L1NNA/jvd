@@ -1,4 +1,3 @@
-from jvd.unpackers import unpack
 import os
 from subprocess import PIPE, STDOUT, Popen
 from tempfile import TemporaryDirectory
