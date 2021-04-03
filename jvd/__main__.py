@@ -40,7 +40,7 @@ def entry_point():
     )
     parser.add_argument(
         '--ext',
-        default='',
+        default=None,
         help='If the input is a folder, the file extension to include'
     )
     parser.add_argument(

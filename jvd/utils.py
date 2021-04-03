@@ -117,9 +117,13 @@ def sha256sum(filename):
 def grep_ext(folder, ext=None):
     paths = [p for p in Path(
         folder).rglob('*') if p.is_file()]
-    if ext:
-        paths = [str(p) for p in paths if len(ext) < 1
-                 or p.suffix == ext or str(p).endswith(ext)]
+    if ext is not None:
+        ext = ext.strip()
+        if len(ext) > 0:
+            paths = [str(p) for p in paths if
+             p.suffix == ext or str(p).endswith(ext)]
+        else:
+            paths = [str(p) for p in paths if not '.' in p.name]
     else:
         paths = [str(p) for p in paths]
     return paths
