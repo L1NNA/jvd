@@ -36,7 +36,7 @@ def get_disassembler(disassembler=None):
         return None
 
 
-def _process_single(s, cfg=False, capa=False, decompile=False,
+def _process_single(s, capa=False, decompile=False,
                     clean_up=False, disassembler=None, unpack=True,
                     disassemble=True, inplace=True, verbose=-1):
     if not unpack:
@@ -51,14 +51,14 @@ def _process_single(s, cfg=False, capa=False, decompile=False,
             v: JVSample
             dis.disassemble(
                 v.file, decompile=decompile, cleanup=clean_up,
-                cfg=cfg, no_result=True, file_type=v.file_type,
+                file_type=v.file_type,
                 capa=capa, verbose=verbose,
             )
     return samples
 
 
 def process_folder(
-        folder, cfg=False, capa=False, decompile=False,
+        folder, capa=False, decompile=False,
         clean_up=False, ext=None, disassembler=None, disassemble=True,
         unpack=True,
         verbose=-1):
@@ -66,18 +66,17 @@ def process_folder(
         files = [folder]
     else:
         files = grep_ext(folder, ext=ext)
-    samples = [JVSample(f) for f in files]
-
-    if unpack:
-        for s in samples:
-            s.save()
-        if len(samples) > 0:
-            # call first time to update any necessary resource
-            label(samples[0])
+    print('scanning files and tagging file information')
+    samples = [JVSample(f) for f in tqdm(files)]
+    for s in tqdm(samples):
+        s.save()
+    if len(samples) > 0:
+        # call first time to update any necessary resource
+        label(samples[0])
 
     for _, result in m_map(
         partial(_process_single,
-                cfg=cfg, capa=capa, decompile=decompile,
+                capa=capa, decompile=decompile,
                 clean_up=clean_up, disassembler=disassembler,
                 verbose=verbose, disassemble=disassemble,
                 unpack=unpack,

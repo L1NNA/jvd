@@ -41,11 +41,9 @@ def entry_point():
     parser.add_argument(
         '--ext',
         default=None,
-        help='If the input is a folder, the file extension to include'
+        help='If the input is a folder, the file extension to include. Default is all the files. '
+        'Empty string will select files without any `.`.'
     )
-    parser.add_argument(
-        '--cfg', dest='cfg',
-        action='store_true', help='Generate CFG matrix')
     parser.add_argument(
         '--disassemble', dest='disassemble',
         action='store_true', help='Disassemble all the applicable files.')
@@ -79,7 +77,7 @@ def entry_point():
             logging.error('You have to supply at least a file or a path.')
         else:
             process_folder(
-                f, cfg=flags.cfg, capa=flags.capa, decompile=flags.decompile,
+                f, capa=flags.capa, decompile=flags.decompile,
                 clean_up=False, ext=flags.ext, disassembler=disassembler,
                 verbose=flags.verbose, disassemble=flags.disassemble,
                 unpack=flags.unpack,

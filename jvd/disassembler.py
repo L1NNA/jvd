@@ -17,7 +17,7 @@ from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
 class DisassemblerAbstract(metaclass=ABCMeta):
-    timeout = 24*60
+    timeout = 24*60*60
 
     @abstractmethod
     def _process(self, file, file_type, output_file_path, decompile=False, verobse=-1):
@@ -32,15 +32,16 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         return res
 
     def disassemble(
-            self, file, decompile=False, cleanup=False, cfg=False,
-            no_result=False, file_type=None, capa=False, verbose=-1,
+            self, file, decompile=False, cleanup=False,
+        file_type=None, capa=False, verbose=-1,
             additional_ext=''):
         js_file = file + '{}.asm.json.gz'.format(additional_ext)
-        res = None
         log = []
         file_type = file_type if file_type else get_file_type(file)
         if os.path.exists(js_file):
             log.append('directly reading the generated json file')
+            if not capa:
+                return js_file, log
         else:
             tmp_folder = file + '{}.tmp'.format(additional_ext)
             try:
@@ -51,7 +52,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 copyfile(file, new_file)
                 _, out_log = self._process(
                     new_file, file_type, output_file_path=new_file_js, decompile=decompile,
-                     verbose=verbose)
+                    verbose=verbose)
                 copyfile(new_file_js, js_file)
                 if isinstance(log, list):
                     log.extend(log)
@@ -72,26 +73,15 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 if os.path.exists(js_file):
                     os.remove(js_file)
                 raise Exception('no basic blocks are generated.. skipping.')
-            changed = False
-            if 'f_type' not in res:
-                res['bin']['f_type'] = file_type
-                changed = True
-            if cfg and 'cfg' not in res:
-                self._cfg(res)
-                changed = True
             if capa and 'capa' not in res:
                 res['capa'] = capa_analyze(res, file, verbose=verbose)
-                changed = True
-            if changed:
                 content = json.dumps(
                     res,
                     cls=CapaJsonObjectEncoder,
                 ).encode('utf-8')
                 with gzip.GzipFile(js_file, 'w') as gf:
                     gf.write(content)
-            if no_result:
-                return js_file if res else None, log
-            return res, log
+            return js_file, log
         except Exception as e:
             log.append('Failed ' + file + ' msg: ' + str(e))
             if verbose > 1:

@@ -89,7 +89,7 @@ class P7zip(ResourceAbstract, Unpacker):
     def unpack_if_applicable(
             self, sample: JVSample, inplace=True):
         packer = self.check_supported_archive(sample.file_type)
-        if packer and packer not in sample.packers:
+        if packer:  # and packer not in sample.packers:
             if not self.x7z:
                 self.x7z = require('p7zip')
             unpack_dir = sample.file + '_unpack'
@@ -103,19 +103,20 @@ class P7zip(ResourceAbstract, Unpacker):
                             'ascii', 'ignore').splitlines()
                 except:
                     if os.path.exists(unpack_dir):
-                        rmtree(unpack_dir)
+                        rmtree(unpack_dir, True)
                     return [sample]
             sample.add_packer(packer)
             files: List[Path] = list(Path(unpack_dir).rglob("*.*"))
             files = [str(f) for f in files if f.is_file()]
             if inplace:
+                files = [f for f in files if str(f).lower().endswith(('.exe', '.dll', '.pdf'))]
                 if len(files) != 1:
                     if os.path.exists(unpack_dir):
-                        rmtree(unpack_dir)
+                        rmtree(unpack_dir, True)
                     return [sample]
                 else:
                     sample.replace(files[0])
-                    rmtree(unpack_dir)
+                    rmtree(unpack_dir, True)
                     return [sample]
             samples = [JVSample(f, sample) for f in files]
             for s in samples:

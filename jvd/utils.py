@@ -121,7 +121,7 @@ def grep_ext(folder, ext=None):
         ext = ext.strip()
         if len(ext) > 0:
             paths = [str(p) for p in paths if
-             p.suffix == ext or str(p).endswith(ext)]
+                     p.suffix == ext or str(p).endswith(ext)]
         else:
             paths = [str(p) for p in paths if not '.' in p.name]
     else:
@@ -209,7 +209,8 @@ class JVSample:
             elif resource:
                 self.resource = resource
             else:
-                self.resource = Path(file).with_suffix('').name
+                self.resource = Path(file).with_suffix(
+                    '').name.replace('.', '_')
             self.labels = set(['na'])
             self.packers = set(['na'])
             self.ext = ext.replace('.', '_')
@@ -225,7 +226,7 @@ class JVSample:
             '-'.join(sorted(self.labels)),
             '-'.join(sorted(self.packers)),
             self.ext,
-            self.file_type.split()[0].lower(),
+            self.file_type.split()[0].lower().replace('/', '_'),
             'bin'
         ])
         return os.path.join(
@@ -235,11 +236,12 @@ class JVSample:
 
     def save(self):
         new_file = self.get_file_name()
-        os.rename(self.file, new_file)
-        self.file = str(new_file)
+        if not self.file == new_file:
+            os.rename(self.file, new_file)
+            self.file = str(new_file)
 
     def add_labels(self, new_labels):
-        new_labels = [l.strip() for l in new_labels
+        new_labels = [l.strip().replace('.', '_').replace('-', '_') for l in new_labels
                       if l != 'na' and len(l.strip()) > 0]
         if len(new_labels) < 1:
             return
@@ -249,7 +251,7 @@ class JVSample:
         self.save()
 
     def add_packer(self, new_label):
-        new_label = new_label.strip()
+        new_label = new_label.strip().replace('.', '_').replace('-', '_')
         if not new_label or new_label == 'na' or len(new_label) == 0:
             return
         if len(self.packers) == 1 and list(self.packers)[0] == 'na':
