@@ -39,6 +39,9 @@ def get_disassembler(disassembler=None):
 def _process_single(s, capa=False, decompile=False,
                     clean_up=False, disassembler=None, unpack=True,
                     disassemble=True, inplace=True, verbose=-1):
+    if isinstance(s, str):
+        s = JVSample(s)
+        s.save()
     if not unpack:
         samples = [s]
     else:
@@ -62,17 +65,20 @@ def process_folder(
         clean_up=False, ext=None, disassembler=None, disassemble=True,
         unpack=True,
         verbose=-1):
+    print('scanning files...')
     if os.path.isfile(folder):
         files = [folder]
     else:
         files = grep_ext(folder, ext=ext)
-    print('scanning files and tagging file information')
-    samples = [JVSample(f) for f in tqdm(files)]
-    for s in tqdm(samples):
-        s.save()
-    if len(samples) > 0:
+    # print('scanning files and tagging file information')
+    # samples = [JVSample(f) for f in tqdm(files)]
+    # for s in tqdm(samples):
+    #     s.save()
+    if len(files) > 0:
         # call first time to update any necessary resource
-        label(samples[0])
+        s = JVSample(files[0])
+        s.save()
+        label(s)
 
     for _, result in m_map(
         partial(_process_single,
@@ -80,6 +86,6 @@ def process_folder(
                 clean_up=clean_up, disassembler=disassembler,
                 verbose=verbose, disassemble=disassemble,
                 unpack=unpack,
-                ), samples):
+                ), files):
         pass
     print('done!')

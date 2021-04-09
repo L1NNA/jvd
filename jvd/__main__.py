@@ -4,6 +4,9 @@ import argparse
 import os
 from jvd import ida_available, get_disassembler, process_folder
 from jvd.installer import make
+from tqdm import tqdm
+from jvd.utils import grep_ext
+from shutil import rmtree
 
 logging.basicConfig(
     level=logging.INFO,
@@ -54,6 +57,9 @@ def entry_point():
         '--capa', dest='capa',
         action='store_true', help='Analyze by capa')
     parser.add_argument(
+        '--cleanup', dest='cleanup',
+        action='store_true', help='Clean up the temporary folders')
+    parser.add_argument(
         '--decompile', dest='decompile',
         action='store_true',
         help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
@@ -69,6 +75,13 @@ def entry_point():
 
     if is_src_dir and flags.make:
         make()
+    elif flags.cleanup:
+        folders = grep_ext(flags.file, '.tmp', type='d')
+        for f in tqdm(folders):
+            try:
+                rmtree(f)
+            except Exception as e:
+                print(str(e), ':::', f)
     else:
         if flags.dis is not None:
             disassembler = flags.dis

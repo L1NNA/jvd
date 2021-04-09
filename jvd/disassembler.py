@@ -45,6 +45,8 @@ class DisassemblerAbstract(metaclass=ABCMeta):
         else:
             tmp_folder = file + '{}.tmp'.format(additional_ext)
             try:
+                if os.path.exists(tmp_folder):
+                    rmtree(tmp_folder)
                 os.mkdir(tmp_folder)
                 new_file = os.path.join(tmp_folder, os.path.basename(file))
                 new_file_js = os.path.join(
@@ -64,7 +66,10 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     raise e
                 return None, log
             finally:
-                rmtree(tmp_folder)
+                try:
+                    rmtree(tmp_folder)
+                except:
+                    pass
                 pass
 
         try:

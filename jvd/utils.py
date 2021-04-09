@@ -114,9 +114,13 @@ def sha256sum(filename):
         return hashlib.sha256(filename).hexdigest()
 
 
-def grep_ext(folder, ext=None):
-    paths = [p for p in Path(
-        folder).rglob('*') if p.is_file()]
+def grep_ext(folder, ext=None, type='f'):
+    if type == 'f':
+        paths = [p for p in Path(
+            folder).rglob('*') if p.is_file()]
+    elif type == 'd':
+        paths = [p for p in Path(
+            folder).rglob('*') if p.is_dir()]
     if ext is not None:
         ext = ext.strip()
         if len(ext) > 0:
@@ -236,7 +240,7 @@ class JVSample:
 
     def save(self):
         new_file = self.get_file_name()
-        if not self.file == new_file:
+        if not os.path.abspath(self.file) == os.path.abspath(new_file):
             os.rename(self.file, new_file)
             self.file = str(new_file)
 
