@@ -41,7 +41,7 @@ def _process_single(s, capa=False, decompile=False,
                     disassemble=True, inplace=True, verbose=-1):
     if isinstance(s, str):
         s = JVSample(s)
-        s.save()
+        # s.save()
     if not unpack:
         samples = [s]
     else:
@@ -74,11 +74,11 @@ def process_folder(
     # samples = [JVSample(f) for f in tqdm(files)]
     # for s in tqdm(samples):
     #     s.save()
-    if len(files) > 0:
-        # call first time to update any necessary resource
-        s = JVSample(files[0])
-        s.save()
-        label(s)
+    # if len(files) > 0:
+    #     # call first time to update any necessary resource
+    #     s = JVSample(files[0])
+    #     s.save()
+    #     label(s)
 
     for _, result in m_map(
         partial(_process_single,

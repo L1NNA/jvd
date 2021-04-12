@@ -118,7 +118,7 @@ class P7zip(ResourceAbstract, Unpacker):
                     sample.replace(files[0])
                     rmtree(unpack_dir, True)
                     return [sample]
-            samples = [JVSample(f, sample) for f in files]
+            samples = [JVSample(f) for f in files]
             for s in samples:
                 s.save()
             return samples

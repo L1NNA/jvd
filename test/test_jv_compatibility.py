@@ -14,9 +14,10 @@ def test_jvd_field_missing():
     bin = os.path.join('test', 'test_jvd', 'libpng-1.7.0b54.o')
     disassembler = get_disassembler('ghidra')
     disassembler: DisassemblerAbstract
-    gz_obj, logs = disassembler.disassemble(
-        bin, cleanup=False, capa=True, decompile=True,)
+    gz_file, logs = disassembler.disassemble(
+        bin, cleanup=False, capa=True, decompile=True, verbose=2)
     print(logs)
+    gz_obj = read_gz_js(gz_file)
     assert 'capa' in gz_obj
     cap = gz_obj['capa']
     assert len(cap['tac']) > 0
@@ -28,9 +29,10 @@ def test_jvd_field_missing():
         bin = os.path.join('test', 'test_jvd', 'zlib-1.2.7.o')
         disassembler = get_disassembler('ida')
         disassembler: DisassemblerAbstract
-        gz_obj, logs = disassembler.disassemble(
+        gz_file, logs = disassembler.disassemble(
             bin, cleanup=False, capa=True, decompile=True,)
         print(logs)
+        gz_obj = read_gz_js(gz_file)
         assert 'capa' in gz_obj
         cap = gz_obj['capa']
         assert len(cap['tac']) > 1

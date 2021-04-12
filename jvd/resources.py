@@ -22,7 +22,7 @@ def internet_on():
 
 
 # update dependencies only if internet is available
-online = internet_on()
+# online = internet_on()
 
 
 class ResourceAbstract(metaclass=ABCMeta):
@@ -60,7 +60,7 @@ class ResourceAbstract(metaclass=ABCMeta):
         file_unpack = file + '_unpacked'
 
         download = not os.path.exists(file)
-        if not download and self.check_update and online:
+        if not download and self.check_update:  # and online:
             try:
                 u = urllib.request.urlopen(url)
                 meta = u.info()
