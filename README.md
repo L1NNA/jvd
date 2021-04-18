@@ -1,6 +1,6 @@
 # JARV1S-Disassembler
 
- ![Build and Release Ghidra JAR](https://github.com/L1NNA/JARV1S-Disassembler/workflows/Build%20and%20Release%20Ghidra%20JAR/badge.svg) ![Ghidra Extractor for Capa](https://github.com/L1NNA/JARV1S-Disassembler/workflows/Ghidra%20Extractor%20for%20Capa/badge.svg) [![Source Lexer/AST/CPG-Parsers](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/src-lexer-ast.yml/badge.svg)](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/src-lexer-ast.yml) [![Decompilation and Capa Rule Matching](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/decompile-capa-rules.yml/badge.svg)](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/decompile-capa-rules.yml) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?&maxAge=86400)
+ ![Build and Release Ghidra JAR](https://github.com/L1NNA/JARV1S-Disassembler/workflows/Build%20and%20Release%20Ghidra%20JAR/badge.svg) ![Ghidra Extractor for Capa](https://github.com/L1NNA/JARV1S-Disassembler/workflows/Ghidra%20Extractor%20for%20Capa/badge.svg) [![Source Lexer/AST/CPG-Parsers](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/src-lexer-ast.yml/badge.svg)](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/src-lexer-ast.yml) [![Decompilation and Capa Rule Matching](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/decompile-capa-rules.yml/badge.svg)](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/decompile-capa-rules.yml) [![Symbolic Execution](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/vex.yml/badge.svg)](https://github.com/L1NNA/JARV1S-Disassembler/actions/workflows/vex.yml) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?&maxAge=86400)
 
 Universal disassembly generation and processing for JARV1S/Kam1n0
 
@@ -37,9 +37,13 @@ optional arguments:
   -h, --help            show this help message and exit
   --dis {ghidra}        The disassembler
   --ext EXT             If the input is a folder, the file extension to
-                        include
-  --cfg                 Generate CFG matrix
+                        include. Default is all the files. Empty string will
+                        select files without any `.`.
+  --disassemble         Disassemble all the applicable files.
+  --unpack              Unpack before disassembling.
   --capa                Analyze by capa
+  --cleanup             Clean up the temporary folders.
+  --vex                 Extract vex code and execution paths.
   --decompile           Decomiple the code (if IDA is chosen as disassembler,
                         it will use Ghidra to decompile and merge.
   --verbose {-1,0,1,2}
