@@ -64,6 +64,10 @@ def entry_point():
         '--vex', dest='vex',
         action='store_true', help='Extract vex code and execution path.')
     parser.add_argument(
+        '--tracelet', dest='tracelet',
+        type=int, default=-1,
+        help='For vex processing, extract tracelet (>0) rather than full execution paths (-1).')
+    parser.add_argument(
         '--decompile', dest='decompile',
         action='store_true',
         help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
@@ -109,7 +113,9 @@ def entry_point():
 
             if flags.vex:
                 print('processing vex...')
-                sym.process_all(files)
+                sym.process_all(
+                    files, verbose=flags.verbose,
+                    tracelet=flags.tracelet)
         print('done')
 
 

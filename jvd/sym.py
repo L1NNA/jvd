@@ -10,7 +10,55 @@ log.getLogger('angr').setLevel(log.CRITICAL)
 log.getLogger('cle').setLevel(log.CRITICAL)
 
 
-def dump_sim(binary, function=None, loop=1, verbose=-1):
+def eval_state(d, verbose=-1):
+    d_vars = []
+    d_vars_name = []
+    d_vars_res = []
+    for k, v in d.solver.get_variables():
+        if k[0] == 'api':
+            name = k[1]
+        elif k[0] == 'reg':
+            name = f'reg_{k[1]}'
+        elif k[0] == 'mem':
+            name = f'mem_{hex(k[1])[2:]}'
+        elif k[0] == 'file':
+            name = k[1]
+        else:
+            name = k[1]
+        # quick hack for amd64/x86..
+        # avoid stack/ip/segment registers
+        if not k[1] in (0x38, 0x30, 0x40, 0x48, 0xb8):
+            d_vars.append(v)
+            d_vars_name.append(name)
+
+    if verbose > 1:
+        print('started', len(d_vars), len(d.solver.constraints))
+    vals = d.solver._solver.batch_eval(d_vars, 1)[0]
+    if verbose > 1:
+        print('done', len(vals))
+    for v, val in zip(d_vars, vals):
+        try:
+            if val != 0:
+                bytez = val.to_bytes(v.size(), 'big')
+                str_val = hex(val)
+                h = str_val[2:]
+                if len(h) >= 62:
+                    str_val = bytez.decode(
+                        'utf-8', errors='ignore'
+                    ).strip().replace('\x00', '')
+                d_vars_res.append(str_val)
+        except (ValueError, Exception) as v:
+            log.error(
+                'Failed to evaluate variable ' + str(v))
+            pass
+    return {
+        'vars': d_vars_name,
+        'vars_res': d_vars_res,
+        'addr': list(d.history.bbl_addrs)
+    }
+
+
+def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
     p = angr.Project(binary, auto_load_libs=False)
 
     functions = []
@@ -63,70 +111,35 @@ def dump_sim(binary, function=None, loop=1, verbose=-1):
             blocks.append(blk)
 
         try:
-            call_state = p.factory.call_state(
-                tar.addr,
-                # to get list of write/read actions
-                # `state.history.actions`
-                # add_options=angr.options.refs,
-            )
-            simgr = p.factory.simgr(call_state)
-            simgr.use_technique(angr.exploration_techniques.LoopSeer(
-                cfg=cfg, functions=None, bound=loop))
-            if verbose > 1:
-                print('running', len(blocks))
-            simgr.run()
-            if verbose > 1:
-                print('done running')
-            sigs = []
-            for d in simgr.deadended:
-                d_vars = []
-                d_vars_name = []
-                d_vars_res = []
-                for k, v in d.solver.get_variables():
-                    if k[0] == 'api':
-                        name = k[1]
-                    elif k[0] == 'reg':
-                        name = f'reg_{k[1]}'
-                    elif k[0] == 'mem':
-                        name = f'mem_{hex(k[1])[2:]}'
-                    elif k[0] == 'file':
-                        name = k[1]
-                    else:
-                        name = k[1]
-                    # quick hack for amd64/x86..
-                    # avoid stack/ip/segment registers
-                    if not k[1] in (0x38, 0x30, 0x40, 0x48, 0xb8):
-                        d_vars.append(v)
-                        d_vars_name.append(name)
-
+            if tracelet < 0:
+                call_state = p.factory.call_state(
+                    tar.addr,
+                    # to get list of write/read actions
+                    # `state.history.actions`
+                    # add_options=angr.options.refs,
+                )
+                simgr = p.factory.simgr(call_state)
+                simgr.use_technique(angr.exploration_techniques.LoopSeer(
+                    cfg=cfg, functions=None, bound=loop))
                 if verbose > 1:
-                    print('started', len(d_vars), len(d.solver.constraints))
-                vals = d.solver._solver.batch_eval(d_vars, 1)[0]
+                    print('running', len(blocks))
+                simgr.run()
                 if verbose > 1:
-                    print('done', len(vals))
-                for v, val in zip(d_vars, vals):
-                    try:
-                        if val != 0:
-                            bytez = val.to_bytes(v.size(), 'big')
-                            str_val = hex(val)
-                            h = str_val[2:]
-                            if len(h) >= 62:
-                                str_val = bytez.decode(
-                                    'utf-8', errors='ignore'
-                                ).strip().replace('\x00', '')
-                                if len(str_val) > 0:
-                                    sigs.append(str_val)
-                            d_vars_res.append(str_val)
-                    except (ValueError, Exception) as v:
-                        log.error(
-                            'Failed to evaluate variable ' + str(v))
-                        pass
-
-                paths.append({
-                    'vars': d_vars_name,
-                    'vars_res': d_vars_res,
-                    'addr': list(d.history.bbl_addrs)
-                })
+                    print('done running')
+                for d in simgr.deadended:
+                    paths.append(eval_state(d))
+            else:
+                for b in tar.blocks:
+                    call_state = p.factory.call_state(
+                        b.addr,
+                    )
+                    simgr = p.factory.simgr(call_state)
+                    simgr.use_technique(angr.exploration_techniques.LoopSeer(
+                        cfg=cfg, functions=None, bound=loop))
+                    for _ in range(tracelet):
+                        simgr.step()
+                    for d in simgr.active:
+                        paths.append(eval_state(d))
         except (ValueError, Exception) as e:
             log.error(str(e))
             if verbose > 1:
@@ -135,16 +148,16 @@ def dump_sim(binary, function=None, loop=1, verbose=-1):
     return {'bin': binary, 'functions': functions, 'blocks': blocks}
 
 
-def process_file(file, verbose=-1):
+def process_file(file, tracelet=-1, verbose=-1):
     dump_file = file + '.vex.json.gz'
     if not os.path.exists(dump_file):
         write_gz_js(
-            dump_sim(file, verbose=verbose),
+            dump_sim(file, tracelet=tracelet, verbose=verbose),
             dump_file
         )
     return dump_file
 
 
-def process_all(files, verbose=-1):
-    for _ in m_map(partial(process_file, verbose=verbose), files):
+def process_all(files, tracelet=-1, verbose=-1):
+    for _ in m_map(partial(process_file, verbose=verbose, tracelet=tracelet), files):
         pass
