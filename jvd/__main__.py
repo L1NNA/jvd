@@ -6,6 +6,7 @@ from jvd import ida_available, get_disassembler, process_folder
 from jvd.installer import make
 from tqdm import tqdm
 from jvd.utils import grep_ext
+import jvd.sym as sym
 from shutil import rmtree
 
 logging.basicConfig(
@@ -58,7 +59,10 @@ def entry_point():
         action='store_true', help='Analyze by capa')
     parser.add_argument(
         '--cleanup', dest='cleanup',
-        action='store_true', help='Clean up the temporary folders')
+        action='store_true', help='Clean up the temporary folders.')
+    parser.add_argument(
+        '--vex', dest='vex',
+        action='store_true', help='Extract vex code and execution path.')
     parser.add_argument(
         '--decompile', dest='decompile',
         action='store_true',
@@ -86,15 +90,27 @@ def entry_point():
         if flags.dis is not None:
             disassembler = flags.dis
         f = flags.file
+        print('scanning files...')
+        if os.path.isfile(f):
+            files = [f]
+        else:
+            files = grep_ext(f, ext=flags.ext)
         if not f:
             logging.error('You have to supply at least a file or a path.')
         else:
-            process_folder(
-                f, capa=flags.capa, decompile=flags.decompile,
-                clean_up=False, ext=flags.ext, disassembler=disassembler,
-                verbose=flags.verbose, disassemble=flags.disassemble,
-                unpack=flags.unpack,
-            )
+            if flags.disassemble or flags.unpack or flags.capa:
+                print('processing...')
+                process_folder(
+                    files, capa=flags.capa, decompile=flags.decompile,
+                    clean_up=False, ext=flags.ext, disassembler=disassembler,
+                    verbose=flags.verbose, disassemble=flags.disassemble,
+                    unpack=flags.unpack,
+                )
+
+            if flags.vex:
+                print('processing vex...')
+                sym.process_all(files)
+        print('done')
 
 
 if __name__ == "__main__":

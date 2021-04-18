@@ -33,11 +33,11 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
         return lang in ('cpp', 'c')
 
     def extract_graph(self, src):
-        file_name = 'test.cpp'
         home, exec_parse, exec_export = self.get()
 
         with TemporaryDirectory() as temp_dir:
 
+            file_name = 'test.cpp'
             prj_path = os.path.join(temp_dir, 'src')
             out_path = os.path.join(temp_dir, 'out')
             bin_path = 'cpg.bin'

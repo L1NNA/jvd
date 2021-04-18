@@ -61,15 +61,10 @@ def _process_single(s, capa=False, decompile=False,
 
 
 def process_folder(
-        folder, capa=False, decompile=False,
+        files, capa=False, decompile=False,
         clean_up=False, ext=None, disassembler=None, disassemble=True,
         unpack=True,
         verbose=-1):
-    print('scanning files...')
-    if os.path.isfile(folder):
-        files = [folder]
-    else:
-        files = grep_ext(folder, ext=ext)
     # print('scanning files and tagging file information')
     # samples = [JVSample(f) for f in tqdm(files)]
     # for s in tqdm(samples):
@@ -80,7 +75,7 @@ def process_folder(
     #     s.save()
     #     label(s)
 
-    for _, result in m_map(
+    for _ in m_map(
         partial(_process_single,
                 capa=capa, decompile=decompile,
                 clean_up=clean_up, disassembler=disassembler,
@@ -88,4 +83,3 @@ def process_folder(
                 unpack=unpack,
                 ), files):
         pass
-    print('done!')

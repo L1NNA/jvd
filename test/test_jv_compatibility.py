@@ -1,4 +1,5 @@
 import sys
+import os
 import test.test_capa.tests.fixtures as fixtures
 from test.test_capa.tests.fixtures import *
 from functools import lru_cache

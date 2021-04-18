@@ -43,7 +43,8 @@ setup(
         'javalang >= 0.13.0',
         'pydot >= 1.4.2',
         'networkx',
-        'psutil'
+        'psutil',
+        'angr'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
