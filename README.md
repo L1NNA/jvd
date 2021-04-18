@@ -37,9 +37,13 @@ optional arguments:
   -h, --help            show this help message and exit
   --dis {ghidra}        The disassembler
   --ext EXT             If the input is a folder, the file extension to
-                        include
-  --cfg                 Generate CFG matrix
+                        include. Default is all the files. Empty string will
+                        select files without any `.`.
+  --disassemble         Disassemble all the applicable files.
+  --unpack              Unpack before disassembling.
   --capa                Analyze by capa
+  --cleanup             Clean up the temporary folders.
+  --vex                 Extract vex code and execution paths.
   --decompile           Decomiple the code (if IDA is chosen as disassembler,
                         it will use Ghidra to decompile and merge.
   --verbose {-1,0,1,2}
