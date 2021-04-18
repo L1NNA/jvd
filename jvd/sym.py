@@ -127,7 +127,7 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
                 if verbose > 1:
                     print('done running')
                 for d in simgr.deadended:
-                    paths.append(eval_state(d))
+                    paths.append(eval_state(d, verbose=verbose))
             else:
                 for b in tar.blocks:
                     call_state = p.factory.call_state(
@@ -138,8 +138,8 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
                         cfg=cfg, functions=None, bound=loop))
                     for _ in range(tracelet):
                         simgr.step()
-                    for d in simgr.active:
-                        paths.append(eval_state(d))
+                    for d in list(simgr.active) + list(simgr.deadended):
+                        paths.append(eval_state(d, verbose=verbose))
         except (ValueError, Exception) as e:
             log.error(str(e))
             if verbose > 1:
