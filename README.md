@@ -28,31 +28,46 @@ If IDA Pro is not in the path, Ghidra jar will be downloaded and installed.
 If not using the offline installer, during the first run, the required jar and JDK will be downloaded to `~/jv-dependences` if needed.
 Options:
 ```bash
+
 usage: jvd <file> [options]
 
 positional arguments:
-  file                  The binary file or the targeted path.
+  file                  The binary file or the targeted path. (default: None)
 
 optional arguments:
   -h, --help            show this help message and exit
-  --ext EXT             If the input is a folder, the file extension to
+  --ext                 If the input is a folder, the file extension to
                         include. Default is all the files. Empty string will
-                        select files without any `.`.
-  --unpack              Unpack before disassembling.
-  --cleanup             Clean up the temporary folders.
-  --dis                 Disassemble all the applicable files.
-  --dis-backend {ghidra}
-                        The disassembler
-  --dis-decompile       Decomiple the code (if IDA is chosen as disassembler,
-                        it will use Ghidra to decompile and merge.
-  --dis-capa            Analyze by capa
-  --vex                 Extract vex code and execution path.
-  --vex-tracelet TRACELET
-                        For vex processing, extract tracelet (>0) rather than
-                        full execution paths (-1).
-  --vex-overlap         The tracelets overlap each other.
+                        select files without any `.`. (default: None)
+
+Gobal commands and toggles:
+  --unpack              Unpack before disassembling. (default: False)
+  --cleanup             Clean up the temporary folders. (default: False)
   --verbose {-1,0,1,2}
-  --make                Make the installer for offline usage.
+  --make                Make the installer for offline usage. (default: False)
+
+Disassembling and decompilation:
+  --dis                 Disassemble all the applicable files. (default: False)
+  --dis-backend {ghidra}
+                        The disassembler (default: ghidra)
+  --dis-decompile       Decomiple the code (if IDA is chosen as disassembler,
+                        it will use Ghidra to decompile and merge. (default:
+                        False)
+  --dis-capa            Analyze by capa (default: False)
+
+Vex IR code extraction and symbolic execution:
+  --vex                 Extract vex code and execution path. (default: False)
+  --vex-tracelet        For vex processing, extract tracelet (>0) rather than
+                        full execution paths (-1). (default: -1)
+  --vex-loop            Maximum bound of loops in symbolic execution (default:
+                        2)
+  --vex-overlap         The tracelets overlap each other. (default: False)
+
+Source code processing:
+  --src                 Extract AST/CPGs from a source file or a folder.
+                        (default: False)
+  --src-lang {cpp,c,python,java}
+                        The source code language. (default: c)
 
 ```
 Packed binaries will be unapcked (in order) by:

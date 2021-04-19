@@ -7,9 +7,7 @@ import networkx as nx
 
 
 class JavaASTExtractor(GraphExtractor):
-
-    def match_lang(self, lang):
-        return lang in ('java',)
+    langs = ('java')
 
     def extract_graph(self, src):
         try:

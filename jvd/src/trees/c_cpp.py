@@ -10,6 +10,8 @@ from jvd.utils import unzip_with_permission
 
 
 class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
+    langs = ('cpp', 'c')
+
     def __init__(self):
         super().__init__()
         self.default = 'https://github.com/ShiftLeftSecurity/joern/releases/download/v1.1.123/joern-cli.zip'
@@ -29,10 +31,7 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
         )
         return home, exec_parse, exec_export
 
-    def match_lang(self, lang):
-        return lang in ('cpp', 'c')
-
-    def extract_graph(self, src):
+    def extract(self, src, is_path=False):
         home, exec_parse, exec_export = self.get()
 
         with TemporaryDirectory() as temp_dir:
@@ -40,11 +39,19 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
             file_name = 'test.cpp'
             prj_path = os.path.join(temp_dir, 'src')
             out_path = os.path.join(temp_dir, 'out')
-            bin_path = 'cpg.bin'
+            bin_path = os.path.join(temp_dir, 'cpg.bin')
             os.makedirs(prj_path)
-            with open(os.path.join(
-                    prj_path, file_name), 'w') as outf:
-                outf.write(src)
+
+            if is_path and os.path.isdir(src):
+                prj_path = os.path.abspath(src)
+            else:
+                if is_path and os.path.isfile(src):
+                    with open(src) as rf:
+                        src = rf.read()
+                with open(os.path.join(
+                        prj_path, file_name), 'w') as outf:
+                    outf.write(src)
+
             cmd = [exec_parse, prj_path, bin_path]
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
             out, err = p.communicate()
@@ -52,7 +59,7 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
             cmd = [exec_export, bin_path]
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
             out, err = p.communicate()
-            graphs = []
+            graphs = {}
             for f in os.listdir(out_path):
                 with open(os.path.join(out_path, f), 'r') as rf:
                     content = rf.read()
@@ -61,7 +68,16 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
                     g = pydot.graph_from_dot_data(content)
                     if len(g) > 0:
                         g = nx.drawing.nx_pydot.from_pydot(g[0])
-                        graphs.append(g)
-            graph = nx.compose_all(graphs)
+                        key = g.graph['name']
+                        if key in graphs:
+                            key = key + f.split('-')[0]
+                        graphs[key] = g
+            # graph = nx.compose_all(graphs)
             # print(graph.nodes(data=True))
-            return graph
+            return graphs
+
+    def extract_graph(self, src):
+        return self.extract(src, is_path=False)
+
+    def extract_folder(self, folder):
+        return self.extract(folder, is_path=True)

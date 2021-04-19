@@ -1,9 +1,14 @@
+import json
 from pygments.lexers import get_all_lexers
 from pygments.lexers import guess_lexer, LEXERS, get_lexer_by_name
 from pygments.lexer import Lexer
 from pygments.token import String, Comment, Number, Name
 import re
 import struct
+import os
+from jvd.utils import write_gz_js
+import networkx as nx
+from networkx.readwrite import json_graph
 
 
 def tokenize(src: str):
@@ -11,12 +16,22 @@ def tokenize(src: str):
 
 
 class GraphExtractor():
+    langs = (None)
 
     def extract_graph(self, src):
         pass
 
-    def match_lang(self, lang):
+    def extract_folder(self, folder):
         pass
+
+    def process_folder(self, folder):
+        file = folder + '.ast.json.gz'
+        if not os.path.exists(file):
+            graphs = self.extract_folder(folder)
+            for k in graphs:
+                graphs[k] = json_graph.node_link_data(graphs[k])
+            write_gz_js(graphs, file)
+        return file
 
 
 def str2num(t_type, t_val):
@@ -69,14 +84,15 @@ class SourceFragment():
             lexer = get_lexer_by_name(self.lang)
         self.tokens = list(lexer.get_tokens(src))
 
-    def gen_graph(self):
+    def gen_graph(self, merge=True):
         if self.graph:
             return self.graph
-        all_graph_extractors = [g() for g in GraphExtractor.__subclasses__()]
-        extractors = [
-            g for g in all_graph_extractors if g.match_lang(self.lang)]
+        extractors = [g() for g in GraphExtractor.__subclasses__()
+                      if self.lang in g.langs]
         if len(extractors) > 0:
             self.graph = extractors[0].extract_graph(self.src)
+        if isinstance(self.graph, dict):
+            self.graph = nx.compose_all(self.graph.values())
         return self.graph
 
     def get_by_types(self, _type):
@@ -109,3 +125,12 @@ class SourceFragment():
             numbers = [n for n in numbers if len(n) > 4]
         tokens.extend(numbers)
         return tokens
+
+
+def process_folder(folder, lang):
+    extractors = [g() for g in GraphExtractor.__subclasses__()
+                  if lang in g.langs]
+    if len(extractors) > 0:
+        extractors[0].process_folder(folder)
+    else:
+        raise Exception('no extractor found for', lang)

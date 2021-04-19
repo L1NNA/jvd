@@ -43,9 +43,7 @@ class NxWalker(ast.NodeVisitor):
 
 
 class PythonASTExtractor(GraphExtractor):
-
-    def match_lang(self, lang):
-        return lang in ('python', 'python2', 'python3')
+    langs = ('python', 'python2', 'python3')
 
     def extract_graph(self, src):
         tree = ast.parse(src)
