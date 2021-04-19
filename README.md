@@ -31,6 +31,16 @@ Options:
 
 usage: jvd <file> [options]
 
+    ▄█        ▄█  ███▄▄▄▄   ███▄▄▄▄      ▄████████ 
+    ███       ███  ███▀▀▀██▄ ███▀▀▀██▄   ███    ███ 
+    ███       ███▌ ███   ███ ███   ███   ███    ███ 
+    ███       ███▌ ███   ███ ███   ███   ███    ███ 
+    ███       ███▌ ███   ███ ███   ███ ▀███████████ 
+    ███       ███  ███   ███ ███   ███   ███    ███ 
+    ███▌    ▄ ███  ███   ███ ███   ███   ███    ███ 
+    █████▄▄██ █▀    ▀█   █▀   ▀█   █▀    ███    █▀  
+by  ▀                                               
+
 positional arguments:
   file                  The binary file or the targeted path. (default: None)
 
@@ -68,6 +78,7 @@ Source code processing:
                         (default: False)
   --src-lang {cpp,c,python,java}
                         The source code language. (default: c)
+
 
 ```
 Packed binaries will be unapcked (in order) by:
