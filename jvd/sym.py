@@ -50,6 +50,8 @@ def eval_state(d, verbose=-1):
         except (ValueError, Exception) as v:
             log.error(
                 'Failed to evaluate variable ' + str(v))
+            if verbose > 1:
+                raise v
             pass
     return {
         'vars': d_vars_name,
@@ -58,7 +60,7 @@ def eval_state(d, verbose=-1):
     }
 
 
-def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
+def dump_sim(binary, function=None, tracelet=-1, overlap=False, loop=1, verbose=-1):
     p = angr.Project(binary, auto_load_libs=False)
 
     functions = []
@@ -79,13 +81,19 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
             if not tar.name in function:
                 continue
         paths = []
+        endpoints = [
+            b.addr
+            # tar.get_block(b.addr).instruction_addrs[-1]
+            for b in tar.endpoints]
         functions.append(
             {
                 'addr': tar.addr,
                 'name': tar.name,
-                'bbs_len': len(tar.block_addrs),
+                'bbs_len': len(list(tar.blocks)),
                 'size': tar.size,
-                'calls': [f.addr for f in tar.functions_called()],
+                # 'calls': [f.addr for f in tar.functions_called()],
+                'bbs': [b.addr for b in tar.blocks],
+                'eps': endpoints,
                 'paths': paths
             }
         )
@@ -96,6 +104,7 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
                 'oprs': i.op_str, 'vex': []} for i in b.capstone.insns}
             blk = {
                 'addr': b.addr,
+                'f_addr': tar.addr,
                 'size': b.size,
                 'ins': sorted(ins.values(), key=lambda x: x['addr']),
             }
@@ -123,13 +132,17 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
                     cfg=cfg, functions=None, bound=loop))
                 if verbose > 1:
                     print('running', len(blocks))
+                # simgr.explore(find=endpoints, cfg=cfg)
                 simgr.run()
                 if verbose > 1:
                     print('done running')
                 for d in simgr.deadended:
                     paths.append(eval_state(d, verbose=verbose))
             else:
+                covered = set()
                 for b in tar.blocks:
+                    if not overlap and b.addr in covered:
+                        continue
                     call_state = p.factory.call_state(
                         b.addr,
                     )
@@ -138,8 +151,13 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
                         cfg=cfg, functions=None, bound=loop))
                     for _ in range(tracelet):
                         simgr.step()
+                        # simgr.move(
+                        #     from_stash='active', to_stash='deadended',
+                        #     filter_func=lambda s: s.addr in endpoints)
                     for d in list(simgr.active) + list(simgr.deadended):
-                        paths.append(eval_state(d, verbose=verbose))
+                        pt = eval_state(d, verbose=verbose)
+                        covered.update(pt['addr'])
+                        paths.append(pt)
         except (ValueError, Exception) as e:
             log.error(str(e))
             if verbose > 1:
@@ -148,16 +166,16 @@ def dump_sim(binary, function=None, tracelet=-1, loop=1, verbose=-1, ):
     return {'bin': binary, 'functions': functions, 'blocks': blocks}
 
 
-def process_file(file, tracelet=-1, verbose=-1):
+def process_file(file, **kwargs):
     dump_file = file + '.vex.json.gz'
     if not os.path.exists(dump_file):
         write_gz_js(
-            dump_sim(file, tracelet=tracelet, verbose=verbose),
+            dump_sim(file, **kwargs),
             dump_file
         )
     return dump_file
 
 
-def process_all(files, tracelet=-1, verbose=-1):
-    for _ in m_map(partial(process_file, verbose=verbose, tracelet=tracelet), files):
+def process_all(files, **kwargs):
+    for _ in m_map(partial(process_file, **kwargs), files):
         pass

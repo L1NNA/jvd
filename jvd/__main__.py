@@ -34,14 +34,6 @@ def entry_point():
         nargs='?',
         help='The binary file or the targeted path.'
     )
-    disassember = 'ghidra' if not ida else 'ida'
-    disassemblers = ['ghidra'] if not ida else ['ida', 'ghidra']
-    parser.add_argument(
-        '--dis',
-        choices=disassemblers,
-        default=disassember,
-        help='The disassembler'
-    )
     parser.add_argument(
         '--ext',
         default=None,
@@ -49,28 +41,43 @@ def entry_point():
         'Empty string will select files without any `.`.'
     )
     parser.add_argument(
-        '--disassemble', dest='disassemble',
-        action='store_true', help='Disassemble all the applicable files.')
-    parser.add_argument(
         '--unpack', dest='unpack',
         action='store_true', help='Unpack before disassembling.')
     parser.add_argument(
-        '--capa', dest='capa',
-        action='store_true', help='Analyze by capa')
-    parser.add_argument(
         '--cleanup', dest='cleanup',
         action='store_true', help='Clean up the temporary folders.')
+    disassember = 'ghidra' if not ida else 'ida'
+    disassemblers = ['ghidra'] if not ida else ['ida', 'ghidra']
+    parser.add_argument(
+        '--dis', dest='disassemble',
+        action='store_true', help='Disassemble all the applicable files.')
+    parser.add_argument(
+        '--dis-backend', dest='dis',
+        choices=disassemblers,
+        default=disassember,
+        help='The disassembler'
+    )
+    parser.add_argument(
+        '--dis-decompile', dest='decompile',
+        action='store_true',
+        help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
+    parser.add_argument(
+        '--dis-capa', dest='capa',
+        action='store_true', help='Analyze by capa')
     parser.add_argument(
         '--vex', dest='vex',
         action='store_true', help='Extract vex code and execution path.')
     parser.add_argument(
-        '--tracelet', dest='tracelet',
+        '--vex-tracelet', dest='tracelet',
         type=int, default=-1,
         help='For vex processing, extract tracelet (>0) rather than full execution paths (-1).')
     parser.add_argument(
-        '--decompile', dest='decompile',
-        action='store_true',
-        help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
+        '--vex-loop', dest='loop',
+        type=int, default=2,
+        help='Maximum bound of loops in symbolic execution.')
+    parser.add_argument(
+        '--vex-overlap', dest='overlap',
+        action='store_true', help='The tracelets overlap each other.')
     parser.add_argument(
         '--verbose', dest='verbose',
         type=int, choices=range(-1, 3), default=-1)
@@ -115,7 +122,7 @@ def entry_point():
                 print('processing vex...')
                 sym.process_all(
                     files, verbose=flags.verbose,
-                    tracelet=flags.tracelet)
+                    tracelet=flags.tracelet, overlap=flags.overlap, loop=flags.loop)
         print('done')
 
 

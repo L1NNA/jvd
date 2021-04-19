@@ -19,7 +19,7 @@ def test_vex_full():
 
 def test_vex_tracelet():
     bin = os.path.join('test', 'test_jvd', 'crackme')
-    obj = dump_sim(bin, function='authenticate', tracelet=3)
+    obj = dump_sim(bin, function='authenticate', tracelet=3, overlap=True)
     target = obj['functions'][0]
     assert target['name'] == 'authenticate'
     found = False
