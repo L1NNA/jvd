@@ -25,11 +25,30 @@ if not ida:
 is_src_dir = os.path.exists('setup.py')
 
 
+class CombinedFormatClass(
+        argparse.ArgumentDefaultsHelpFormatter,
+        argparse.RawDescriptionHelpFormatter):
+    pass
+
+banner = """
+    ▄█        ▄█  ███▄▄▄▄   ███▄▄▄▄      ▄████████ 
+    ███       ███  ███▀▀▀██▄ ███▀▀▀██▄   ███    ███ 
+    ███       ███▌ ███   ███ ███   ███   ███    ███ 
+    ███       ███▌ ███   ███ ███   ███   ███    ███ 
+    ███       ███▌ ███   ███ ███   ███ ▀███████████ 
+    ███       ███  ███   ███ ███   ███   ███    ███ 
+    ███▌    ▄ ███  ███   ███ ███   ███   ███    ███ 
+    █████▄▄██ █▀    ▀█   █▀   ▀█   █▀    ███    █▀  
+by  ▀                                               
+"""
+
+
 def entry_point():
 
     parser = argparse.ArgumentParser(
         usage='jvd <file> [options]',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+        formatter_class=CombinedFormatClass,
+        description=banner,
     )
     parser.add_argument(
         'file',
