@@ -66,7 +66,7 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
                     content = content.replace("digraph", 'digraph "', 1)
                     content = content.replace(" {", '" {', 1)
                     g = pydot.graph_from_dot_data(content)
-                    if len(g) > 0:
+                    if g is not None and len(g) > 0:
                         g = nx.drawing.nx_pydot.from_pydot(g[0])
                         key = g.graph['name']
                         if key in graphs:

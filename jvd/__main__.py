@@ -40,7 +40,7 @@ banner = """
     ███▌    ▄ ███  ███   ███ ███   ███   ███    ███ 
     █████▄▄██ █▀    ▀█   █▀   ▀█   █▀    ███    █▀  
     ▀                                               
-    [by www.l1nna.com @ Queen's University]
+        [by www.l1nna.com @ Queen's University]
 """
 
 
