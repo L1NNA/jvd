@@ -73,6 +73,32 @@ class JVDExtractor(FeatureExtractor):
             yield feature, va
 
 
+def extract_features(extractor:JVDExtractor, function_addr=None):
+    all_features = defaultdict(list)
+    functions_features = []
+    bb_features = []
+    insn_features = []
+    file_features =[]
+    if function_addr is None:
+        file_features = list(extractor.extract_file_features())
+    
+    functions = extractor.get_functions()
+    for function in functions:
+        if function_addr is None or function['addr_start'] == function_addr:
+            functions_features.extend(list(extractor.extract_function_features(function)))
+            basic_blocks = extractor.get_basic_blocks(function)
+            for basic_block in basic_blocks:
+                bb_features.extend(list(extractor.extract_basic_block_features(function, basic_block)))
+                instructions = extractor.get_instructions(function, basic_block)
+                for instruction in instructions:
+                    insn_features.extend(list(extractor.extract_insn_features(function, basic_block, instruction)))
+
+    
+    for feat, addr in file_features+functions_features+bb_features+insn_features:
+        all_features[addr].append(feat)
+    return dict(all_features)
+
+
 def install_rules(verbose=-1):
     return require('caparules')
 
