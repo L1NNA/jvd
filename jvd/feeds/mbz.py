@@ -68,6 +68,8 @@ def _merge_all(path, out_dir='_all_staging'):
         for b in tqdm(bins):
             b: Path
             sample = JVSample(str(b))
+            # label(sample)
+            # continue
             family = '-'.join(
                 sorted([l for l in sample.labels if not l.startswith('_vt')]))
             if family == 'na':
@@ -84,7 +86,7 @@ def _merge_all(path, out_dir='_all_staging'):
 
 if __name__ == '__main__':
     data_path = 'I:/MalBinZoo/ftp'
-    _download_all(data_path)
+    # _download_all(data_path)
     _merge_all(data_path)
     pass
     # label_folder('I:/MalBinZoo/2020-06-29_extracted')

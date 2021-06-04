@@ -39,6 +39,8 @@ class DataUnit:
         for b in self.obj.blocks:
             if not hasattr(b, 'calls'):
                 b.calls = []
+            if not hasattr(b, 'ins'):
+                b.ins = []
             for i in b.ins:
                 if not hasattr(i, 'dr'):
                     i.dr = []
