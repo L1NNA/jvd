@@ -13,6 +13,7 @@ import traceback
 from jvd.utils import read_gz_js, write_gz_js, which, check_output_ctx
 import platform
 from jvd.resources import require
+import time, threading
 
 
 SRC = os.path.split(os.path.realpath(__file__))[0]
@@ -24,13 +25,15 @@ ida_available = which('ida64.exe' if platform.system()
 ida64 = 'ida64' if platform.system() == 'Windows' else 'idat64'
 ida32 = 'ida' if platform.system() == 'Windows' else 'idat'
 
+
 class IDA(DisassemblerAbstract):
 
     def __init__(self):
-        if not ida_available:
-            raise FileNotFoundError('IDA is not found!')
+        pass
 
     def _process(self, file, file_type, output_file_path, decompile=False, verbose=-1):
+        if not ida_available and 'idaapi' not in sys.modules:
+            raise FileNotFoundError('IDA is not found!')
         log = None
         program = ida64
         extension = None
@@ -89,16 +92,81 @@ class IDA(DisassemblerAbstract):
 
         return output_file_path, log
 
-    def disassemble_in_context(self, function_addresses=None, with_ins_comments=True):
+    def context_init(self):
+        if 'idaapi' in sys.modules:
+            import idaapi
+            self.f_current = None
+
+            def _check():
+                addr = idaapi.get_screen_ea()
+                f_current = idaapi.get_func(addr)
+                if f_current and f_current != self.f_current:
+                    self.f_current = f_current
+                    print(self.context_function_info())
+
+
+            
+            def _step():
+                idaapi.execute_sync(_check, idaapi.MFF_FAST)
+                tt = threading.Timer(.5, _step)
+                tt.daemon = True
+                tt.start()
+            
+            _step()
+            return True
+        return False
+
+
+    def _get_all_wrapped(self, **kwargs):
         from jvd.ida.ida_utils import get_all
         import idaapi
         # this import cannot be moved to the header since it can
         # be only imported when running in context
-        res = {}
+        _bin = {}
 
         def _get():
-            res.update(get_all(function_eas=function_addresses,
-                               with_blocks=with_ins_comments))
+            _bin.update(get_all(**kwargs))
 
         idaapi.execute_sync(_get, idaapi.MFF_FAST)
-        return res
+
+        return _bin
+
+    def context_binary_info(self):
+        _bin_info = self._get_all_wrapped(
+            function_eas=None,
+            with_blocks=False)['bin']
+        return {
+            k: v for k, v in _bin_info.items() if k not in ['strings', 'data', ]
+        }
+
+    def context_function_info(self):
+        _all_info = self._get_all_wrapped(
+            function_eas=None,
+            with_blocks=True,
+            current_ea=True
+        )
+
+        refs = set()
+        for b in _all_info['blocks']:
+            for i in b.get('ins', []):
+                for r in i.get('dr', []) + i.get('cr', []):
+                    refs.add(r)
+
+        _cleaned_bin = {
+            k: v for k, v in _all_info['bin'].items() if k not in [
+                'strings', 'data', 'import_functions', 'export_functions',
+                'import_modules', 'seg', 'entry_points']
+        }
+        _cleaned_bin['strings'] = {
+            k: v for k, v in _all_info['bin']['strings'].items() if k in refs
+        }
+        _cleaned_bin['data'] = {
+            k: v for k, v in _all_info['bin']['strings'].items() if k in refs
+        }
+        return {
+            'bin': _cleaned_bin,
+            'functions': _all_info['functions'],
+            'blocks': _all_info['blocks'],
+            'comments': _all_info['comments'],
+        }
+

@@ -13,7 +13,6 @@ from shutil import copyfile, rmtree, unpack_archive
 from tqdm import tqdm
 
 from jvd.utils import read_gz_js, write_gz_js, get_file_type, grep_ext, m_map
-from jvd.capa import capa_analyze, CapaJsonObjectEncoder
 
 
 class DisassemblerAbstract(metaclass=ABCMeta):
@@ -79,6 +78,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     os.remove(js_file)
                 raise Exception('no basic blocks are generated.. skipping.')
             if capa and 'capa' not in res:
+                from jvd.capa.extractor import capa_analyze, CapaJsonObjectEncoder
                 res['capa'] = capa_analyze(res, file, verbose=verbose)
                 content = json.dumps(
                     res,
@@ -100,19 +100,22 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             except:
                 pass
 
-    def disassemble_in_context(self, function_addresses=None, with_ins_comments=True):
-        """
-        Call within the disassembler context e.g. as a plugin (so no need to call another process)
-        There is no `file` argument as this function is expected to with the file open on a given disassembler.
+    # def disassemble_in_context(self, function_addresses=None, with_ins_comments=True):
+    #     """
+    #     Call within the disassembler context e.g. as a plugin (so no need to call another process)
+    #     There is no `file` argument as this function is expected to with the file open on a given disassembler.
 
-        with_ins_comments controls if the return result should include all the instructions and comments.
-        """
-        return None
+    #     with_ins_comments controls if the return result should include all the instructions and comments.
+    #     """
+    #     return None
 
-    def sync_comments(self, to_be_updates=None, to_be_deleted=None):
+    def context_init(self):
+        return False
+
+    def context_binary_info(self):
         pass
 
-    def jump(self, address):
+    def context_function_info(self):
         pass
 
     def cleanup(self, file):

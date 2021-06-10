@@ -6,9 +6,8 @@ from jvd import ida_available, get_disassembler, process_folder
 from jvd.installer import make
 from tqdm import tqdm
 from jvd.utils import grep_ext
-import jvd.sym as sym
-import jvd.src as src
 from shutil import rmtree
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -146,13 +145,15 @@ def entry_point():
             disassembler = flags.dis
         f = flags.file
         if flags.src:
+
+            import jvd.src as src
             src.process_folder(
                 f, flags.lang
             )
             return
 
         print('scanning files...')
-        if os.path.isfile(f):
+        if f is not None and os.path.isfile(f):
             files = [f]
         else:
             files = grep_ext(f, ext=flags.ext)
@@ -170,6 +171,7 @@ def entry_point():
 
             if flags.vex:
                 print('processing vex...')
+                import jvd.sym as sym
                 sym.process_all(
                     files, verbose=flags.verbose,
                     tracelet=flags.tracelet, overlap=flags.overlap, loop=flags.loop)

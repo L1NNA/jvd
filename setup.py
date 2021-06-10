@@ -44,7 +44,9 @@ setup(
         'pydot >= 1.4.2',
         'networkx',
         'psutil',
-        'angr'
+        'angr',
+        'pywebview',
+        'eventlet'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

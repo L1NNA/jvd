@@ -31,6 +31,7 @@ import sys
 from ida_entry import get_entry, get_entry_qty
 import base64
 from capa.features.extractors.ida.helpers import find_string_at
+from functools import lru_cache
 
 
 def now_str(): return datetime.now().isoformat()
@@ -159,6 +160,7 @@ def get_processor():
     return processor
 
 
+@lru_cache(maxsize=1)
 def get_binary_with_functions():
     binary = {}
     # if rebase == 1:
@@ -262,13 +264,18 @@ def get_functions():
     return functions
 
 
-def get_all(function_eas: list = None, with_blocks=True):
+def get_all(function_eas: list = None, with_blocks=True, current_ea=False):
 
     if function_eas is None:
         function_eas = []
-        for seg_ea in Segments():
-            for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
-                function_eas.append(function_ea)
+        if current_ea:
+            addr = idaapi.get_screen_ea()
+            f_current = idaapi.get_func(addr)
+            function_eas.append(f_current.start_ea)
+        else:
+            for seg_ea in Segments():
+                for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
+                    function_eas.append(function_ea)
 
     binary, functions = get_binary_with_functions()
     set_function_eas = set(function_eas)
@@ -305,6 +312,7 @@ def get_all(function_eas: list = None, with_blocks=True):
         for function_ea in function_eas:
             funcfc = FlowChart(get_func(function_ea))
             function = functions[function_ea]
+            function['calls'] = set(function['calls'])
 
             func_blks = list(funcfc)
             for bblock in func_blks:
@@ -336,7 +344,6 @@ def get_all(function_eas: list = None, with_blocks=True):
                         elif ref not in binary['strings'] and ref not in binary['data']:
                             binary['data'][ref] = base64.b64encode(get_bytes(
                                 head, get_item_size(head)))
-                        
 
                     mne = print_insn_mnem(head)
                     if mne == "":

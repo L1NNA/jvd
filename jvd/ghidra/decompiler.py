@@ -14,10 +14,14 @@ from jvd.utils import check_output_ctx
 class Ghidra(DisassemblerAbstract):
 
     def __init__(self):
-        self.jar = require('ghidrajar')
-        self.java = require('jdk')
+        self.jar = None
+        self.java = None
+        pass
 
     def _process(self, file, file_type, output_file_path, decompile=False, verbose=-1):
+        if not self.jar:
+            self.jar = require('ghidrajar')
+            self.java = require('jdk')
         log = None
         js_file, log = process(
             self.java, self.jar, file,

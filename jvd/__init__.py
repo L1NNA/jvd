@@ -17,6 +17,15 @@ from tqdm import tqdm
 from functools import partial
 import logging as log
 
+dis_ida = IDA()
+dis_ghidra = Ghidra()
+dis_all = [dis_ida, dis_ghidra]
+plugin_mode = False
+for d in dis_all:
+    plugin_mode = d.context_init() or plugin_mode
+if plugin_mode:
+    from jvd.client import serve
+    serve()
 
 def get_disassembler(disassembler=None):
     """
@@ -29,9 +38,9 @@ def get_disassembler(disassembler=None):
             disassembler = 'ghidra'
 
     if disassembler == 'ida':
-        return IDA()
+        return dis_ida()
     if disassembler == 'ghidra':
-        return Ghidra()
+        return dis_ghidra()
     else:
         return None
 
