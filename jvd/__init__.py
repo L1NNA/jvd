@@ -38,9 +38,9 @@ def get_disassembler(disassembler=None):
             disassembler = 'ghidra'
 
     if disassembler == 'ida':
-        return dis_ida()
+        return dis_ida
     if disassembler == 'ghidra':
-        return dis_ghidra()
+        return dis_ghidra
     else:
         return None
 
