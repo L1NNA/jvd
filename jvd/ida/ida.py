@@ -13,7 +13,8 @@ import traceback
 from jvd.utils import read_gz_js, write_gz_js, which, check_output_ctx
 import platform
 from jvd.resources import require
-import time, threading
+import time
+import threading
 
 
 SRC = os.path.split(os.path.realpath(__file__))[0]
@@ -102,20 +103,18 @@ class IDA(DisassemblerAbstract):
                 f_current = idaapi.get_func(addr)
                 if f_current and f_current != self.f_current:
                     self.f_current = f_current
-                    print(self.context_function_info())
+                from jvd.client import search
+                search(self.context_function_info)
 
-
-            
             def _step():
                 idaapi.execute_sync(_check, idaapi.MFF_FAST)
                 tt = threading.Timer(.5, _step)
                 tt.daemon = True
                 tt.start()
-            
+
             _step()
             return True
         return False
-
 
     def _get_all_wrapped(self, **kwargs):
         from jvd.ida.ida_utils import get_all
@@ -169,4 +168,3 @@ class IDA(DisassemblerAbstract):
             'blocks': _all_info['blocks'],
             'comments': _all_info['comments'],
         }
-

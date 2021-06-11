@@ -1,7 +1,7 @@
 import socket
 from contextlib import closing
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 from threading import Thread
 import secrets
 import os
@@ -67,19 +67,19 @@ def authenticate(handler):
 @socketio.on('binary')
 @authenticate
 def handle_binary_request(data):
-    res = None
-    function_addresses = data['functions'] if 'functions' in data else None
-    with_ins_comments = data['with_ins_comments'] == True if 'with_ins_comments' in data else False
-    res = disassembler.disassemble_in_context(
-        function_addresses=function_addresses,
-        with_ins_comments=with_ins_comments,
-    )
-    return res
+    from jvd.disassembler import DisassemblerAbstract
+    disassembler: DisassemblerAbstract
+    return disassembler.context_binary_info()
 
 
 @socketio.on('connect')
 def connect():
-    print('connected!!')
+    print('connected to the browser..')
+
+
+def search(obj_func):
+    emit('search', obj_func, broadcast=True)
+
 
 
 def create_window():

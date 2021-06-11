@@ -4,7 +4,7 @@ import test.test_capa.tests.fixtures as fixtures
 from test.test_capa.tests.fixtures import *
 from functools import lru_cache
 from jvd import get_disassembler
-from jvd.capa import capa_analyze
+from jvd.capa.extractor import capa_analyze
 from jvd.disassembler import DisassemblerAbstract
 from jvd.utils import read_gz_js
 from jvd import ida_available

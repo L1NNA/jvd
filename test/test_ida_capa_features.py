@@ -30,7 +30,7 @@ fixtures.get_function = get_function_jvd
 @lru_cache()
 def get_jvd_ida_extractor(path):
     from jvd import get_disassembler
-    from jvd.capa import JVDExtractor
+    from jvd.capa.extractor import JVDExtractor
     from jvd.disassembler import DisassemblerAbstract
 
     disassembler = get_disassembler(disassembler='ida')
