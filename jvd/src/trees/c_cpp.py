@@ -7,6 +7,7 @@ import pydot
 from jvd.resources import ResourceAbstract
 from jvd.src.defines import GraphExtractor
 from jvd.utils import unzip_with_permission
+from tqdm import tqdm
 
 
 class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
@@ -60,7 +61,7 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
             out, err = p.communicate()
             graphs = {}
-            for f in os.listdir(out_path):
+            for f in tqdm(list(os.listdir(out_path))):
                 with open(os.path.join(out_path, f), 'r') as rf:
                     content = rf.read()
                     content = content.replace("digraph", 'digraph "', 1)
@@ -72,6 +73,9 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
                         if key in graphs:
                             key = key + f.split('-')[0]
                         graphs[key] = g
+                    else:
+                        print('!error')
+                        print(content)
             # graph = nx.compose_all(graphs)
             # print(graph.nodes(data=True))
             return graphs
