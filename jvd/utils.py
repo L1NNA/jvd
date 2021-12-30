@@ -291,11 +291,11 @@ def kill(proc_pid):
 
 
 @contextmanager
-def check_output_ctx(cmd, timeout=None, env=None, stdin=None):
+def check_output_ctx(cmd, timeout=None, env=None, stdin=None, live=False):
     proc = None
     try:
         proc = subprocess.Popen(
-            cmd, stdout=PIPE, stderr=STDOUT, env=env,
+            cmd, stdout=None if live else PIPE, stderr=STDOUT, env=env,
             stdin=stdin)
         outputs, _ = proc.communicate(timeout=timeout)
         yield outputs
