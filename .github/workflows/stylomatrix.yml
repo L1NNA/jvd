@@ -1,4 +1,4 @@
-name: Symbolic Execution
+name: Sylomatrix Extractor
 
 on:
   push:
