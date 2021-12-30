@@ -8,6 +8,7 @@ from jvd.resources import ResourceAbstract, require
 import re
 import platform
 import os
+import numpy as np
 
 from jvd.utils import check_output_ctx
 
@@ -44,7 +45,7 @@ def __load_embedding(js_file, size):
             if len(m) < 1:
                 res[k] = []
             else:
-                res[k] = [m.get(i, []) for i in range(size)]
+                res[k] = np.array([m.get(i, []) for i in range(size)])
         return res
 
 
