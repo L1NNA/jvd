@@ -44,7 +44,7 @@ def __load_embedding(js_file, size):
             if len(m) < 1:
                 res[k] = []
             else:
-                res[k] = [obj.get(i, []) for i in range(size)]
+                res[k] = [m.get(i, []) for i in range(size)]
         return res
 
 
