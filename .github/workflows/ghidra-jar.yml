@@ -14,6 +14,7 @@ on:
     paths:
       - "ghidra/**"
       - ".github/workflows/ghidra-jar.yml"
+      - "test/**"
 
 jobs:
   build:
