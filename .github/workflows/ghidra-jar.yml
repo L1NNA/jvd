@@ -42,8 +42,10 @@ jobs:
           ./ghidra_10.3.1_PUBLIC/support/buildGhidraJar
           ls -alh
           ls -alh ghidra/lib/nsa/ghidra/1.0/
-          mv ghidra.jar ghidra-1.0.jar
-          cp ghidra-1.0.jar ghidra/lib/nsa/ghidra/1.0/ghidra-1.0.jar
+          # mv ghidra.jar ghidra-1.0.jar
+          # cp ghidra-1.0.jar ghidra/lib/nsa/ghidra/1.0/ghidra-1.0.jar
+          mvn install:install-file -Dfile=ghidra.jar -DgroupId=nsa -DartifactId=ghidra -Dversion=1.0 -Dpackaging=jar -
+          ls -alh
       - name: package
         run: |
           cd ghidra
