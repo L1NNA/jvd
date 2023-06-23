@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - ".github/workflows/test_stylomatrix.yml"
+      - "pyproject.toml"
       - "jvd/**"
       - "test/**"
   pull_request:
