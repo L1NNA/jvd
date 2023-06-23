@@ -18,7 +18,9 @@ logging.basicConfig(
 
 ida = ida_available
 if not ida:
-    logging.info('IDA is not available. Will use Ghidra instead.')
+    logging.info('IDA is not available. Will use Ghidra instead. Checking ghidra jar updates..')
+    from jvd.ghidra.decompiler import check_require
+    check_require()
 
 
 is_src_dir = os.path.exists('setup.py')
@@ -64,9 +66,6 @@ def entry_point():
         help='If the input is a folder, the file extension to include. Default is all the files. '
         'Empty string will select files without any `.`.'
     )
-    group_gen.add_argument(
-        '--unpack', dest='unpack',
-        action='store_true', help='Unpack before disassembling.')
     group_gen.add_argument(
         '--cleanup', dest='cleanup',
         action='store_true', help='Clean up the temporary folders.')
@@ -152,31 +151,31 @@ def entry_point():
             )
             return
 
-        print('scanning files...')
-        if f is not None and os.path.isfile(f):
-            files = [f]
-        else:
-            files = grep_ext(f, ext=flags.ext)
+        logging.info('scanning files...')
+        if f is not None:
+            if os.path.isfile(f):
+                files = [f]
+            else:
+                files = grep_ext(f, ext=flags.ext)
         if not f:
             logging.error('You have to supply at least a file or a path.')
         else:
-            if flags.disassemble or flags.unpack or flags.capa:
-                print('processing...')
+            if flags.disassemble or flags.capa:
+                logging.info('processing...')
                 process_folder(
                     files, capa=flags.capa, decompile=flags.decompile,
                     clean_up=False, ext=flags.ext, disassembler=disassembler,
                     verbose=flags.verbose, disassemble=flags.disassemble,
-                    unpack=flags.unpack,
                 )
 
             if flags.vex:
-                print('processing vex...')
+                logging.info('processing vex...')
                 import jvd.sym as sym
                 sym.process_all(
                     files, verbose=flags.verbose,
                     tracelet=flags.tracelet, overlap=flags.overlap, loop=flags.loop)
 
-        print('done')
+        logging.info('done')
 
 
 if __name__ == "__main__":

@@ -43,6 +43,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 return js_file, log
         else:
             tmp_folder = file + '{}.tmp'.format(additional_ext)
+            out_log = None
             try:
                 if os.path.exists(tmp_folder):
                     rmtree(tmp_folder)

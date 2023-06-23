@@ -10,7 +10,6 @@ from jvd.ghidra import Ghidra
 from jvd.resources import require
 import os
 from pathlib import Path
-from jvd.unpackers import unpack_sample
 from jvd.labelers import label
 from jvd.utils import JVSample, grep_ext, m_map
 from tqdm import tqdm
@@ -20,12 +19,6 @@ import logging as log
 dis_ida = IDA()
 dis_ghidra = Ghidra()
 dis_all = [dis_ida, dis_ghidra]
-plugin_mode = False
-for d in dis_all:
-    plugin_mode = d.context_init() or plugin_mode
-if plugin_mode:
-    from jvd.client import serve
-    serve()
 
 def get_disassembler(disassembler=None):
     """
@@ -51,12 +44,7 @@ def _process_single(s, capa=False, decompile=False,
     if isinstance(s, str):
         s = JVSample(s)
         # s.save()
-    if not unpack:
-        samples = [s]
-    else:
-        samples = unpack_sample(s, inplace=inplace)
-        for v in samples:
-            label(v)
+    samples = [s]
     dis = get_disassembler(disassembler)
     if disassemble:
         for v in samples:

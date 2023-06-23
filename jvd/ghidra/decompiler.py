@@ -11,6 +11,11 @@ from jvd.resources import require
 from jvd.utils import check_output_ctx
 
 
+def check_require():
+    require('ghidrajar')
+    require('jdk')
+
+
 class Ghidra(DisassemblerAbstract):
 
     def __init__(self):
