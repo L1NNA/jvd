@@ -169,7 +169,14 @@ class AttrDict(dict):
         if hasattr(self, 'addr_start'):
             return getattr(self, 'addr_start')
         return None
-
+    
+    def __getattr__(self, key):
+        if key == 'address':
+            if hasattr(self, 'ea'):
+                return self['ea']
+            if hasattr(self, 'addr_start'):
+                return self['addr_start']
+        raise AttributeError
 
 def toAttrDict(obj, classkey=None):
     obj_as_dict = todict(obj, classkey=classkey)

@@ -3,7 +3,7 @@ import struct
 
 import capa.features.extractors.helpers as helpers
 import capa.features.extractors.strings as strings
-from capa.features import String, Characteristic
+from capa.features.common import String, Characteristic
 from capa.features.file import Export, Import, Section
 from jvd.capa.data import DataUnit
 from collections import defaultdict

@@ -17,6 +17,7 @@ class DataUnit:
             self.obj.bin.strings = {}
         self.map_b = defaultdict(list)
         for b in self.obj.blocks:
+            b.address = b.addr_start
             self.map_b[b.addr_f].append(b)
 
         # flattened to nested

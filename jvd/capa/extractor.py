@@ -1,21 +1,27 @@
+from io import BytesIO
+from capa.features.common import ARCH_AMD64, ARCH_I386, Arch, Feature
 import os
-from shutil import unpack_archive
 from collections import defaultdict
+from shutil import unpack_archive
+
+import capa
+# from capa.render import convert_match_to_result_document, CapaJsonObjectEncoder
+from capa.features.address import NO_ADDRESS, Address, FileOffsetAddress
+from capa.features.common import (ARCH_ANY, FORMAT_ELF, FORMAT_FREEZE,
+                                  FORMAT_PE, FORMAT_RESULT, OS, OS_ANY,
+                                  OS_AUTO, OS_WINDOWS, Arch, Feature, Format,
+                                  String)
+from capa.features.extractors.base_extractor import FeatureExtractor
+from capa.main import (UnsupportedRuntimeError, find_capabilities, get_rules,
+                       has_file_limitation)
 
 import jvd.capa.block as e_block
 import jvd.capa.file as e_file
 import jvd.capa.function as e_func
 import jvd.capa.ins as e_ins
 from jvd.capa.data import DataUnit
-from jvd.utils import download_file, read_gz_js
 from jvd.resources import ResourceAbstract, require
-
-import capa
-from capa.features.extractors import FeatureExtractor
-from capa.main import (UnsupportedRuntimeError, find_capabilities, get_rules,
-                       has_file_limitation)
-from capa.render import convert_match_to_result_document, CapaJsonObjectEncoder
-
+from jvd.utils import download_file, get_file_type, read_gz_js
 
 rules = []
 
@@ -40,6 +46,29 @@ class JVDExtractor(FeatureExtractor):
         if isinstance(gz_file, str):
             gz_file = read_gz_js(gz_file)
         self.data_unit = DataUnit(gz_file, bin_path)
+        self.global_features = []
+        file_format = get_file_type(bin_path).lower().split(',')[0]
+        if 'pe' in file_format:
+            self.global_features.append((Format(FORMAT_PE), NO_ADDRESS))
+            self.global_features.append((OS(OS_WINDOWS), NO_ADDRESS))
+        elif 'elf' in file_format:
+            self.global_features.append((Format(FORMAT_ELF), NO_ADDRESS))
+            with open(bin_path, "rb") as fh:
+                buf = BytesIO(fh.read())
+                os = capa.features.extractors.elf.detect_elf_os(buf)
+                if os in capa.features.common.VALID_OS:
+                    self.global_features.append((OS(os), NO_ADDRESS))
+        arch = self.data_unit.obj.bin.architecture.lower()
+        bits = str(self.data_unit.obj.bin.bits)
+        if 'amd64' in arch or 'x86_64' in arch:
+            self.global_features.append((Arch(ARCH_AMD64), NO_ADDRESS))
+        elif 'i386' in arch:
+            self.global_features.append((Arch(ARCH_I386), NO_ADDRESS))
+        if 'metapc' in arch:
+            if '32' in bits:
+                self.global_features.append((Arch(ARCH_I386), NO_ADDRESS))
+            else:
+                self.global_features.append((Arch(ARCH_AMD64), NO_ADDRESS))
 
     def get_base_address(self):
         return self.data_unit.obj.base
@@ -99,6 +128,9 @@ class JVDExtractor(FeatureExtractor):
         for feat, addr in file_features+functions_features+bb_features+insn_features:
             all_features[addr].append(feat)
         return dict(all_features)
+
+    def extract_global_features(self):
+        yield from self.global_features
 
 
 def install_rules(verbose=-1):

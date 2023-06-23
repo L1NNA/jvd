@@ -25,10 +25,10 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
             unpacked_dir, 'joern-cli'
         )
         exec_parse = os.path.join(
-            unpacked_dir, 'joern-cli', 'joern-parse'
+            unpacked_dir, 'joern-cli', 'bin', 'joern-parse'
         )
         exec_export = os.path.join(
-            unpacked_dir, 'joern-cli', 'joern-export'
+            unpacked_dir, 'joern-cli', 'bin', 'joern-export'
         )
         return home, exec_parse, exec_export
 
@@ -56,7 +56,7 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
             cmd = [exec_parse, prj_path, bin_path]
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
             out, err = p.communicate()
-            # print(out.decode('utf8'))
+            print(out.decode('utf8'))
             cmd = [exec_export, bin_path]
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
             out, err = p.communicate()

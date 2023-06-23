@@ -7,10 +7,11 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 
+from jvd.normalizer.libc import is_libc
 import capa.features.extractors.helpers as helpers
-from capa.features import (
-    ARCH_X32,
-    ARCH_X64,
+from capa.features.common import (
+    ARCH_I386,
+    ARCH_AMD64,
     MAX_BYTES_FEATURE_SIZE,
     THUNK_CHAIN_DEPTH_DELTA,
     Bytes,
@@ -34,15 +35,6 @@ PATTERN_HEXNUM_2 = re.compile(r"[+\-]\s*(?P<num>[a-fA-F0-9]+)[hH]")
 PATTERN_SINGLENUM = re.compile(r"[+\-]\s*(?P<num>[0-9])")
 
 
-def get_arch(f):
-    bits = f.unit.obj.bin.bits
-    if bits == 'b32':
-        return ARCH_X32
-    elif bits == 'b64':
-        return ARCH_X64
-    raise ValueError("unexpected architecture")
-
-
 def extract_insn_api_features(f, bb, insn):
     """parse instruction API features
 
@@ -56,6 +48,9 @@ def extract_insn_api_features(f, bb, insn):
     """
 
     unit: DataUnit = f.unit
+
+    if len(insn.oprs) > 0 and is_libc(insn.oprs[0]):
+        yield API(insn.oprs[0]), insn.ea
 
     if insn.mne in unit.syntax.operations:
         if not unit.syntax.operations[insn.mne].jmp:
@@ -127,7 +122,7 @@ def extract_insn_number_features(f, bb, insn):
 
     for const in get_opr_constant(insn.oprs, insn.oprs_tp, True):
         yield Number(const), insn.ea
-        yield Number(const, arch=get_arch(f)), insn.ea
+        # yield Number(const, arch=get_arch(f)), insn.ea
 
 
 def extract_insn_bytes_features(f, bb, insn):
@@ -213,7 +208,7 @@ def extract_insn_offset_features(f, bb, insn):
             number = int(number_int.group("num"))
             number = -1 * number if number_int.group().startswith("-") else number
         yield Offset(number), insn.ea
-        yield Offset(number, arch=get_arch(f)), insn.ea
+        # yield Offset(number, arch=get_arch(f)), insn.ea
 
 
 def contains_stack_cookie_keywords(ins, blk, func):
@@ -296,6 +291,8 @@ def extract_insn_peb_access_characteristic_features(f, bb, insn):
 
 def extract_insn_segment_access_features(f, bb, insn):
     """ parse the instruction for access to fs or gs """
+    if f.address == 0x180001068:
+        print(insn)
     operands = insn.oprs
     for operand in operands:
         operand = operand.lower()
@@ -382,6 +379,20 @@ def extract_function_indirect_call_characteristic_features(f, bb, insn):
                 yield Characteristic("indirect call"), insn.ea
 
 
+def extract_insn_obfs_call_plus_5_characteristic_features(f, bb, insn):
+    """
+    parse call $+5 instruction from the given instruction.
+    """
+    mne = insn.mne.lower()
+    if mne != "call":
+        return
+
+    if len(insn.cr) > 0:
+        for cr in insn.cr:
+            if cr - insn.ea == 5:
+                yield Characteristic("call $+5"), insn.ea
+
+
 def extract_features(f, bb, insn):
     """extract instruction features
 
@@ -408,4 +419,5 @@ INSTRUCTION_HANDLERS = (
     extract_insn_segment_access_features,
     # extract_function_calls_from,
     extract_function_indirect_call_characteristic_features,
+    extract_insn_obfs_call_plus_5_characteristic_features,
 )

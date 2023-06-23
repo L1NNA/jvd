@@ -1,4 +1,4 @@
-name: Sylomatrix Extractor
+name: Ghidra Extractor for Capa
 
 on:
   push:
@@ -6,10 +6,13 @@ on:
       - master
     paths:
       - "jvd/**"
+      # - "ghidra/**"
       - "test/**"
-  pull_request:
-    branches:
-      - master
+  # pull_request:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - 'jvd/**'
 
 jobs:
   build:
@@ -35,7 +38,12 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
+      - name: Install poetry
         run: |
-          pip install pytest
-          pytest test/test_stylomatrix.py
+          curl -sSL https://install.python-poetry.org | python3 -
+      - name: Test Disassemblying
+        run: |
+          poetry run pytest test/test_jv_disassembler.py
+      - name: Test Capa features
+        run: |
+          poetry run pytest test/test_capa_ghidra.py
