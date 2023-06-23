@@ -5,9 +5,10 @@ on:
     branches:
       - master
     paths:
-      - "jvd/**"
       - ".github/workflows/test_lexer.yml"
+      - "jvd/**"
       - "test/**"
+      - "pyproject.toml"
   pull_request:
     branches:
       - master

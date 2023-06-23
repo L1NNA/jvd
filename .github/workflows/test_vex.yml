@@ -8,6 +8,7 @@ on:
       - ".github/workflows/test_vex.yml"
       - "jvd/**"
       - "test/**"
+      - "pyproject.toml"
   pull_request:
     branches:
       - master
@@ -35,6 +36,7 @@ jobs:
       - name: Install poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
+          poetry install
       - name: Test vex
         run: |
           poetry run pytest test/test_vex.py

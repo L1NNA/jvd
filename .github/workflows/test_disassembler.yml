@@ -5,14 +5,13 @@ on:
     branches:
       - master
     paths:
+      - ".github/workflows/test_disassembler.yml"
       - "jvd/**"
-      # - "ghidra/**"
       - "test/**"
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'jvd/**'
+      - "pyproject.toml"
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
