@@ -6,15 +6,15 @@ on:
       - master
     paths:
       - "ghidra/**"
-      - ".github/workflows/ghidra-jar.yml"
-      - "test/**"
+      - "test/test_disassembler.py"
+      - "test/test_decompiler.py"
   pull_request:
     branches:
       - master
     paths:
       - "ghidra/**"
-      - ".github/workflows/ghidra-jar.yml"
-      - "test/**"
+      - "test/test_disassembler.py"
+      - "test/test_decompiler.py"
 
 jobs:
   build:
