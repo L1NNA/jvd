@@ -9,14 +9,14 @@
   <build>
     <finalName>jarv1s-ghidra</finalName>
     <plugins>
-      <!-- <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
         <configuration>
-          <release>13</release>
+          <release>17</release>
         </configuration>
-      </plugin> -->
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
