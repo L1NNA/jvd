@@ -67,7 +67,7 @@ import ghidra.util.exception.CancelledException;
 import ghidra.util.exception.DuplicateNameException;
 import ghidra.util.exception.VersionException;
 import ghidra.util.task.TaskMonitor;
-
+import utility.function.Dummy;
 import ghidra.app.util.bin.RandomAccessByteProvider;
 import ghidra.app.util.importer.LoadSpecChooser;
 import ghidra.app.util.importer.MessageLog;
@@ -147,7 +147,7 @@ public class GhidraDecompiler {
             LoadResults<? extends DomainObject> domainObjects = loadSpec.getLoader().load(
                 provider, programName, project.getProject(), project.getRootFolder().getName(),
                  loadSpec,
-                    loaderOptions, messageLog, null, monitor);
+                    loaderOptions, messageLog, Dummy.consumer(), monitor);
 
             List<Program> programs = new ArrayList<Program>();
             for (Loaded<? extends DomainObject> domainObject : domainObjects) {
