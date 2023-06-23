@@ -50,7 +50,7 @@ jobs:
         uses: L1NNA/github-release@master
         with:
           tag: v0.0.1
-          files: ghidra/target/jarv1s-ghidra.jar ghidra-1.0.jar
+          files: ghidra/target/jarv1s-ghidra.jar
           gzip: false
           body: latest jar built
           token: ${{ secrets.GITHUB_TOKEN }}
