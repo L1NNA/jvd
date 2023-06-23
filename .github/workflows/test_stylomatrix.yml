@@ -5,6 +5,7 @@ on:
     branches:
       - master
     paths:
+      - ".github/workflows/test_stylomatrix.yml"
       - "jvd/**"
       - "test/**"
   pull_request:

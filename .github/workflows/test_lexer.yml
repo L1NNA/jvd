@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - "jvd/**"
+      - ".github/workflows/test_lexer.yml"
       - "test/**"
   pull_request:
     branches:
