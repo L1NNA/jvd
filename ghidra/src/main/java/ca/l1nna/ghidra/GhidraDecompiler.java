@@ -71,9 +71,10 @@ import ghidra.util.task.TaskMonitor;
 import ghidra.app.util.bin.RandomAccessByteProvider;
 import ghidra.app.util.importer.LoadSpecChooser;
 import ghidra.app.util.importer.MessageLog;
-import ghidra.app.util.importer.MultipleProgramsStrategy;
 import ghidra.app.util.importer.OptionChooser;
+import ghidra.app.util.opinion.LoadResults;
 import ghidra.app.util.opinion.LoadSpec;
+import ghidra.app.util.opinion.Loaded;
 import ghidra.app.util.opinion.LoaderMap;
 import ghidra.app.util.opinion.LoaderService;
 import ghidra.program.model.address.AddressFactory;
@@ -143,17 +144,20 @@ public class GhidraDecompiler {
             loaderOptions.stream().forEach(o -> System.out.println("ccc " + o.toString()));
 
             String programName = loadSpec.getLoader().getPreferredFileName(provider);
-            List<DomainObject> domainObjects = loadSpec.getLoader().load(provider, programName, fd, loadSpec,
-                    loaderOptions, messageLog, project, monitor);
+            LoadResults<? extends DomainObject> domainObjects = loadSpec.getLoader().load(
+                provider, programName, project.getProject(), project.getRootFolder().getName(),
+                 loadSpec,
+                    loaderOptions, messageLog, null, monitor);
 
             List<Program> programs = new ArrayList<Program>();
-            for (DomainObject domainObject : domainObjects) {
-                if (domainObject instanceof Program) {
-                    programs.add((Program) domainObject);
+            for (Loaded<? extends DomainObject> domainObject : domainObjects) {
+                DomainObject dom = domainObject.getDomainObject();
+                if (dom instanceof Program) {
+                    programs.add((Program)dom);
                 }
             }
 
-            programs = MultipleProgramsStrategy.ONE_PROGRAM_OR_NULL.handlePrograms(programs, project);
+            // programs = MultipleProgramsStrategy.ONE_PROGRAM_OR_NULL.handlePrograms(programs, project);
             if (programs != null && programs.size() == 1) {
                 program = programs.get(0);
                 program.startTransaction("Batch Processing");

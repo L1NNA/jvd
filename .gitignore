@@ -117,3 +117,5 @@ target
 jvd_installer*
 bins
 .unpacker_history
+jdk*
+ghidra_*
