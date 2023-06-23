@@ -35,6 +35,7 @@ jobs:
       - name: Install poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
+          poetry install
       - name: Testing stylomatrix jar
         run: |
-          poery run pytest test/test_stylomatrix.py
+          poetry run pytest test/test_stylomatrix.py
