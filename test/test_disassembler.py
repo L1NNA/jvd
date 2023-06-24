@@ -21,7 +21,6 @@ def helper_function(disassembler, capa, decompile):
         gz_obj = read_gz_js(gz_file)
         yield gz_obj
     except:
-        print(logs)
         print(traceback.format_exc())
     finally:
         if gz_file is not None and os.path.exists(gz_file):

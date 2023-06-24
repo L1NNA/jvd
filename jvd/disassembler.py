@@ -62,7 +62,10 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     log.append(str(log))
             except Exception as e:
                 log.append(str(e))
+                if out_log is not None:
+                    log.append(out_log)
                 if verbose > 1:
+                    print(out_log)
                     raise e
                 return None, log
             finally:
