@@ -6,6 +6,7 @@ from jvd import ida_available
 from test.test_capa.tests.fixtures import xfail
 import os
 from contextlib import contextmanager
+import traceback
 
 
 @contextmanager
@@ -19,6 +20,9 @@ def helper_function(disassembler, capa, decompile):
             bin, cleanup=False, capa=capa, decompile=decompile, verbose=2)
         gz_obj = read_gz_js(gz_file)
         yield gz_obj
+    except:
+        print(logs)
+        print(traceback.format_exc())
     finally:
         if gz_file is not None and os.path.exists(gz_file):
             os.remove(gz_file)
