@@ -1,3 +1,4 @@
+import json
 from io import BytesIO
 from capa.features.common import ARCH_AMD64, ARCH_I386, Arch, Feature
 import os
@@ -5,7 +6,6 @@ from collections import defaultdict
 from shutil import unpack_archive
 
 import capa
-# from capa.render import convert_match_to_result_document, CapaJsonObjectEncoder
 from capa.features.address import NO_ADDRESS, Address, FileOffsetAddress
 from capa.features.common import (ARCH_ANY, FORMAT_ELF, FORMAT_FREEZE,
                                   FORMAT_PE, FORMAT_RESULT, OS, OS_ANY,
@@ -22,14 +22,22 @@ import jvd.capa.ins as e_ins
 from jvd.capa.data import DataUnit
 from jvd.resources import ResourceAbstract, require
 from jvd.utils import download_file, get_file_type, read_gz_js
+from functools import cache
 
-rules = []
+
+@cache
+def get_rules(verbose):
+    rule_path = install_rules(verbose)
+    rules = capa.main.get_rules([rule_path])
+    if isinstance(rules, list):
+        rules = capa.rules.RuleSet(rules)
+    return rules
 
 
 class CapaRules(ResourceAbstract):
     def __init__(self):
         super().__init__()
-        self.version = 'v1.6.1'
+        self.version = 'v5.1.0'
         self.default = 'https://github.com/fireeye/capa-rules/archive/{}.zip'.format(
             self.version)
         self.check_update = False
@@ -139,28 +147,17 @@ def install_rules(verbose=-1):
 
 def capa_analyze(gz_file, bin_path, verbose=-1):
 
-    rule_path = install_rules(verbose)
-    tactics = []
-    mbcs = []
-    caps = []
-
-    if len(rules) < 1:
-        rules.extend(get_rules(rule_path,
-                               disable_progress=verbose < 1))
-    rs = capa.rules.RuleSet(rules)
+    rs = get_rules(verbose)
     extractor = JVDExtractor(gz_file, bin_path)
-    if not extractor.data_unit.syntax:
-        return {'tac': tactics, 'mbc': mbcs, 'cap': caps}
-
     capabilities, counts = find_capabilities(
         rs, extractor, disable_progress=verbose < 1)
 
     docs = []
 
-    # (rule_name, matches)
     items = [(dict(rs[r_name].meta), matches)
              for r_name, matches in capabilities.items()]
-    items.sort(key=lambda i: (i[0].get('namespace', ''), i[0].get('name', '')))
+
+    all_caps = []
 
     for meta, matches in items:
 
@@ -180,15 +177,14 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
 
         meta['capa/path'] = os.path.abspath(meta['capa/path']).replace(
             os.path.abspath(
-                rule_path), ''
-            # 'https://github.com/fireeye/capa-rules/blob/master'
+                '/capa/rules/'), ''
         )
 
         loc = defaultdict(list)
 
         for _, m in matches:
             for l, statement in collect_locations(m):
-                loc[l].append(statement)
+                loc[str(l)].append(statement)
         doc['loc'] = loc
         if 'examples' in doc:
             del doc['examples']
@@ -200,22 +196,9 @@ def capa_analyze(gz_file, bin_path, verbose=-1):
         if 'namespace' in doc:
             del doc['namespace']
 
-        if meta.get("mbc"):
-            mbcs.append(doc)
-        elif meta.get("att&ck"):
-            tactics.append(doc)
-        else:
-            caps.append(doc)
+        all_caps.append(doc)
 
-    # docs.append(
-    #     {
-    #         "meta": dict(rule.meta),
-    #         "matches": {
-    #             addr: convert_match_to_result_document(rs, capabilities, match) for (addr, match) in matches
-    #         },
-    #     })
-
-    return {'tac': tactics, 'mbc': mbcs, 'cap': caps}
+    return all_caps
 
 
 def collect_locations(result):
@@ -225,3 +208,4 @@ def collect_locations(result):
     for c in result.children:
         for l, st in collect_locations(c):
             yield l, st
+

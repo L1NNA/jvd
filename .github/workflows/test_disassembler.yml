@@ -36,9 +36,10 @@ jobs:
       - name: Install poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
+          poetry install
       - name: Test Disassemblying
         run: |
-          poetry run pytest test/test_jv_disassembler.py
+          poetry run pytest test/test_disassembler.py
       - name: Test Capa features
         run: |
           poetry run pytest test/test_capa_ghidra.py

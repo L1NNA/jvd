@@ -79,11 +79,11 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     os.remove(js_file)
                 raise Exception('no basic blocks are generated.. skipping.')
             if capa and 'capa' not in res:
-                from jvd.capa.extractor import capa_analyze, CapaJsonObjectEncoder
+                from jvd.capa.extractor import capa_analyze
                 res['capa'] = capa_analyze(res, file, verbose=verbose)
                 content = json.dumps(
                     res,
-                    cls=CapaJsonObjectEncoder,
+                    # cls=CapaJsonObjectEncoder,
                 ).encode('utf-8')
                 with gzip.GzipFile(js_file, 'w') as gf:
                     gf.write(content)
