@@ -31,7 +31,7 @@ class JDK(ResourceAbstract):
             pattern = b'\"(\d+[\.]*\d+).*\"'
             val = re.search(pattern, version).groups()[0]
             val = float(val)
-            if val >= 11:
+            if val >= 17:
                 return 'java'
         except Exception as e:
             pass
