@@ -10,6 +10,7 @@ from contextlib import contextmanager
 
 @contextmanager
 def helper_function(disassembler, capa, decompile):
+    gz_file = None
     try:
         bin = os.path.join('test', 'test_jvd', 'libpng-1.7.0b54.o')
         disassembler = get_disassembler(disassembler)
@@ -18,9 +19,8 @@ def helper_function(disassembler, capa, decompile):
             bin, cleanup=False, capa=capa, decompile=decompile, verbose=2)
         gz_obj = read_gz_js(gz_file)
         yield gz_obj
-        os.remove(gz_file)
     finally:
-        if os.path.exists(gz_file):
+        if gz_file is not None and os.path.exists(gz_file):
             os.remove(gz_file)
 
 
@@ -65,4 +65,3 @@ def test_ida_capa():
         with helper_function('ida', True, False) as gz_obj:
             assert len(gz_obj['functions']) > 10
             assert len(gz_obj['capa']) > 5
-
