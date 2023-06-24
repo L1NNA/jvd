@@ -39,7 +39,7 @@ class JDK(ResourceAbstract):
         java = {
             'linux': 'jdk-17.0.7+7-jre/bin/java',
             'windows': 'jdk-17.0.7+7-jre/bin/java.exe',
-            'darwin': 'jdk-17.0.7+7-jre/jdk/Contents/Home/bin/java',
+            'darwin': 'jdk-17.0.7+7-jre/Contents/Home/bin/java',
         }[platform.system().lower()]
         root = super().get()
         java = os.path.join(root, java)
