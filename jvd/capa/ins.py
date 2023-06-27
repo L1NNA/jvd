@@ -52,9 +52,8 @@ def extract_insn_api_features(f, bb, insn):
     if len(insn.oprs) > 0 and is_libc(insn.oprs[0]):
         yield API(insn.oprs[0]), insn.ea
 
-    if insn.mne in unit.syntax.operations:
-        if not unit.syntax.operations[insn.mne].jmp:
-            return
+    if len(insn.cr) < 1:
+        return
 
     for c in insn.cr + insn.dr:
         if str(c) in unit.obj.bin.import_functions:
@@ -116,9 +115,8 @@ def extract_insn_number_features(f, bb, insn):
     if 'ADD' in insn.mne and any(reg in stk for reg in syntax.registers_cat['ptr'].keys()):
         return
 
-    if insn.mne in unit.syntax.operations:
-        if unit.syntax.operations[insn.mne].jmp:
-            return
+    if len(insn.cr) < 1:
+        return
 
     for const in get_opr_constant(insn.oprs, insn.oprs_tp, True):
         yield Number(const), insn.ea
@@ -308,20 +306,16 @@ def extract_insn_cross_section_cflow(f, bb, insn):
     """
     u: DataUnit
     u = f.unit
-    s: Assembly
-    s = u.syntax
-    mne = insn.mne
-    if mne in s.operations and s.operations[mne].jmp is True:
-        if len(insn.cr) > 0:
-            for target in insn.cr:
-                if str(target) in u.obj.bin.import_functions:
-                    continue
-                if u.find_seg(insn.ea) != u.find_seg(target):
-                    yield Characteristic("cross section flow"), insn.ea
-        elif len(insn.oprs) > 0 and insn.oprs[0].startswith("0x"):
-            target = int(insn.oprs[0], 16)
+    if len(insn.cr) > 0:
+        for target in insn.cr:
+            if str(target) in u.obj.bin.import_functions:
+                continue
             if u.find_seg(insn.ea) != u.find_seg(target):
                 yield Characteristic("cross section flow"), insn.ea
+    elif len(insn.oprs) > 0 and insn.oprs[0].startswith("0x"):
+        target = int(insn.oprs[0], 16)
+        if u.find_seg(insn.ea) != u.find_seg(target):
+            yield Characteristic("cross section flow"), insn.ea
 
 
 # def extract_function_calls_from(f, bb, insn):
