@@ -1,5 +1,4 @@
 from collections import defaultdict
-from jvd.normalizer.syntax import get_definition
 import sys
 from jvd.utils import AttrDict
 

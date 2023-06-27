@@ -208,3 +208,27 @@ def norm_opr(mne, arc=None):
             if mne in arc.operations:
                 return arc.operations[mne]
     return None
+
+def is_op_stack_var(arc, op):
+    op = op.lower()
+    if 'arm' in arc:
+        for r in ["sp", "lr", "r13", "r14"]:
+            if r in op:
+                return True
+    if 'powerpc' in arc or 'ppc' in arc:
+        for r in ["r1", "r2"]:
+            if r in op:
+                return True
+    if '68' in arc:
+        for r in ["usp", "msp", "sp", "isp"]:
+            if r in op:
+                return True
+    if 'mips' in arc:
+        for r  in ["sp"]:
+            if r in op:
+                return True
+    for r in ["ebp", "rbp", "esp", "rsp", "bp", "sp" ]:
+        if r in op:
+            return True
+
+

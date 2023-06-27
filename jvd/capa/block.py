@@ -7,7 +7,7 @@ from capa.features.common import Characteristic
 from capa.features.basicblock import BasicBlock
 from capa.features.extractors.helpers import MIN_STACKSTRING_LEN
 import string
-from jvd.normalizer.syntax import Assembly, get_opr_imm_str, is_constant
+from jvd.normalizer.syntax import is_op_stack_var, get_opr_imm_str, is_constant
 
 
 def get_printable_len(op, op_type):
@@ -60,11 +60,9 @@ def is_mov_imm_to_stack(f, insn):
     if not val:
         return insn.is_mv_stack
 
-    if f and f.unit and f.unit.syntax:
-        syntax: Assembly
-        syntax = f.unit.syntax
+    if f and f.unit:
         stk = insn.oprs[0].lower()
-        if any(reg in stk for reg in syntax.registers_cat['ptr'].keys()):
+        if is_op_stack_var(f.unit.obj.bin.architecture, stk):
             insn.is_mv_stack = val, insn.oprs_tp[1]
             return insn.is_mv_stack
     return insn.is_mv_stack

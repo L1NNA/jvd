@@ -21,7 +21,7 @@ from capa.features.common import (
 from capa.features.insn import API, Number, Offset, Mnemonic
 from jvd.capa.data import DataUnit
 from jvd.capa.block import is_mov_imm_to_stack
-from jvd.normalizer.syntax import get_opr_constant, Assembly, get_opr_imm_str, is_reg, is_mem_ref
+from jvd.normalizer.syntax import get_opr_constant, is_op_stack_var, is_reg, is_mem_ref
 import string
 import re
 import struct
@@ -106,13 +106,11 @@ def extract_insn_number_features(f, bb, insn):
     unit = f.unit
 
     # get from cache (AttrDict will not add new attribute to json)
-    syntax: Assembly
-    syntax = f.unit.syntax
     if len(insn.oprs) < 1:
         return
 
     stk = insn.oprs[0].lower()
-    if 'ADD' in insn.mne and any(reg in stk for reg in syntax.registers_cat['ptr'].keys()):
+    if 'ADD' in insn.mne and is_op_stack_var(unit.obj.bin.architecture, stk):
         return
 
     if len(insn.cr) < 1:
@@ -187,10 +185,10 @@ def extract_insn_offset_features(f, bb, insn):
     example:
         .text:0040112F cmp [esi+4], ebx
     """
-    syntax = f.unit.syntax
+    unit = f.unit
     for operand in insn.oprs:
         operand = operand.lower()
-        if any(reg in operand for reg in syntax.registers_cat['ptr'].keys()):
+        if is_op_stack_var(unit.obj.bin.architecture, operand):
             continue
         number = 0
         number_hex = re.search(PATTERN_HEXNUM, operand)
@@ -353,8 +351,6 @@ def extract_function_indirect_call_characteristic_features(f, bb, insn):
     """
     u: DataUnit
     u = f.unit
-    s: Assembly
-    s = u.syntax
     mne = insn.mne
     if 'CALL' in mne:
         if len(insn.oprs) > 0:
