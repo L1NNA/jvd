@@ -311,9 +311,12 @@ def extract_insn_cross_section_cflow(f, bb, insn):
             if u.find_seg(insn.ea) != u.find_seg(target):
                 yield Characteristic("cross section flow"), insn.ea
     elif len(insn.oprs) > 0 and insn.oprs[0].startswith("0x"):
-        target = int(insn.oprs[0], 16)
-        if u.find_seg(insn.ea) != u.find_seg(target):
-            yield Characteristic("cross section flow"), insn.ea
+        try:
+            target = int(insn.oprs[0], 16)
+            if u.find_seg(insn.ea) != u.find_seg(target):
+                yield Characteristic("cross section flow"), insn.ea
+        except:
+            pass
 
 
 # def extract_function_calls_from(f, bb, insn):
