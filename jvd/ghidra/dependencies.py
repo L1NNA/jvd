@@ -10,7 +10,7 @@ class GhidraJar(ResourceAbstract):
     def __init__(self):
         super().__init__()
         self.default = 'https://github.com/L1NNA/JARV1S-Ghidra/releases/download/v0.0.1/jarv1s-ghidra.jar'
-        self.check_update = True
+        self.check_update = False
 
 
 class JDK(ResourceAbstract):
