@@ -20,7 +20,7 @@ pydot = "^1.4.2"
 networkx = "2.5.1"
 psutil = "^5.9.5"
 angr = "^9.2.56"
-numpy = "^1.25.0"
+numpy = "^1.25.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.2"
