@@ -2,13 +2,13 @@
 
 [[package]]
 name = "ailment"
-version = "9.2.56"
+version = "9.2.58"
 description = "The angr intermediate language."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ailment-9.2.56-py3-none-any.whl", hash = "sha256:d9842da886e8a757211333a39dd9f0a18dadbd8297ea4eb0398641c68960a8ee"},
-    {file = "ailment-9.2.56.tar.gz", hash = "sha256:4c60e7349eda5c1bebbe7d556b6b344e44b2e5dfde4a74e404fc2e9fe6cc459a"},
+    {file = "ailment-9.2.58-py3-none-any.whl", hash = "sha256:2cf6782bcb4f09a62349a1516d4efbe07e11ababc7170f0f47fd1561554f4182"},
+    {file = "ailment-9.2.58.tar.gz", hash = "sha256:0fc6cd2daf9e9743f2d957f43c5977acca9e8c6c1868e796c98df392a05e0cbf"},
 ]
 
 [package.extras]
@@ -16,25 +16,25 @@ docs = ["furo", "myst-parser", "sphinx", "sphinx-autodoc-typehints"]
 
 [[package]]
 name = "angr"
-version = "9.2.56"
+version = "9.2.58"
 description = "A multi-architecture binary analysis toolkit, with the ability to perform dynamic symbolic execution and various static analyses on binaries"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "angr-9.2.56-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:2f1374edf0cfaf4d9bf3bf83afe0df6d56d6443816eef71c84857ca056ca7691"},
-    {file = "angr-9.2.56-py3-none-manylinux2014_x86_64.whl", hash = "sha256:d3fd853c69b0754258ae7cb99dd57b2d82fb4a02655d0a4033b5f4732f788c03"},
-    {file = "angr-9.2.56-py3-none-win_amd64.whl", hash = "sha256:324e1754ce88d57fe5e074e5250cec6291f5887b094ab448f4c1e34b76cf439a"},
-    {file = "angr-9.2.56.tar.gz", hash = "sha256:b79e2183177419a4678736a6fd3d763812c31e8d8422f86e7915cb59e9e30cce"},
+    {file = "angr-9.2.58-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:5cf93744a759e8e01620362d25bddf29c056a3f067cd054d61798d986990a1cd"},
+    {file = "angr-9.2.58-py3-none-manylinux2014_x86_64.whl", hash = "sha256:c0548e048e7c71d9b34395f2a441d51139da1ef4d5e22f8b39076ed1fa7b9bb3"},
+    {file = "angr-9.2.58-py3-none-win_amd64.whl", hash = "sha256:952b3421e9f3778940a830a4d59c2a34ae522a0c67ae18582cdc9f1818cf4038"},
+    {file = "angr-9.2.58.tar.gz", hash = "sha256:9d9110b9a2df2457e128241807d30d083094519472704de703e3229a071496dd"},
 ]
 
 [package.dependencies]
-ailment = "9.2.56"
-archinfo = "9.2.56"
+ailment = "9.2.58"
+archinfo = "9.2.58"
 cachetools = "*"
 capstone = ">=3.0.5rc2,<5.0.0rc2 || >5.0.0rc2"
 cffi = ">=1.14.0"
-claripy = "9.2.56"
-cle = "9.2.56"
+claripy = "9.2.58"
+cle = "9.2.58"
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 CppHeaderParser = "*"
 dpkt = "*"
@@ -46,7 +46,7 @@ networkx = ">=2.0,<2.8.1 || >2.8.1"
 protobuf = ">=3.19.0"
 psutil = "*"
 pycparser = ">=2.18"
-pyvex = "9.2.56"
+pyvex = "9.2.58"
 rich = ">=13.1.0"
 rpyc = "*"
 sortedcontainers = "*"
@@ -60,13 +60,13 @@ pcode = ["pypcode (>=1.1)"]
 
 [[package]]
 name = "archinfo"
-version = "9.2.56"
+version = "9.2.58"
 description = "Classes with architecture-specific information useful to other projects."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "archinfo-9.2.56-py3-none-any.whl", hash = "sha256:8be65397d9a167c18ee9234c530c4e92b71b939865a682524dfe5bce4fdfae69"},
-    {file = "archinfo-9.2.56.tar.gz", hash = "sha256:a8070e4c515a13fa002eabb8b3a19d6f17492d135f348a5061946de862643219"},
+    {file = "archinfo-9.2.58-py3-none-any.whl", hash = "sha256:7c6f1d5e1950f9dd4a0c6264855721146354a287fb5abffe88806615b8babde3"},
+    {file = "archinfo-9.2.58.tar.gz", hash = "sha256:ed6dcab18d1b9076fde7e756ccac31239dde1938487e0dc92fe3fe2b0dfb1752"},
 ]
 
 [package.extras]
@@ -282,13 +282,13 @@ files = [
 
 [[package]]
 name = "claripy"
-version = "9.2.56"
+version = "9.2.58"
 description = "An abstraction layer for constraint solvers"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "claripy-9.2.56-py3-none-any.whl", hash = "sha256:1e5287b33aa3d65799c971ab19a6d5292f98b551184eaa0ebbdc4c4135fadb33"},
-    {file = "claripy-9.2.56.tar.gz", hash = "sha256:d140a6eacad692a3d16594eb4630b9323e78acdabf25f42931dde2f3fd1c5345"},
+    {file = "claripy-9.2.58-py3-none-any.whl", hash = "sha256:800ae897e4ebc14fee0bae83eb07e1c1132a7a1476bdc82a7c6708a620a5b050"},
+    {file = "claripy-9.2.58.tar.gz", hash = "sha256:f6ab1e5f6cea0ed37a69867f42dc76fab32a07224a09a171f10d5f98b5004bfd"},
 ]
 
 [package.dependencies]
@@ -303,19 +303,19 @@ docs = ["furo", "myst-parser", "sphinx", "sphinx-autodoc-typehints"]
 
 [[package]]
 name = "cle"
-version = "9.2.56"
+version = "9.2.58"
 description = "|"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "cle-9.2.56-py3-none-any.whl", hash = "sha256:3e71938f658ac6802bb251afa59fd7818d26939dae85227843b6a78ebc8c7e59"},
-    {file = "cle-9.2.56.tar.gz", hash = "sha256:70ce1eff4632da740a67392972d4f1030103c52526bd9fa8abd042f9a36ddcf4"},
+    {file = "cle-9.2.58-py3-none-any.whl", hash = "sha256:76b7e0a400015622c7bcaa25cbb6bb2ad51750f8e0758f6c6be92902392af6ec"},
+    {file = "cle-9.2.58.tar.gz", hash = "sha256:33df4e09333a83ca2b2d5322d392c76bf2e0cf6edfd5f24e61b15510c190905f"},
 ]
 
 [package.dependencies]
 pefile = "*"
 pyelftools = ">=0.27"
-pyvex = "9.2.56"
+pyvex = "9.2.58"
 sortedcontainers = ">=2.0"
 
 [package.extras]
@@ -1229,19 +1229,19 @@ files = [
 
 [[package]]
 name = "pyvex"
-version = "9.2.56"
+version = "9.2.58"
 description = "A Python interface to libVEX and VEX IR"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyvex-9.2.56-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:e10efc2704efcd86cbf09426fffb8b7f462124cc920ea200dca090d43f7be75a"},
-    {file = "pyvex-9.2.56-py3-none-manylinux2014_x86_64.whl", hash = "sha256:e22e74f75e4cf61b38f54cf2ab6dc5ad739f9f97c8fa5249e98ec987e91a58f5"},
-    {file = "pyvex-9.2.56-py3-none-win_amd64.whl", hash = "sha256:be561a4ec93c6b5f74e73a973b657f5b3f9ee3871bb6b8b74507d820b0061943"},
-    {file = "pyvex-9.2.56.tar.gz", hash = "sha256:f05df70282a1efdb60972e206efa14b308efe3d2b33580e1ff1b21e2f8887163"},
+    {file = "pyvex-9.2.58-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:229943c314fa3bf0ea15b66b6882cfcb3505108ae2d295c1f49e8bfec5f76247"},
+    {file = "pyvex-9.2.58-py3-none-manylinux2014_x86_64.whl", hash = "sha256:a9762babec455f4510864bba8cb18d6d7782b6650df2cc66953b0c413e30e09a"},
+    {file = "pyvex-9.2.58-py3-none-win_amd64.whl", hash = "sha256:19a58d2b8d4bfc538e0cad2204f58a9b259fa7532d0ccc7e83fccfba1794ba61"},
+    {file = "pyvex-9.2.58.tar.gz", hash = "sha256:f9e125c3276b52773bad63a21b37c2fd51ed8d484d83fe073c939908010b669c"},
 ]
 
 [package.dependencies]
-archinfo = "9.2.56"
+archinfo = "9.2.58"
 bitstring = "*"
 cffi = {version = ">=1.0.3", markers = "implementation_name == \"cpython\""}
 
@@ -1674,4 +1674,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "294d76368f53251240eb98f4908822a30d56e09408a9499846281f05cb8ef2b7"
+content-hash = "bc4b1f22514d881aaafc86e09d09301aa1d31896275d161a123dacc77761ad3f"
