@@ -5,7 +5,7 @@ name = "ailment"
 version = "9.2.56"
 description = "The angr intermediate language."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
     {file = "ailment-9.2.56-py3-none-any.whl", hash = "sha256:d9842da886e8a757211333a39dd9f0a18dadbd8297ea4eb0398641c68960a8ee"},
     {file = "ailment-9.2.56.tar.gz", hash = "sha256:4c60e7349eda5c1bebbe7d556b6b344e44b2e5dfde4a74e404fc2e9fe6cc459a"},
