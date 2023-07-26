@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from pathlib import Path
-from shutil import copyfile, rmtree, unpack_archive
+from shutil import copyfile, unpack_archive
 
 from tqdm import tqdm
 
@@ -42,39 +42,29 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             if not capa:
                 return js_file, log
         else:
-            tmp_folder = file + '{}.tmp'.format(additional_ext)
-            out_log = None
-            try:
-                if os.path.exists(tmp_folder):
-                    rmtree(tmp_folder)
-                os.mkdir(tmp_folder)
-                new_file = os.path.join(tmp_folder, os.path.basename(file))
-                new_file_js = os.path.join(
-                    tmp_folder, os.path.basename(js_file))
-                copyfile(file, new_file)
-                _, out_log = self._process(
-                    new_file, file_type, output_file_path=new_file_js, decompile=decompile,
-                    verbose=verbose)
-                copyfile(new_file_js, js_file)
-                if isinstance(log, list):
-                    log.extend(log)
-                else:
-                    log.append(str(log))
-            except Exception as e:
-                log.append(str(e))
-                if out_log is not None:
-                    log.append(out_log)
-                if verbose > 1:
-                    print(out_log)
-                    raise e
-                return None, log
-            finally:
+            with tempfile.TemporaryDirectory() as tmp_folder:
+                out_log = None
                 try:
-                    rmtree(tmp_folder)
-                except:
-                    pass
-                pass
-
+                    new_file = os.path.join(tmp_folder, os.path.basename(file))
+                    new_file_js = os.path.join(
+                        tmp_folder, os.path.basename(js_file))
+                    copyfile(file, new_file)
+                    _, out_log = self._process(
+                        new_file, file_type, output_file_path=new_file_js, decompile=decompile,
+                        verbose=verbose)
+                    copyfile(new_file_js, js_file)
+                    if isinstance(log, list):
+                        log.extend(log)
+                    else:
+                        log.append(str(log))
+                except Exception as e:
+                    log.append(str(e))
+                    if out_log is not None:
+                        log.append(out_log)
+                    if verbose > 1:
+                        print(out_log)
+                        raise e
+                    return None, log
         try:
             res = read_gz_js(js_file)
             if len(res['blocks']) < 1:
