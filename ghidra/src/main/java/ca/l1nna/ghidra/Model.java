@@ -15,6 +15,7 @@ public class Model {
 
     public static class Binary {
         public Long base = 0l;
+        public String file_format = "";
         public List<String> import_modules = new ArrayList<>();
         public Map<Long, List<String>> import_functions = new HashMap<>();
         public Map<Long, String> export_functions = new HashMap<>();

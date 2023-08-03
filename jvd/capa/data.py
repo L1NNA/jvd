@@ -4,10 +4,13 @@ from jvd.utils import AttrDict
 
 
 class DataUnit:
-    def __init__(self, json_obj, file_path):
+    def __init__(self, json_obj, file_path_or_bytes):
         super().__init__()
-        with open(file_path, "rb") as f:
-            self.fbytes = f.read()
+        if isinstance(file_path_or_bytes, bytes):
+            self.fbytes = file_path_or_bytes 
+        else:
+            with open(file_path_or_bytes, "rb") as f:
+                self.fbytes = f.read()
 
         self.obj = AttrDict.from_nested_dict(json_obj)
         if not 'data' in self.obj.bin:

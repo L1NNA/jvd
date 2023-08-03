@@ -54,6 +54,7 @@ class IDA(DisassemblerAbstract):
         cmd = [program, '-A', '-S{}'.format(IDA_script), file]
         # print(cmd)
         sub_env = os.environ.copy()
+        sub_env["include_bytes"] = 'true' if extension else ''
         sub_env["output_file_path"] = os.path.abspath(output_file_path)
         # print(cmd)
         # p = Popen(

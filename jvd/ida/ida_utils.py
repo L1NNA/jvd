@@ -25,6 +25,7 @@ from idaapi import *
 from ida_name import *
 from idc import *
 import idaapi
+import ida_ida
 import json
 from collections import defaultdict
 import sys
@@ -32,6 +33,7 @@ from ida_entry import get_entry, get_entry_qty
 import base64
 from capa.features.extractors.ida.helpers import find_string_at
 from functools import lru_cache
+import base64
 
 
 def now_str(): return datetime.now().isoformat()
@@ -171,6 +173,7 @@ def get_binary_with_functions():
     binary['sha256'] = get_bin_hash()
     binary['base'] = get_imagebase()
     binary['entry_points'] = [get_entry(i) for i in range(get_entry_qty())]
+    binary['file_format'] = idaapi.get_file_type_name()
 
     info = get_inf_structure()
     bits = "b32"
@@ -264,7 +267,7 @@ def get_functions():
     return functions
 
 
-def get_all(function_eas: list = None, with_blocks=True, current_ea=False):
+def get_all(function_eas: list = None, with_blocks=True, current_ea=False, include_bytes=False):
 
     if function_eas is None:
         function_eas = []
@@ -401,10 +404,18 @@ def get_all(function_eas: list = None, with_blocks=True, current_ea=False):
                         blocks[succ_block.start_ea]['addr_start'])
                 sblock['calls'] = list(set(sblock['calls']))
             function['calls'] = list(function['calls'])
-    return {
+    data = {
         'bin': binary,
         'functions': [f for f in functions.values() if f['addr_start'] in set_function_eas],
         'blocks': list(blocks.values()),
         'comments': comments,
         'functions_src': []
     }
+    if include_bytes:
+        ea_min = ida_ida.inf_get_min_ea()
+        ea_max = ida_ida.inf_get_max_ea()
+        data['bytes'] = base64.b64encode(idaapi.get_bytes(
+           ea_min, ea_max - ea_min
+        )).decode('ascii')  
+    return data
+
