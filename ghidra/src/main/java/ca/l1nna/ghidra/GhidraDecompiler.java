@@ -264,6 +264,7 @@ public class GhidraDecompiler {
             // Arrays.asList(func.getName())));
             bin.name = this.binaryFile.getName();
             bin.base = program.getImageBase().getOffset();
+            bin.file_format = program.getExecutableFormat();
             bin.disassembled_at = date_formatter.format(Calendar.getInstance().getTime());
             bin.functions_count = functionManager.getFunctionCount();
             bin.architecture = program.getLanguage().getProcessor().toString().toLowerCase();

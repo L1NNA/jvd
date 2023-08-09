@@ -49,23 +49,22 @@ class CapaRules(ResourceAbstract):
 
 
 class JVDExtractor(FeatureExtractor):
-    def __init__(self, gz_file, bin_path):
+    def __init__(self, gz_file, bin_path_or_bytes):
         super(JVDExtractor, self).__init__()
         if isinstance(gz_file, str):
             gz_file = read_gz_js(gz_file)
-        self.data_unit = DataUnit(gz_file, bin_path)
+        self.data_unit = DataUnit(gz_file, bin_path_or_bytes)
         self.global_features = []
-        file_format = get_file_type(bin_path).lower().split(',')[0]
+        file_format = self.data_unit.obj.bin.file_format.lower()
         if 'pe' in file_format:
             self.global_features.append((Format(FORMAT_PE), NO_ADDRESS))
             self.global_features.append((OS(OS_WINDOWS), NO_ADDRESS))
         elif 'elf' in file_format:
             self.global_features.append((Format(FORMAT_ELF), NO_ADDRESS))
-            with open(bin_path, "rb") as fh:
-                buf = BytesIO(fh.read())
-                os = capa.features.extractors.elf.detect_elf_os(buf)
-                if os in capa.features.common.VALID_OS:
-                    self.global_features.append((OS(os), NO_ADDRESS))
+            buf = BytesIO(self.data_unit.fbytes)
+            os = capa.features.extractors.elf.detect_elf_os(buf)
+            if os in capa.features.common.VALID_OS:
+                self.global_features.append((OS(os), NO_ADDRESS))
         arch = self.data_unit.obj.bin.architecture.lower()
         bits = str(self.data_unit.obj.bin.bits)
         if 'amd64' in arch or 'x86_64' in arch:
@@ -145,10 +144,10 @@ def install_rules(verbose=-1):
     return require('caparules')
 
 
-def capa_analyze(gz_file, bin_path, verbose=-1):
+def capa_analyze(gz_file, bin_path_or_bytes, verbose=-1):
 
     rs = get_rules(verbose)
-    extractor = JVDExtractor(gz_file, bin_path)
+    extractor = JVDExtractor(gz_file, bin_path_or_bytes)
     capabilities, counts = find_capabilities(
         rs, extractor, disable_progress=verbose < 1)
 

@@ -15,8 +15,9 @@ print('start persisting...')
 
 file_name = os.path.splitext(idc.get_idb_path())[0] + '.asm.json.gz'
 output_file = os.getenv('output_file_path', file_name)
+include_bytes = os.getenv('include_bytes', False)
 
-data = ida_utils.get_all(with_blocks=True)
+data = ida_utils.get_all(with_blocks=True, include_bytes=include_bytes)
 
 content = json.dumps(
     data, ensure_ascii=False

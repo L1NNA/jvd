@@ -8,7 +8,9 @@ from abc import ABCMeta, abstractmethod
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from pathlib import Path
-from shutil import copyfile, unpack_archive
+from shutil import copyfile, rmtree, unpack_archive
+import base64
+
 
 from tqdm import tqdm
 
@@ -73,7 +75,12 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 raise Exception('no basic blocks are generated.. skipping.')
             if capa and 'capa' not in res:
                 from jvd.capa.extractor import capa_analyze
-                res['capa'] = capa_analyze(res, file, verbose=verbose)
+                if 'bytes' in res:
+                    file_or_bytes = base64.decodeBase64(res['bytes'])
+                else:
+                    file_or_bytes = file
+                    
+                res['capa'] = capa_analyze(res, file_or_bytes, verbose=verbose)
                 content = json.dumps(
                     res,
                     # cls=CapaJsonObjectEncoder,
