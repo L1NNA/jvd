@@ -45,16 +45,17 @@ def _process_single(s, capa=False, decompile=False,
         s = JVSample(s)
         # s.save()
     samples = [s]
+    logs = []
     dis = get_disassembler(disassembler)
     if disassemble:
         for v in samples:
             v: JVSample
-            dis.disassemble(
+            _, logs = dis.disassemble(
                 v.file, decompile=decompile, cleanup=clean_up,
                 file_type=v.file_type,
                 capa=capa, verbose=verbose,
             )
-    return samples
+    return samples, logs
 
 
 def process_folder(
@@ -71,12 +72,14 @@ def process_folder(
     #     s = JVSample(files[0])
     #     s.save()
     #     label(s)
-
-    for _ in m_map(
+    all_logs = []
+    for _, (_, logs) in m_map(
         partial(_process_single,
                 capa=capa, decompile=decompile,
                 clean_up=clean_up, disassembler=disassembler,
                 verbose=verbose, disassemble=disassemble,
                 unpack=unpack,
                 ), files):
+        all_logs.extend(logs)
         pass
+    return all_logs
