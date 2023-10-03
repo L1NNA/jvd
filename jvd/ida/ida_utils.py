@@ -25,6 +25,7 @@ from idaapi import *
 from ida_name import *
 from idc import *
 import idaapi
+import ida_bytes
 import ida_ida
 import json
 from collections import defaultdict
@@ -412,10 +413,11 @@ def get_all(function_eas: list = None, with_blocks=True, current_ea=False, inclu
         'functions_src': []
     }
     if include_bytes:
-        ea_min = ida_ida.inf_get_min_ea()
-        ea_max = ida_ida.inf_get_max_ea()
-        data['bytes'] = base64.b64encode(idaapi.get_bytes(
-           ea_min, ea_max - ea_min
-        )).decode('ascii')  
+        all_bytes = bytearray()
+        chunk_ea = ida_ida.inf_get_min_ea()
+        while chunk_ea != idaapi.BADADDR:
+            all_bytes.extend(idaapi.get_bytes(chunk_ea, ida_bytes.chunk_size(chunk_ea)))
+            chunk_ea = ida_bytes.next_chunk(chunk_ea)
+        data['bytes'] = base64.b64encode(all_bytes).decode('ascii')  
     return data
 
