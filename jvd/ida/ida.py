@@ -37,16 +37,8 @@ class IDA(DisassemblerAbstract):
             raise FileNotFoundError('IDA is not found!')
         log = None
         program = ida64
-        extension = None
         if file_type.startswith('IDA '):
-            # 32-bit database
-            program = ida32
-            extension = '.idb'
-        elif file_type.startswith('FoxPro FPT'):
-            # 64-bit database
-            program = ida64
-            extension = '.i64'
-        if extension:
+            program, extension = (ida64, '.i64') if '64' in file_type else (ida32, '.idb')
             db = file + extension
             if not os.path.exists(db):
                 shutil.copyfile(file, db)
