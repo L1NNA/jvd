@@ -70,6 +70,8 @@ class IDA(DisassemblerAbstract):
         with check_output_ctx(cmd, timeout=self.timeout, env=sub_env) as log:
             if not log:
                 log = ''
+            if isinstance(log, bytes):
+                log = log.decode('ascii')
 
         if decompile:
             # assuming that IDA does not support decompilation

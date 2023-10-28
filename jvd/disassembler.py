@@ -76,7 +76,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             if capa and 'capa' not in res:
                 from jvd.capa.extractor import capa_analyze
                 if 'bytes' in res:
-                    file_or_bytes = base64.decodeBase64(res['bytes'])
+                    file_or_bytes = base64.b64decode(res['bytes'])
                 else:
                     file_or_bytes = file
                     
