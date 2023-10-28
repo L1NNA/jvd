@@ -36,16 +36,11 @@ class IDA(DisassemblerAbstract):
         if not ida_available and 'idaapi' not in sys.modules:
             raise FileNotFoundError('IDA is not found!')
         log = None
-        program = ida64
-        extension = None
+        program, extension = (ida64, None)
+        if file_type.startswith('IDA64 '):
+            program, extension = (ida64, '.i64')
         if file_type.startswith('IDA '):
-            # 32-bit database
-            program = ida32
-            extension = '.idb'
-        elif file_type.startswith('FoxPro FPT'):
-            # 64-bit database
-            program = ida64
-            extension = '.i64'
+            program, extension = (ida32, '.idb')
         if extension:
             db = file + extension
             if not os.path.exists(db):

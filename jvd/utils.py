@@ -77,10 +77,31 @@ def write_gz_js(obj, file, cls=None):
 
 
 def get_file_type(file):
+    if isinstance(file, Path):
+        file = str(file.resolve())
+    try:
+        if isinstance(file, str):
+            file_type = magic.from_file(file).lower()
+        else:
+            file_type = magic.from_buffer(file).lower()
+
+        if file_type.startswith('data'):
+            if isinstance(file, str):
+                with open(file, 'rb') as rf:
+                    if rf.read(5).startswith(b'IDA2'):
+                        file_type = 'IDA64 (Interactive Disassembler) database'
+        return file_type
+    except:
+        return 'unknown'
+
+
+def get_file_size(file):
+    if isinstance(file, Path):
+        file = str(file.resolve())
     if isinstance(file, str):
-        return magic.from_file(file)
+        return os.path.getsize(file)
     else:
-        return magic.from_buffer(file)
+        return len(file)
 
 
 def which(program):
@@ -133,16 +154,19 @@ def grep_ext(folder, ext=None, type='f'):
     return paths
 
 
-def m_map(func, inputs, max_workers=-1,):
+def m_map(func, inputs, max_workers=-1, show_progress_bar=False):
     if max_workers < 1:
         max_workers = multiprocessing.cpu_count()
     if platform.system() == 'Windows':
         # windows hard limit is 61
-        max_workers = min(max_workers, 55)
+        max_workers = min(max_workers, 59)
 
     with Pool(max_workers) as e:
-        for ind, result in tqdm(enumerate(
-                e.imap_unordered(func, inputs)), total=len(inputs)):
+        pbar = enumerate(
+            e.imap_unordered(func, inputs))
+        if show_progress_bar:
+            pbar = tqdm(pbar, total=len(inputs))
+        for ind, result in pbar:
             yield ind, result
 
 
@@ -169,7 +193,7 @@ class AttrDict(dict):
         if hasattr(self, 'addr_start'):
             return getattr(self, 'addr_start')
         return None
-    
+
     def __getattr__(self, key):
         if key == 'address':
             if hasattr(self, 'ea'):
@@ -178,30 +202,38 @@ class AttrDict(dict):
                 return self['addr_start']
         raise AttributeError
 
+
 def toAttrDict(obj, classkey=None):
     obj_as_dict = todict(obj, classkey=classkey)
     return AttrDict.from_nested_dict(obj_as_dict)
 
 
-def todict(obj, classkey=None):
+def todict(obj, classkey=None, format_datetime=False):
     if isinstance(obj, dict):
         data = {}
         for (k, v) in obj.items():
-            data[k] = todict(v, classkey)
+            if isinstance(k, Path):
+                k = str(k)
+            data[k] = todict(v, classkey, format_datetime)
         return data
     elif hasattr(obj, "_ast"):
-        return todict(obj._ast())
+        return todict(obj._ast(), format_datetime)
     elif hasattr(obj, "__iter__") and not isinstance(obj, str):
-        return [todict(v, classkey) for v in obj]
+        return [todict(v, classkey, format_datetime) for v in obj]
     elif hasattr(obj, "__dict__"):
-        data = dict([(key, todict(value, classkey))
+        data = dict([(key, todict(value, classkey, format_datetime))
                      for key, value in obj.__dict__.items()
                      if not callable(value) and not key.startswith('_')])
         if classkey is not None and hasattr(obj, "__class__"):
             data[classkey] = obj.__class__.__name__
         return data
     else:
-        return obj
+        if isinstance(obj, datetime.datetime) and format_datetime:
+            return obj.strftime("%Y-%m-%d %H:%M")
+        elif isinstance(obj, Path):
+            return str(obj)
+        else:
+            return obj
 
 
 class JVSample:

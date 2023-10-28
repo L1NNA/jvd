@@ -9,15 +9,21 @@ from contextlib import contextmanager
 import traceback
 
 
+def get_testing_binary(binary_name):
+    selected = os.path.join('test', 'test_jvd', binary_name)
+    assert os.path.exists(selected)
+    return selected
+
+
 @contextmanager
-def helper_function(disassembler, capa, decompile):
+def helper_function(disassembler, capa, decompile, binary='libpng-1.7.0b54.o'):
     gz_file = None
     try:
-        bin = os.path.join('test', 'test_jvd', 'libpng-1.7.0b54.o')
+        binary = get_testing_binary(binary)
         disassembler = get_disassembler(disassembler)
         disassembler: DisassemblerAbstract
         gz_file, logs = disassembler.disassemble(
-            bin, cleanup=False, capa=capa, decompile=decompile, verbose=2)
+            binary, cleanup=False, capa=capa, decompile=decompile, verbose=2)
         gz_obj = read_gz_js(gz_file)
         yield gz_obj
     except:
@@ -51,6 +57,20 @@ def test_ida_disassemble():
 
     with xfail(not ida_available, reason="IDA is not available"):
         with helper_function('ida', False, False) as gz_obj:
+            assert len(gz_obj['functions']) > 10
+
+
+def test_ida_disassemble_idb32():
+
+    with xfail(not ida_available, reason="IDA is not available"):
+        with helper_function('ida', False, False, binary='busybox-i686.idb') as gz_obj:
+            assert len(gz_obj['functions']) > 10
+
+
+def test_ida_disassemble_idb64():
+
+    with xfail(not ida_available, reason="IDA is not available"):
+        with helper_function('ida', False, False, binary='busybox-x86_64.i64') as gz_obj:
             assert len(gz_obj['functions']) > 10
 
 
