@@ -81,9 +81,9 @@ def get_file_type(file):
         file = str(file.resolve())
     try:
         if isinstance(file, str):
-            file_type = magic.from_file(file).lower()
+            file_type = magic.from_file(file)
         else:
-            file_type = magic.from_buffer(file).lower()
+            file_type = magic.from_buffer(file)
 
         if file_type.startswith('data'):
             if isinstance(file, str):
