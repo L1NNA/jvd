@@ -123,6 +123,8 @@ def which(program):
 
 
 def sha256sum(filename):
+    if isinstance(filename, Path):
+        filename = str(filename.resolve())
     if isinstance(filename, str):
         h = hashlib.sha256()
         b = bytearray(128*1024)
