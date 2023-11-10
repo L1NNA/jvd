@@ -19,7 +19,7 @@ javalang = "^0.13.0"
 pydot = "^1.4.2"
 networkx = "2.5.1"
 psutil = "^5.9.5"
-angr = "^9.2.56"
+angr = "^9.2.58"
 numpy = "^1.25.0"
 
 [tool.poetry.group.dev.dependencies]
