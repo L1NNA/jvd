@@ -352,7 +352,6 @@ def get_all(function_eas: list = None, with_blocks=True, current_ea=False, inclu
                     mne = print_insn_mnem(head)
                     if mne == "":
                         continue
-                    mne = GetDisasm(head).split()[0]
                     mne = mne.upper()
                     oprs = []
                     oprs_tp = []
