@@ -38,7 +38,7 @@ def get_disassembler(disassembler=None):
         return None
 
 
-def _process_single(s, capa=False, decompile=False,
+def _process_single(s, decompile=False,
                     clean_up=False, disassembler=None, unpack=True,
                     disassemble=True, inplace=True, verbose=-1):
     if isinstance(s, str):
@@ -52,14 +52,13 @@ def _process_single(s, capa=False, decompile=False,
             v: JVSample
             _, logs = dis.disassemble(
                 v.file, decompile=decompile, cleanup=clean_up,
-                file_type=v.file_type,
-                capa=capa, verbose=verbose,
+                file_type=v.file_type, verbose=verbose,
             )
     return samples, logs
 
 
 def process_folder(
-        files, capa=False, decompile=False,
+        files, decompile=False,
         clean_up=False, ext=None, disassembler=None, disassemble=True,
         unpack=True,
         verbose=-1):
@@ -75,7 +74,7 @@ def process_folder(
     all_logs = []
     for _, (_, logs) in m_map(
         partial(_process_single,
-                capa=capa, decompile=decompile,
+                decompile=decompile,
                 clean_up=clean_up, disassembler=disassembler,
                 verbose=verbose, disassemble=disassemble,
                 unpack=unpack,

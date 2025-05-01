@@ -94,9 +94,6 @@ def entry_point():
         '--dis-decompile', dest='decompile',
         action='store_true',
         help='Decomiple the code (if IDA is chosen as disassembler, it will use Ghidra to decompile and merge.')
-    group_dis.add_argument(
-        '--dis-capa', dest='capa',
-        action='store_true', help='Analyze by capa')
 
     group_vex = parser.add_argument_group(
         'Vex IR code extraction and symbolic execution')
@@ -160,10 +157,10 @@ def entry_point():
         if not f:
             logging.error('You have to supply at least a file or a path.')
         else:
-            if flags.disassemble or flags.capa:
+            if flags.disassemble:
                 logging.info('processing...')
                 process_folder(
-                    files, capa=flags.capa, decompile=flags.decompile,
+                    files, decompile=flags.decompile,
                     clean_up=False, ext=flags.ext, disassembler=disassembler,
                     verbose=flags.verbose, disassemble=flags.disassemble,
                 )

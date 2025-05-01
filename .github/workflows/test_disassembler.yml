@@ -40,6 +40,3 @@ jobs:
       - name: Test Disassemblying
         run: |
           poetry run pytest test/test_disassembler.py -s
-      - name: Test Capa features
-        run: |
-          poetry run pytest test/test_capa_ghidra.py -s

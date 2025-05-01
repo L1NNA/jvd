@@ -31,10 +31,30 @@ import json
 from collections import defaultdict
 import sys
 from ida_entry import get_entry, get_entry_qty
-import base64
-from capa.features.extractors.ida.helpers import find_string_at
+import base64c
 from functools import lru_cache
 import base64
+
+
+def find_string_at(ea: int, min_: int = 4) -> str:
+    """check if ASCII string exists at a given virtual address
+    From: https://github.com/mandiant/capa/blob/9d3d3be21dda5d6a646dac38b645fd5a30a9aa52/capa/features/extractors/ida/helpers.py#L249C1-L264C1
+
+    """
+    found = idaapi.get_strlit_contents(ea, -1, idaapi.STRTYPE_C)
+    if found and len(found) >= min_:
+        try:
+            found = found.decode("ascii")
+            # hacky check for IDA bug; get_strlit_contents also reads Unicode as
+            # myy__uunniiccoodde when searching in ASCII mode so we check for that here
+            # and return the fixed up value
+            if len(found) >= 3 and found[1::2] == found[2::2]:
+                found = found[0] + found[1::2]
+            return found
+        except UnicodeDecodeError:
+            pass
+    return ""
+
 
 
 def now_str(): return datetime.now().isoformat()

@@ -63,7 +63,6 @@ Disassembling and decompilation:
   --dis-decompile       Decomiple the code (if IDA is chosen as disassembler,
                         it will use Ghidra to decompile and merge. (default:
                         False)
-  --dis-capa            Analyze by capa (default: False)
 
 Vex IR code extraction and symbolic execution:
   --vex                 Extract vex code and execution path. (default: False)

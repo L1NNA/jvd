@@ -8,6 +8,7 @@ from jvd.resources import ResourceAbstract
 from jvd.src.defines import GraphExtractor
 from jvd.utils import unzip_with_permission
 from tqdm import tqdm
+from jvd.resources import require
 
 
 class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
@@ -53,12 +54,20 @@ class JoernCPPExtractor(ResourceAbstract, GraphExtractor):
                         prj_path, file_name), 'w') as outf:
                     outf.write(src)
 
+            java_exec = require('jdk')
+            env = os.environ.copy()
+            env['PATH'] = os.path.dirname(java_exec) + os.pathsep + env['PATH']
+            try:
+                java_version_output = Popen(['java', '-version'], stdout=PIPE, stderr=STDOUT, cwd=temp_dir, env=env).communicate()[0].decode('utf8')
+                # print(java_version_output)
+            except Exception as e:
+                raise Exception(f"Failed to execute java -version: {e}")
             cmd = [exec_parse, prj_path, bin_path]
-            p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
+            p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir, env=env)
             out, err = p.communicate()
-            print(out.decode('utf8'))
+            # print('!', out.decode('utf8'))
             cmd = [exec_export, bin_path]
-            p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir)
+            p = Popen(cmd, stdout=PIPE, stderr=STDOUT, cwd=temp_dir, env=env)
             out, err = p.communicate()
             graphs = {}
             for f in tqdm(list(os.listdir(out_path))):

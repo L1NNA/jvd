@@ -34,15 +34,14 @@ class DisassemblerAbstract(metaclass=ABCMeta):
 
     def disassemble(
             self, file, decompile=False, cleanup=False,
-        file_type=None, capa=False, verbose=-1,
+        file_type=None, verbose=-1,
             additional_ext=''):
         js_file = file + '{}.asm.json.gz'.format(additional_ext)
         log = []
         file_type = file_type if file_type else get_file_type(file)
         if os.path.exists(js_file):
             log.append('directly reading the generated json file')
-            if not capa:
-                return js_file, log
+            return js_file, log
         else:
             with tempfile.TemporaryDirectory() as tmp_folder:
                 out_log = None
@@ -73,20 +72,6 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 if os.path.exists(js_file):
                     os.remove(js_file)
                 raise Exception('no basic blocks are generated.. skipping.')
-            if capa and 'capa' not in res:
-                from jvd.capa.extractor import capa_analyze
-                if 'bytes' in res:
-                    file_or_bytes = base64.b64decode(res['bytes'])
-                else:
-                    file_or_bytes = file
-                    
-                res['capa'] = capa_analyze(res, file_or_bytes, verbose=verbose)
-                content = json.dumps(
-                    res,
-                    # cls=CapaJsonObjectEncoder,
-                ).encode('utf-8')
-                with gzip.GzipFile(js_file, 'w') as gf:
-                    gf.write(content)
             return js_file, log
         except Exception as e:
             log.append('Failed ' + file + ' msg: ' + str(e))
@@ -133,7 +118,6 @@ class DisassemblerAbstract(metaclass=ABCMeta):
             cleanup=False,
             cfg=False,
             file_ext='.bin',
-            capa=False,
             verbose=-1):
         if isinstance(path_or_files, str):
             logging.info('processing {} with {} '.format(
@@ -150,7 +134,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                     partial(
                         self.disassemble, decompile=decompile,
                         cleanup=cleanup, cfg=cfg, no_result=True,
-                        capa=capa, verbose=verbose), files
+                        verbose=verbose), files
                 )
                 with ProcessPoolExecutor(max_workers=50) as e:
                     for ind, extracted in enumerate(
@@ -160,7 +144,7 @@ class DisassemblerAbstract(metaclass=ABCMeta):
                 for ind, f in enumerate(files):
                     extracted = self.disassemble(
                         f, decompile=decompile, cleanup=cleanup, cfg=cfg,
-                        no_result=True, capa=capa, verbose=verbose)
+                        no_result=True, verbose=verbose)
                     yield ind, extracted
 
         for ind, extracted in tqdm(gen(), total=len(files)):
