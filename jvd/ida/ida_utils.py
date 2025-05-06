@@ -31,7 +31,6 @@ import json
 from collections import defaultdict
 import sys
 from ida_entry import get_entry, get_entry_qty
-import base64c
 from functools import lru_cache
 import base64
 
