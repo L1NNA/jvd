@@ -19,6 +19,7 @@ from datetime import datetime
 import codecs
 import hashlib
 import os
+from typing import Any, Optional, Sequence, Tuple
 from ida_nalt import *
 from idautils import *
 from idaapi import *
@@ -176,7 +177,10 @@ def get_bin_hash():
 
 def get_processor():
     info = get_inf_structure()
-    processor = info.procName.lower()
+    if info.version < 700:
+        processor = info.procName.lower()
+    else:
+        processor = info.procname.lower()
     if processor.startswith('mips'):
         processor = 'mips'
     return processor
@@ -254,25 +258,29 @@ def get_binary_with_functions():
     return binary, functions
 
 
+def get_function(function_ea) -> dict:
+    function = dict()
+    f_name = get_func_name(function_ea)
+    function['name'] = f_name
+    function['description'] = ''
+    function['addr_start'] = function_ea
+    function['addr_end'] = find_func_end(function_ea)
+    # function['bin_id'] = sha256
+    # function['api'] = get_apis(function_ea)[1]
+    function['calls'] = set()
+    # functions['xref'] = []
+    function['tags'] = ['ida-lib'] if isLibrary(function_ea) else []
+    func_blocks = list(idaapi.FlowChart(idaapi.get_func(function_ea)))
+    function['bbs_len'] = len(func_blocks)
+    return function
+
+
 def get_functions():
     sha256 = get_bin_hash()
     functions = {}
     for seg_ea in Segments():
         for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
-            f_name = get_func_name(function_ea)
-            function = dict()
-            function['name'] = f_name
-            function['description'] = ''
-            function['addr_start'] = function_ea
-            function['addr_end'] = find_func_end(function_ea)
-            # function['bin_id'] = sha256
-            # function['api'] = get_apis(function_ea)[1]
-            function['calls'] = set()
-            # functions['xref'] = []
-            function['tags'] = ['ida-lib'] if isLibrary(function_ea) else []
-            functions[function_ea] = function
-            func_blocks = list(idaapi.FlowChart(idaapi.get_func(function_ea)))
-            function['bbs_len'] = len(func_blocks)
+            functions[function_ea] = get_function(function_ea)
 
     # for seg_ea in Segments():
     #     for function_ea in Functions(get_segm_start(seg_ea), get_segm_end(seg_ea)):
@@ -287,7 +295,142 @@ def get_functions():
     return functions
 
 
-def get_all(function_eas: list = None, with_blocks=True, current_ea=False, include_bytes=False):
+def _extract_blocks(function_eas: Sequence[int], binary: dict[str, Any],
+                    functions: dict[int, Any]) -> Tuple[dict[int, Any], list]:
+    """
+    Extracts basic blocks for selected functions in 'function_eas'. Also, along
+    the way:
+    - comments are extracted
+    - function calls are computed ('functions' are updated) 
+    - 'binary' data and string references are updated
+
+    Returns blocks and comments, while 'binary' and 'functions' are updated in-place.
+    """
+    blocks = {}
+    processor = get_processor()
+    time_str = now_str()
+    comments = []
+
+    for function_ea in function_eas:
+        func_blocks = FlowChart(get_func(function_ea))
+        function = functions[function_ea]
+        for bblock in func_blocks:
+            sblock = {}
+            sblock['addr_start'] = bblock.start_ea
+            if processor == 'arm':
+                sblock['addr_start'] += get_sreg(bblock.start_ea, 'T')
+            sblock['addr_end'] = bblock.end_ea
+            sblock['name'] = 'loc_' + format(bblock.start_ea, 'x').upper()
+            sblock['ins'] = []
+            sblock['addr_f'] = function['addr_start']
+            sblock['calls'] = []
+            blocks[bblock.start_ea] = sblock
+
+    fn_ending_blk_sea = defaultdict(list)
+    for function_ea in function_eas:
+        funcfc = FlowChart(get_func(function_ea))
+        for bblock in funcfc:
+            if len(list(bblock.succs())) < 1:
+                fn_ending_blk_sea[function_ea].append(
+                    blocks[bblock.start_ea])
+
+    for function_ea in function_eas:
+        funcfc = FlowChart(get_func(function_ea))
+        function = functions[function_ea]
+        function['calls'] = set(function['calls'])
+
+        func_blks = list(funcfc)
+        for bblock in func_blks:
+
+            sblock = blocks[bblock.start_ea]
+            sblock['ins'] = []
+            decoded = None
+
+            for head in Heads(bblock.start_ea, bblock.end_ea):
+
+                drs = []
+                refdata = list(DataRefsFrom(head))
+                for dr in refdata:
+                    depth = 0
+                    while depth < 10:
+                        depth += 1
+                        dr_rfs = list(DataRefsFrom(dr))
+                        if len(dr_rfs) > 0:
+                            dr = dr_rfs[0]
+                    drs.append(dr)
+
+                comments.extend(get_comments(head, time_str, head))
+                for ref in drs:
+                    if ref not in binary['strings']:
+                        str_val = find_string_at(ref)
+                        if str_val and len(str_val) > 0:
+                            binary['strings'][ref] = str_val
+
+                    elif ref not in binary['strings'] and ref not in binary['data']:
+                        binary['data'][ref] = base64.b64encode(get_bytes(
+                            head, get_item_size(head)))
+
+                mne = print_insn_mnem(head)
+                if mne == "":
+                    continue
+                mne = GetDisasm(head).split()[0]
+                mne = mne.upper()
+                oprs = []
+                oprs_tp = []
+                for i in range(5):
+                    if cleanStack == 1:
+                        OpOff(head, i, 16)
+                    opd = print_operand(head, i)
+                    tp = get_operand_type(head, i)
+                    if len(opd) < 1:
+                        continue
+                    oprs.append(opd)
+
+                    if tp == 5:
+                        if not decoded:
+                            decoded = DecodeInstruction(head)
+                        dt = decoded.ops[i].dtype
+                        tp = tp * (dt + 1)
+                        # tp/5 to get the size
+                    oprs_tp.append(tp)
+
+                cr = list(CodeRefsFrom(head, False))
+
+                if is_call_insn(head):
+                    calls = [x.to for x in XrefsFrom(
+                        head, XREF_FAR) if x.to in fn_ending_blk_sea]
+                    for x in calls:
+                        if x in blocks:
+                            sblock['calls'].append(x)
+                            for eea_ending_blk in fn_ending_blk_sea[x]:
+                                eea_ending_blk['calls'].append(
+                                    sblock['addr_start'])
+
+                    function['calls'].update(cr)
+
+                sblock['ins'].append({
+                    'ea': head,
+                    'mne': mne,
+                    'oprs': oprs,
+                    'oprs_tp': oprs_tp,
+                    'dr': drs,
+                    'cr': cr,
+                })
+
+            # sblock['ins_c'] = len(sblock['ins'])
+
+            # flow chart
+            for succ_block in bblock.succs():
+                succ_block = func_blks[succ_block.id]
+                sblock['calls'].append(
+                    blocks[succ_block.start_ea]['addr_start'])
+            sblock['calls'] = list(set(sblock['calls']))
+        function['calls'] = list(function['calls'])
+
+    return blocks, comments
+
+
+def get_all(function_eas: Optional[list] = None, with_blocks=True, current_ea=False, include_bytes=False):
 
     if function_eas is None:
         function_eas = []
@@ -303,127 +446,10 @@ def get_all(function_eas: list = None, with_blocks=True, current_ea=False, inclu
     binary, functions = get_binary_with_functions()
     set_function_eas = set(function_eas)
     comments = list()
-    blocks = {}
-    sha256 = get_bin_hash()
-    processor = get_processor()
-    time_str = now_str()
 
     if with_blocks:
-        for function_ea in function_eas:
-            func_blocks = FlowChart(get_func(function_ea))
-            function = functions[function_ea]
-            for bblock in func_blocks:
-                sblock = {}
-                sblock['addr_start'] = bblock.start_ea
-                if processor == 'arm':
-                    sblock['addr_start'] += get_sreg(bblock.start_ea, 'T')
-                sblock['addr_end'] = bblock.end_ea
-                sblock['name'] = 'loc_' + format(bblock.start_ea, 'x').upper()
-                sblock['ins'] = []
-                sblock['addr_f'] = function['addr_start']
-                sblock['calls'] = []
-                blocks[bblock.start_ea] = sblock
+        blocks, comments = _extract_blocks(function_eas, binary, functions)
 
-        fn_ending_blk_sea = defaultdict(lambda: list())
-        for function_ea in function_eas:
-            funcfc = FlowChart(get_func(function_ea))
-            for bblock in funcfc:
-                if len(list(bblock.succs())) < 1:
-                    fn_ending_blk_sea[function_ea].append(
-                        blocks[bblock.start_ea])
-
-        for function_ea in function_eas:
-            funcfc = FlowChart(get_func(function_ea))
-            function = functions[function_ea]
-            function['calls'] = set(function['calls'])
-
-            func_blks = list(funcfc)
-            for bblock in func_blks:
-
-                sblock = blocks[bblock.start_ea]
-                sblock['ins'] = []
-                decoded = None
-
-                for head in Heads(bblock.start_ea, bblock.end_ea):
-
-                    drs = []
-                    refdata = list(DataRefsFrom(head))
-                    for dr in refdata:
-                        depth = 0
-                        while depth < 10:
-                            depth += 1
-                            dr_rfs = list(DataRefsFrom(dr))
-                            if len(dr_rfs) > 0:
-                                dr = dr_rfs[0]
-                        drs.append(dr)
-
-                    comments.extend(get_comments(head, time_str, head))
-                    for ref in drs:
-                        if ref not in binary['strings']:
-                            str_val = find_string_at(ref)
-                            if str_val and len(str_val) > 0:
-                                binary['strings'][ref] = str_val
-
-                        elif ref not in binary['strings'] and ref not in binary['data']:
-                            binary['data'][ref] = base64.b64encode(get_bytes(
-                                head, get_item_size(head)))
-
-                    mne = print_insn_mnem(head)
-                    if mne == "":
-                        continue
-                    mne = GetDisasm(head).split()[0]
-                    mne = mne.upper()
-                    oprs = []
-                    oprs_tp = []
-                    for i in range(5):
-                        if cleanStack == 1:
-                            OpOff(head, i, 16)
-                        opd = print_operand(head, i)
-                        tp = get_operand_type(head, i)
-                        if len(opd) < 1:
-                            continue
-                        oprs.append(opd)
-
-                        if tp == 5:
-                            if not decoded:
-                                decoded = DecodeInstruction(head)
-                            dt = decoded.ops[i].dtype
-                            tp = tp * (dt + 1)
-                            # tp/5 to get the size
-                        oprs_tp.append(tp)
-
-                    cr = list(CodeRefsFrom(head, False))
-
-                    if is_call_insn(head):
-                        calls = [x.to for x in XrefsFrom(
-                            head, XREF_FAR) if x.to in fn_ending_blk_sea]
-                        for x in calls:
-                            if x in blocks:
-                                sblock['calls'].append(x)
-                                for eea_ending_blk in fn_ending_blk_sea[x]:
-                                    eea_ending_blk['calls'].append(
-                                        sblock['addr_start'])
-
-                        function['calls'].update(cr)
-
-                    sblock['ins'].append({
-                        'ea': head,
-                        'mne': mne,
-                        'oprs': oprs,
-                        'oprs_tp': oprs_tp,
-                        'dr': drs,
-                        'cr': cr,
-                    })
-
-                # sblock['ins_c'] = len(sblock['ins'])
-
-                # flow chart
-                for succ_block in bblock.succs():
-                    succ_block = func_blks[succ_block.id]
-                    sblock['calls'].append(
-                        blocks[succ_block.start_ea]['addr_start'])
-                sblock['calls'] = list(set(sblock['calls']))
-            function['calls'] = list(function['calls'])
     data = {
         'bin': binary,
         'functions': [f for f in functions.values() if f['addr_start'] in set_function_eas],
@@ -437,6 +463,33 @@ def get_all(function_eas: list = None, with_blocks=True, current_ea=False, inclu
         while chunk_ea != idaapi.BADADDR:
             all_bytes.extend(idaapi.get_bytes(chunk_ea, ida_bytes.chunk_size(chunk_ea)))
             chunk_ea = ida_bytes.next_chunk(chunk_ea)
-        data['bytes'] = base64.b64encode(all_bytes).decode('ascii')  
+        data['bytes'] = base64.b64encode(all_bytes).decode('ascii')
     return data
 
+
+def get_single_function(function_start_ea: int) -> Optional[dict[str, Any]]:
+    """
+    Extract function metadata, its basic-blocks and comments.
+
+    Similar to get_all(with_blocks=True), but only analyzes a single function. 
+    Therefore, it does not retrieve whole-binary metadata, and returned function
+    and blocks do not contain calls/references to/from other functions or data. 
+
+    Returns extracted data, or None if no function starts at 'function_start_ea'
+    """
+    if not idaapi.get_func(function_start_ea):
+        return None
+
+    dummy_binary = {'strings': {}, 'data': {}}
+    functions = {function_start_ea: get_function(function_start_ea)}
+    blocks, comments = _extract_blocks([function_start_ea], dummy_binary, functions)
+
+    data = {
+        'bin': {},
+        'functions': list(functions.values()),
+        'blocks': list(blocks.values()),
+        'comments': comments,
+        'functions_src': []
+    }
+
+    return data
