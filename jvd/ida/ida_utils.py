@@ -247,7 +247,22 @@ def get_binary_with_functions():
     binary['disassembled_at'] = now_str()
     binary['seg'] = {}
     for seg_ea in Segments():
-        binary['seg'][seg_ea] = idc.get_segm_name(seg_ea)
+        seg = ida_segment.getseg(seg_ea)
+        if not seg:
+            continue
+        start = seg.start_ea
+        end = seg.end_ea
+        size = end - start
+
+        offset = idaapi.get_fileregion_offset(seg_ea)#ida_loader.get_fileregion_offset(start)
+        if offset == -1 or offset is None:
+            offset = -1
+        
+        seg_type = ida_segment.get_segm_class(seg)
+ 
+        seg_name  = ida_segment.get_segm_name(seg)
+
+        binary['seg'][seg_ea] = [size, offset, seg_type, seg_name]
 
     functions = get_functions()
     binary['functions_count'] = len(functions)
