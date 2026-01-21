@@ -37,9 +37,9 @@ class IDA(DisassemblerAbstract):
             raise FileNotFoundError('IDA is not found!')
         log = None
         program, extension = (ida64, None)
-        if file_type.startswith('IDA64 '):
+        if file_type.upper().startswith('IDA64 '):
             program, extension = (ida64, '.i64')
-        if file_type.startswith('IDA '):
+        if file_type.upper().startswith('IDA '):
             program, extension = (ida32, '.idb')
         if extension:
             db = file + extension
